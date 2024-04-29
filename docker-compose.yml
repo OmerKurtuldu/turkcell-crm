@@ -1,0 +1,162 @@
+services:
+  discovery-server:
+    build: ./discoveryserver
+    ports:
+      - "8888:8888"
+    networks:
+      - common
+
+  gateway-server:
+    build: ./gatewayserver
+    ports:
+      - "8001:8001"
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8888/eureka/
+      - EUREKA_URL=http://discovery-server:8888
+    depends_on:
+      - discovery-server
+    networks:
+      - common
+
+  config-server:
+    build: ./configserver
+    ports:
+      - "8079:8079"
+    networks:
+      - common
+
+  auth-service:
+    build: ./authservice
+    ports:
+      - "8084:8084"
+    environment:
+      - SPRING_CLOUD_CONFIG_PROFILE=prod
+      - CONFIG_URL=http://config-server:8079
+    restart: on-failure
+    depends_on:
+      - postgres
+      - discovery-server
+      - config-server
+    networks:
+      - common
+
+  customer-service:
+    build: ./customerservice
+    ports:
+      - "8083:8083"
+    environment:
+      - SPRING_CLOUD_CONFIG_PROFILE=prod
+      - CONFIG_URL=http://config-server:8079
+    restart: on-failure
+    depends_on:
+      - postgres
+      - discovery-server
+      - config-server
+    networks:
+      - common
+
+  invoice-service:
+    build: ./invoiceservice
+    ports:
+      - "8082:8082"
+    environment:
+      - SPRING_CLOUD_CONFIG_PROFILE=prod
+      - CONFIG_URL=http://config-server:8079
+    restart: on-failure
+    depends_on:
+      - postgres
+      - discovery-server
+      - config-server
+    networks:
+      - common
+
+  order-service:
+    build: ./orderservice
+    ports:
+      - "8081:8081"
+    environment:
+      - SPRING_CLOUD_CONFIG_PROFILE=prod
+      - CONFIG_URL=http://config-server:8079
+    restart: on-failure
+    depends_on:
+      - mongodb
+      - discovery-server
+      - config-server
+    networks:
+      - common
+
+  product-service:
+    build: ./productservice
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_CLOUD_CONFIG_PROFILE=prod
+      - CONFIG_URL=http://config-server:8079
+    restart: on-failure
+    depends_on:
+      - postgres
+      - discovery-server
+      - config-server
+    networks:
+      - common
+
+  postgres:
+    image: postgres:16.2-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=test
+      - POSTGRES_USER=postgres
+    volumes:
+      - turkcell-pair1-crm-postgresql-volume:/var/lib/postgresql/data
+    networks:
+      - common
+
+  mongodb:
+    image: mongo
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=root
+    volumes:
+      - turkcell-pair1-crm-mongodb-volume:/data/db
+    networks:
+      - common
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper
+    ports:
+      - 2181:2181
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+  kafka:
+    image: confluentinc/cp-kafka
+    ports:
+      - 9092:9092
+    environment:
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_INTERNAL:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092,PLAINTEXT_INTERNAL://broker:29092
+      KAFKA_BROKER_ID: 1
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+  kafka-manager:
+    image: hlebalbau/kafka-manager
+    ports:
+      - 9000:9000
+    environment:
+      ZK_HOSTS: zookeeper:2181
+    depends_on:
+      - kafka
+
+
+volumes:
+  turkcell-pair1-crm-postgresql-volume:
+    name: turkcell-pair1-crm-postgresql
+  turkcell-pair1-crm-mongodb-volume:
+    name: turkcell-pair1-crm-mongodb
+
+networks:
+  common:
+    driver: bridge
