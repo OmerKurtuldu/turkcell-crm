@@ -24,7 +24,6 @@ public class AddressManager implements AddressService {
 
     @Override
     public CreatedAddressResponse add(CreatedAddressRequest createdAddressRequest) {
-        //TODO BURAYI TARTIŞALIM
         Address address = this.modelMapperService.forRequest().map(createdAddressRequest, Address.class);
         Customer customer = customerRepository.findById(createdAddressRequest.getCustomerId()).orElseThrow();
         address.setCustomer(customer);

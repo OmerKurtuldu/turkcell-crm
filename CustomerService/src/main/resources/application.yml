@@ -13,9 +13,9 @@ spring:
   application:
     name: customer-service
   datasource:
-    url: jdbc:postgresql://localhost:5432/turkcellcrmcustomerdb
+    url: jdbc:postgresql://localhost:5432/turkcellcrmcustomerdb2
     username: postgres
-    password: postgres
+    password: 12345
   jpa:
     hibernate:
       ddl-auto: update
