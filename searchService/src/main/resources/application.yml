@@ -14,6 +14,19 @@ spring:
     name: search-service
   data:
     mongodb:
-      database: turkcellcrmcustomerdb
+      database: searchServiceDb
       uri: mongodb://localhost:27017
-
+  kafka:
+    consumer:
+      bootstrap-servers: localhost:9092
+      group-id: search
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      properties:
+        spring:
+          json:
+            trusted:
+              packages: '*'
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+    topic:
+      name: customer_topics

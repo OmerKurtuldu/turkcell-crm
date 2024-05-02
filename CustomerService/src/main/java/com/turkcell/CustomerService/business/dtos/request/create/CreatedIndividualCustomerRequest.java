@@ -1,6 +1,6 @@
 package com.turkcell.CustomerService.business.dtos.request.create;
 
-import com.turkcell.CustomerService.entities.enums.GenderType;
+import com.turkcell.commonpackage.utils.enums.GenderType;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;

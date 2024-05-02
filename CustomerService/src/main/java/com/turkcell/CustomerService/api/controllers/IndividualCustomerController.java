@@ -7,6 +7,7 @@ import com.turkcell.CustomerService.business.dtos.response.create.CreatedIndivid
 import com.turkcell.CustomerService.business.dtos.response.get.GetIndividualCustomerResponse;
 import com.turkcell.CustomerService.business.dtos.response.getAll.GetAllIndividualCustomerResponse;
 import com.turkcell.CustomerService.business.dtos.response.updated.UpdatedIndividualCustomerResponse;
+import com.turkcell.CustomerService.kafka.producer.CustomerProducer;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,6 +19,7 @@ import java.util.List;
 @AllArgsConstructor
 @RequestMapping("/individualcustomerservice/api/v1/customers")
 public class IndividualCustomerController {
+
     private IndividualCustomerService individualCustomerService;
 
     @PostMapping

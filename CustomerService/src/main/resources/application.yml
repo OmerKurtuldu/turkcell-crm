@@ -13,9 +13,9 @@ spring:
   application:
     name: customer-service
   datasource:
-    url: jdbc:postgresql://localhost:5432/turkcellcrmcustomerdb2
+    url: jdbc:postgresql://localhost:5432/turkcellcrmcustomerdb
     username: postgres
-    password: 12345
+    password: postgres
   jpa:
     hibernate:
       ddl-auto: update
@@ -27,3 +27,10 @@ spring:
           validation:
             mode: none
     show-sql: true
+  kafka:
+    producer:
+      bootstrap-servers: localhost:9092
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    topic:
+      name: customer_topics

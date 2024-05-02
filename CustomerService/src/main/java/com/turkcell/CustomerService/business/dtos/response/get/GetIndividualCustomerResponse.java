@@ -1,6 +1,6 @@
 package com.turkcell.CustomerService.business.dtos.response.get;
 
-import com.turkcell.CustomerService.entities.enums.GenderType;
+import com.turkcell.commonpackage.utils.enums.GenderType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,11 +8,9 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-
 public class GetIndividualCustomerResponse {
     private int id;
     private LocalDateTime createdDate;
