@@ -1,6 +1,7 @@
 package com.turkcell.CustomerService.business.concretes;
 
 import com.turkcell.CustomerService.business.abstracts.IndividualCustomerService;
+
 import com.turkcell.CustomerService.business.dtos.request.create.CreatedIndividualCustomerRequest;
 import com.turkcell.CustomerService.business.dtos.request.update.UpdatedIndividualCustomerRequest;
 import com.turkcell.CustomerService.business.dtos.response.create.CreatedIndividualCustomerResponse;
@@ -14,10 +15,11 @@ import com.turkcell.CustomerService.dataAccess.abstracts.IndividualCustomerRepos
 import com.turkcell.CustomerService.entities.concretes.Customer;
 import com.turkcell.CustomerService.entities.concretes.IndividualCustomer;
 
+import com.turkcell.CustomerService.kafka.producer.CustomerProducer;
+import com.turkcell.commonpackage.events.customer.CreatedCustomerEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -30,6 +32,7 @@ public class IndividualCustomerManager implements IndividualCustomerService {
     private final ModelMapperService modelMapperService;
     private final CustomerRepository customerRepository;
     private final IndividualCustomerBusinessRules individualCustomerBusinessRules;
+    private final CustomerProducer customerProducer;
 
     @Override
     public CreatedIndividualCustomerResponse add(CreatedIndividualCustomerRequest createIndividualCustomerRequest) {
@@ -41,6 +44,10 @@ public class IndividualCustomerManager implements IndividualCustomerService {
 
         customerRepository.save(customer);
         individualCustomerRepository.save(individualCustomer);
+        CreatedCustomerEvent createdCustomerEvent = this.modelMapperService.forResponse().map(individualCustomer,CreatedCustomerEvent.class);
+        createdCustomerEvent.setMessages("customer status is in pending state");
+        createdCustomerEvent.setStatus("PENDING");
+        customerProducer.sendMessage(createdCustomerEvent);
 
         return this.modelMapperService.forResponse().map(individualCustomer, CreatedIndividualCustomerResponse.class);
     }

@@ -1,14 +1,13 @@
 package com.turkcell.CustomerService.entities.concretes;
 
 import com.turkcell.CustomerService.core.entities.BaseEntity;
-import com.turkcell.CustomerService.entities.enums.GenderType;
+import com.turkcell.commonpackage.utils.enums.GenderType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor

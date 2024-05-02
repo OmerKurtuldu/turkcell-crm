@@ -1,6 +1,6 @@
 package com.turkcell.CustomerService.business.dtos.response.updated;
 
-import com.turkcell.CustomerService.entities.enums.GenderType;
+import com.turkcell.commonpackage.utils.enums.GenderType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

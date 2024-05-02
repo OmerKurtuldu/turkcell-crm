@@ -1,8 +1,8 @@
 package com.turkcell.searchService.repositories;
 
-import com.turkcell.searchService.entities.Search;
+import com.turkcell.searchService.entities.concretes.Customer;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
-public interface SearchRepository extends MongoRepository<Search, String> {
+public interface SearchRepository extends MongoRepository<Customer, String> {
 
 }

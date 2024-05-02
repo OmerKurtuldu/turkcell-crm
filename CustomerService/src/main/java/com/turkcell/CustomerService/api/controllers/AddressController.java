@@ -2,9 +2,7 @@ package com.turkcell.CustomerService.api.controllers;
 
 import com.turkcell.CustomerService.business.abstracts.AddressService;
 import com.turkcell.CustomerService.business.dtos.request.create.CreatedAddressRequest;
-import com.turkcell.CustomerService.business.dtos.request.create.CreatedIndividualCustomerRequest;
 import com.turkcell.CustomerService.business.dtos.response.create.CreatedAddressResponse;
-import com.turkcell.CustomerService.business.dtos.response.create.CreatedIndividualCustomerResponse;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;

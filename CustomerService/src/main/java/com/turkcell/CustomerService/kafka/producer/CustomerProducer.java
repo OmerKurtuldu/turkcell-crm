@@ -1,30 +1,35 @@
 package com.turkcell.CustomerService.kafka.producer;
 
-import com.turkcell.CustomerService.business.dtos.response.create.CustomerCreatedEvent;
+import com.turkcell.commonpackage.events.customer.CreatedCustomerEvent;
+import lombok.AllArgsConstructor;
+import org.apache.kafka.clients.admin.NewTopic;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
-import org.springframework.kafka.core.KafkaTemplate;
 
+
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.KafkaHeaders;
+
 import org.springframework.messaging.Message;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Service;
 
 @Service
+@AllArgsConstructor
 public class CustomerProducer {
+
     private static final Logger LOGGER = LoggerFactory.getLogger(CustomerProducer.class);
-    private final KafkaTemplate<String, Object> kafkaTemplate;
 
-    public CustomerProducer(KafkaTemplate<String, Object> kafkaTemplate) {
-        this.kafkaTemplate = kafkaTemplate;
-    }
+    private NewTopic topic;
 
-    public void sendMessage(CustomerCreatedEvent customerCreatedEvent) {
-        LOGGER.info(String.format("Customer added =>%s", customerCreatedEvent.toString()));
+    private final KafkaTemplate<String, CreatedCustomerEvent> kafkaTemplate;
 
-        Message<CustomerCreatedEvent> message = MessageBuilder.withPayload(customerCreatedEvent)
-//                .setHeader(KafkaHeaders.TOPIC,"inventory-customer-created")
-                .setHeader(KafkaHeaders.TOPIC, "inventory-customer-created")
+    public void sendMessage(CreatedCustomerEvent event) {
+        LOGGER.info(String.format("Customer added =>%s", event.toString()));
+
+        Message<CreatedCustomerEvent> message = MessageBuilder
+                .withPayload(event)
+                .setHeader(KafkaHeaders.TOPIC,topic.name())
                 .build();
 
         kafkaTemplate.send(message);
