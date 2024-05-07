@@ -2,15 +2,13 @@ package com.turkcell.CustomerService.business.concretes;
 
 import com.turkcell.CustomerService.business.abstracts.AddressService;
 import com.turkcell.CustomerService.business.dtos.request.create.CreatedAddressRequest;
-
 import com.turkcell.CustomerService.business.dtos.response.create.CreatedAddressResponse;
-
-import com.turkcell.CustomerService.core.utilities.mapping.ModelMapperService;
 import com.turkcell.CustomerService.dataAccess.abstracts.AddressRepository;
 import com.turkcell.CustomerService.dataAccess.abstracts.CustomerRepository;
 import com.turkcell.CustomerService.entities.concretes.Address;
 import com.turkcell.CustomerService.entities.concretes.Customer;
 
+import com.turkcell.commonpackage.utils.mappers.ModelMapperService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

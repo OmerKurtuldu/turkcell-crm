@@ -2,9 +2,9 @@ package com.turkcell.CustomerService.business.concretes;
 
 import com.turkcell.CustomerService.business.abstracts.CityService;
 import com.turkcell.CustomerService.business.dtos.request.create.CreatedCityRequest;
-import com.turkcell.CustomerService.core.utilities.mapping.ModelMapperService;
 import com.turkcell.CustomerService.dataAccess.abstracts.CityRepository;
 import com.turkcell.CustomerService.entities.concretes.City;
+import com.turkcell.commonpackage.utils.mappers.ModelMapperService;
 
 import java.time.LocalDateTime;
 

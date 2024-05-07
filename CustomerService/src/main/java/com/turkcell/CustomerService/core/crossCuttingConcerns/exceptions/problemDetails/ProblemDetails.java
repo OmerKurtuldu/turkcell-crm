@@ -1,5 +1,6 @@
 package com.turkcell.CustomerService.core.crossCuttingConcerns.exceptions.problemDetails;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
