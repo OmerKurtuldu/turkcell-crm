@@ -1,4 +1,4 @@
-package com.turkcell.CustomerService.core.utilities.mapping;
+package com.turkcell.commonpackage.utils.mappers;
 
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;

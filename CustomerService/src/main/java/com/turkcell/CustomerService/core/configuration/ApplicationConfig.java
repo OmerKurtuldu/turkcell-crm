@@ -25,9 +25,5 @@ public class ApplicationConfig {
         acceptHeaderLocaleResolver.setDefaultLocale(new Locale("tr"));
         return acceptHeaderLocaleResolver;
     }
-    @Bean
-    public ModelMapper getModelMapper(){
-        return new ModelMapper();
-    }
 
 }
