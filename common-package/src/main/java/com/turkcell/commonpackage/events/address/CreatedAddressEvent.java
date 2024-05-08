@@ -1,30 +1,21 @@
-package com.turkcell.CustomerService.business.dtos.request.create;
+package com.turkcell.commonpackage.events.address;
 
+import com.turkcell.commonpackage.events.Event;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@AllArgsConstructor
-@NoArgsConstructor
 @Data
-public class CreatedAddressRequest {
-
-    @NotNull
+@NoArgsConstructor
+@AllArgsConstructor
+public class CreatedAddressEvent  implements Event {
+    private int id;
+    private String messages;
+    private String status;
     private int cityId;
-
-    @NotNull
     private String street;
-
-    @NotNull
     private String houseFlatNumber;
-
-    @NotNull
     private String description;
-
-    @NotNull
     private int customerId;
-
-
-
 }
