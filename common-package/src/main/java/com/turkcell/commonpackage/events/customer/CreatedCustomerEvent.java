@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CreatedCustomerEvent implements Event {
-    private int id;
+    private String id;
     private String messages;
     private String status;
 

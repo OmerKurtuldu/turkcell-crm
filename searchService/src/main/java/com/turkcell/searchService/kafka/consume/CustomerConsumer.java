@@ -3,6 +3,7 @@ package com.turkcell.searchService.kafka.consume;
 
 import com.turkcell.commonpackage.events.customer.CreatedCustomerEvent;
 import com.turkcell.searchService.entities.concretes.Customer;
+import com.turkcell.searchService.repositories.SearchRepository;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 public class CustomerConsumer {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CustomerConsumer.class);
+    private final SearchRepository searchRepository;
 
     @KafkaListener(
             topics = "${spring.kafka.topic.name}", groupId = "${spring.kafka.consumer.group-id}"
@@ -22,6 +24,7 @@ public class CustomerConsumer {
 
     public void consume(CreatedCustomerEvent event){
         Customer customer = new Customer();
+        customer.setId(event.getId());
         customer.setBirthDate(event.getBirthDate());
         customer.setGender(event.getGenderType().name().toString());
         customer.setFatherName(event.getFatherName());
@@ -30,10 +33,9 @@ public class CustomerConsumer {
         customer.setMotherName(event.getMotherName());
         customer.setNationalityNumber(event.getNationalityNumber());
         customer.setSecondName(event.getSecondName());
+        searchRepository.save(customer);
         System.out.println(customer.toString());
         LOGGER.info(String.format("Customer event recieved in stock service => %s", event.toString()));
-
-
     }
 
 }
