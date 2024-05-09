@@ -13,15 +13,16 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CreatedCustomerEvent implements Event {
-    private String id;
+    private int id;
     private String messages;
     private String status;
 
+    private String mobilePhone;
     private String firstName;
     private String secondName;
     private String lastName;
     private LocalDateTime birthDate;
-    private GenderType genderType;
+    private String gender;
     private String fatherName;
     private String motherName;
 

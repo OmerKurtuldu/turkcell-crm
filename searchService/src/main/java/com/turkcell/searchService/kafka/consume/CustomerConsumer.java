@@ -21,18 +21,13 @@ public class CustomerConsumer {
     @KafkaListener(
             topics = "${spring.kafka.topic.name}", groupId = "${spring.kafka.consumer.group-id}"
     )
-
     public void consume(CreatedCustomerEvent event){
         Customer customer = new Customer();
-        customer.setId(event.getId());
-        customer.setBirthDate(event.getBirthDate());
-        customer.setGender(event.getGenderType().name().toString());
-        customer.setFatherName(event.getFatherName());
-        customer.setLastName(event.getLastName());
+        customer.setId(String.valueOf(event.getId()));
         customer.setFirstName(event.getFirstName());
-        customer.setMotherName(event.getMotherName());
+        customer.setLastName(event.getLastName());
+        customer.setMobilePhone(event.getMobilePhone());
         customer.setNationalityNumber(event.getNationalityNumber());
-        customer.setSecondName(event.getSecondName());
         searchRepository.save(customer);
         System.out.println(customer.toString());
         LOGGER.info(String.format("Customer event recieved in stock service => %s", event.toString()));

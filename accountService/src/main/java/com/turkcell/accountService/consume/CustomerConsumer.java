@@ -27,7 +27,7 @@ public class CustomerConsumer {
         Customer customer = new Customer();
         customer.setId(event.getId());
         customer.setBirthDate(event.getBirthDate());
-        customer.setGender(event.getGenderType().name().toString());
+        customer.setGender(event.getGender().toString());
         customer.setFatherName(event.getFatherName());
         customer.setLastName(event.getLastName());
         customer.setFirstName(event.getFirstName());
