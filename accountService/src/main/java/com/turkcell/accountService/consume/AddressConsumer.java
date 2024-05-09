@@ -8,6 +8,7 @@ import com.turkcell.accountService.entities.concretes.City;
 import com.turkcell.accountService.entities.concretes.Customer;
 import com.turkcell.commonpackage.events.address.CreatedAddressEvent;
 import com.turkcell.commonpackage.events.customer.CreatedCustomerEvent;
+import com.turkcell.commonpackage.utils.mappers.ModelMapperService;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +21,7 @@ public class AddressConsumer {
     private AddressRepository addressRepository;
     private CityRepository cityRepository;
     private CustomerRepository customerRepository;
+    private ModelMapperService modelMapperService;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AddressConsumer.class);
 
@@ -28,15 +30,12 @@ public class AddressConsumer {
     )
 
     public void consume(CreatedAddressEvent event) {
-        Address address = new Address();
+        Address address = this.modelMapperService.forRequest().map(event, Address.class);
         address.setId(event.getId());
         City city = cityRepository.findById(event.getCityId()).orElseThrow();
         address.setCity(city);
         Customer customer = customerRepository.findById(event.getCustomerId()).orElseThrow();
         address.setCustomer(customer);
-        address.setStreet(event.getStreet());
-        address.setHouseFlatNumber(event.getHouseFlatNumber());
-        address.setDescription(event.getDescription());
         addressRepository.save(address);
 
         System.out.println(customer.toString());

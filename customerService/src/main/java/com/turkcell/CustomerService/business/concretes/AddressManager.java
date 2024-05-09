@@ -9,7 +9,6 @@ import com.turkcell.CustomerService.business.dtos.response.create.CreatedAddress
 import com.turkcell.CustomerService.business.dtos.response.get.GetAddressResponse;
 import com.turkcell.CustomerService.business.dtos.response.getAll.GetAllAddressResponse;
 import com.turkcell.CustomerService.business.dtos.response.updated.UpdatedAddressResponse;
-import com.turkcell.CustomerService.core.utilities.mapping.ModelMapperService;
 import com.turkcell.CustomerService.dataAccess.abstracts.AddressRepository;
 import com.turkcell.CustomerService.dataAccess.abstracts.CityRepository;
 import com.turkcell.CustomerService.dataAccess.abstracts.CustomerRepository;
@@ -19,7 +18,7 @@ import com.turkcell.CustomerService.entities.concretes.Customer;
 
 import com.turkcell.CustomerService.kafka.producer.AddressProducer;
 import com.turkcell.commonpackage.events.address.CreatedAddressEvent;
-import com.turkcell.commonpackage.events.customer.CreatedCustomerEvent;
+import com.turkcell.commonpackage.utils.mappers.ModelMapperService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

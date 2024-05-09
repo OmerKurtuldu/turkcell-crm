@@ -1,10 +1,12 @@
 package com.turkcell.accountService;
+import com.turkcell.commonpackage.utils.constants.Paths;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {Paths.ConfigurationBasePackage, Paths.Account.ServiceBasePackage})
 @EnableJpaAuditing
 public class AccountServiceApplication {
 
