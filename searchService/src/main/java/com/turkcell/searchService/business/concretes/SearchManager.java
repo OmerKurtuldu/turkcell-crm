@@ -18,9 +18,7 @@ import java.util.Map;
 @AllArgsConstructor
 public class SearchManager implements SearchService {
 
-
     private MongoOperations mongoOperations;
-
 
     @Override
     public List<Customer> customerList(Customer search) {
@@ -47,10 +45,8 @@ public class SearchManager implements SearchService {
 
                 query.addCriteria(Criteria.where(key).regex(value,"i"));
             }
-
         }
 
-//
 //        Query query = new Query();
 //
 //        if(search.getFirstName() != null){

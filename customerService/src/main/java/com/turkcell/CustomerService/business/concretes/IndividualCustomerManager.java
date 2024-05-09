@@ -9,7 +9,6 @@ import com.turkcell.CustomerService.business.dtos.response.get.GetIndividualCust
 import com.turkcell.CustomerService.business.dtos.response.getAll.GetAllIndividualCustomerResponse;
 import com.turkcell.CustomerService.business.dtos.response.updated.UpdatedIndividualCustomerResponse;
 import com.turkcell.CustomerService.business.rules.IndividualCustomerBusinessRules;
-import com.turkcell.CustomerService.core.utilities.mapping.ModelMapperService;
 import com.turkcell.CustomerService.dataAccess.abstracts.CustomerRepository;
 import com.turkcell.CustomerService.dataAccess.abstracts.IndividualCustomerRepository;
 import com.turkcell.CustomerService.entities.concretes.Customer;
@@ -17,6 +16,7 @@ import com.turkcell.CustomerService.entities.concretes.IndividualCustomer;
 
 import com.turkcell.CustomerService.kafka.producer.CustomerProducer;
 import com.turkcell.commonpackage.events.customer.CreatedCustomerEvent;
+import com.turkcell.commonpackage.utils.mappers.ModelMapperService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

@@ -5,6 +5,7 @@ import com.turkcell.accountService.dataAccess.abstracts.CustomerRepository;
 import com.turkcell.accountService.entities.concretes.Customer;
 import com.turkcell.commonpackage.events.customer.CreatedCustomerEvent;
 
+import com.turkcell.commonpackage.utils.mappers.ModelMapperService;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class CustomerConsumer {
     private CustomerRepository customerRepository;
+    private ModelMapperService modelMapperService;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CustomerConsumer.class);
 
@@ -24,22 +26,12 @@ public class CustomerConsumer {
     )
 
     public void consume(CreatedCustomerEvent event) {
-        Customer customer = new Customer();
-        customer.setId(event.getId());
-        customer.setBirthDate(event.getBirthDate());
-        customer.setGender(event.getGender().toString());
-        customer.setFatherName(event.getFatherName());
-        customer.setLastName(event.getLastName());
-        customer.setFirstName(event.getFirstName());
-        customer.setMotherName(event.getMotherName());
-        customer.setNationalityNumber(event.getNationalityNumber());
-        customer.setSecondName(event.getSecondName());
+        Customer customer = this.modelMapperService.forRequest().map(event, Customer.class);
 
         customerRepository.save(customer);
 
         System.out.println(customer.toString());
         LOGGER.info(String.format("Customer event recieved in stock service => %s", event.toString()));
-
 
     }
 
