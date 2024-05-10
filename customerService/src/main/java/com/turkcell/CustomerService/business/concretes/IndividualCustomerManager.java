@@ -63,7 +63,7 @@ public class IndividualCustomerManager implements IndividualCustomerService {
         customer.setId(customerId);
 
         individualCustomer.setCustomer(customer);
-
+        //todo : updateCustomerEvent
         customerRepository.save(customer);
         individualCustomerRepository.save(individualCustomer);
 
@@ -92,8 +92,7 @@ public class IndividualCustomerManager implements IndividualCustomerService {
 
     @Override
     public void delete(int id) {
-        //todo burayı dene
-
+        //todo burayı dene, status değişecek
         individualCustomerBusinessRules.individualCustomerShouldBeExist(id);
         individualCustomerRepository.deleteById(id);
     }
