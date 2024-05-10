@@ -1,36 +1,8 @@
-eureka:
-  client:
-    fetchRegistry: true
-    registerWithEureka: true
-    serviceUrl:
-      defaultZone: http://localhost:9000/eureka
-  instance:
-    instance-id: ${spring.application.name}:${instanceId:${random.value}}
-    preferIpAddress: true
-server:
-  port: 0
 spring:
   application:
-    name: identity-service
-  datasource:
-    url: jdbc:postgresql://localhost:5432/turkcellcrmidentitydb
-    username: postgres
-    password: 12345
-  jpa:
-    hibernate:
-      ddl-auto: update
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
-      javax:
-        persistence:
-          validation:
-            mode: none
-    show-sql: true
-
-jwt:
-  secret:
-    key: C53m0R5fXD2VXQwoWbV6Rhqk44l/fY0n6rk67028lFw9ZCU9nIpc0V6N1S7hNGHSj6nNGKszIHMUCGxOwatyQXtcA+HmkiCGtO19bhhVEEhfDVxdYP/PLDTnolseuAMP9bYYmXPUXZ/79iRq90kIsM37Uiw/Q3xFFjHObjzzD78ZP8ucmaavcEBTeW9dpOieMvyS7Zdz4ut/slMtIpq1gKBKBw+r3e3sUbUGmoINGJoBsPEQflbE10J1aTRLLREq1EmUNw9VZmVOtCrVErwKawkQFVniWieqAeQze+OY1BfkjYI11lhO7Y7LyOl3Vx35EezWhrYj8ceajsnEr7CIMg==
-
-  expiration:
-    time: 600000
+    name: identityservice
+  cloud:
+    config:
+      profile: dev
+  config:
+    import: configserver:http://localhost:8050/

@@ -1,14 +1,11 @@
 package com.turkcell.accountService.entities.concretes;
 
 import com.turkcell.accountService.core.entities.BaseEntity;
-import com.turkcell.commonpackage.events.customer.CreatedCustomerEvent;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -25,14 +22,13 @@ public class Account extends BaseEntity<Integer> {
     @Column(name = "status")
     private Boolean status;
 
-    @ManyToOne
-    @JoinColumn(name = "customer_id")
-    private Customer customer;
+    @OneToMany(mappedBy = "account")
+    private AccountTypes accountTypes;
 
-    @ManyToMany(mappedBy = "accounts")
-    private Set<Address> addresses;
+    @Column(name = "customer_id")
+    private int customerId;
 
-
-
+    @Column(name = "account_address_id")
+    private int accountAddressId;
 
 }
