@@ -18,4 +18,8 @@ public class Paths {
     public static class Identity {
         public static final String ServiceBasePackage = "com.turkcell.identityservice";
     }
+
+    public static class Discovery {
+        public static final String ServiceBasePackage = "com.turkcell.discoveryserver";
+    }
 }

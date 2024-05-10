@@ -5,8 +5,5 @@ import com.turkcell.searchService.entities.concretes.Customer;
 import java.util.List;
 
 public interface SearchService {
-
-
-    List<Customer> customerList(Customer customer);
-
+    List<Customer> searchCustomer(Customer customerSearch);
 }

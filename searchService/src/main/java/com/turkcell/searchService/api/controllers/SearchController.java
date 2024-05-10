@@ -18,7 +18,7 @@ public class SearchController {
 
     @PostMapping("/customers")
     public List<Customer> searchCustomers(@RequestBody Customer search){
-        return searchService.customerList(search);
+        return searchService.searchCustomer(search);
     }
 
 }
