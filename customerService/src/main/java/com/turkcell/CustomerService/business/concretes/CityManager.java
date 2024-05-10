@@ -17,8 +17,6 @@ public class CityManager implements CityService {
         City city=modelMapperService.forRequest().map(request, City.class);
         city.setCreatedDate(LocalDateTime.now());
         City dbCity=cityRepository.save(city);
-
-
         return city.getId();
     }
 }
