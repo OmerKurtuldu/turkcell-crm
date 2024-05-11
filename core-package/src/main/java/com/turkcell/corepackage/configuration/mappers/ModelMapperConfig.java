@@ -1,7 +1,7 @@
-package com.turkcell.commonpackage.configuration.mappers;
+package com.turkcell.corepackage.configuration.mappers;
 
-import com.turkcell.commonpackage.utils.mappers.ModelMapperManager;
-import com.turkcell.commonpackage.utils.mappers.ModelMapperService;
+import com.turkcell.corepackage.utils.mappers.ModelMapperManager;
+import com.turkcell.corepackage.utils.mappers.ModelMapperService;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

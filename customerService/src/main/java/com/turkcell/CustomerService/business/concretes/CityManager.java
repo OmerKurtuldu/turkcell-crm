@@ -4,7 +4,8 @@ import com.turkcell.CustomerService.business.abstracts.CityService;
 import com.turkcell.CustomerService.business.dtos.request.create.CreatedCityRequest;
 import com.turkcell.CustomerService.dataAccess.abstracts.CityRepository;
 import com.turkcell.CustomerService.entities.concretes.City;
-import com.turkcell.commonpackage.utils.mappers.ModelMapperService;
+import com.turkcell.corepackage.utils.mappers.ModelMapperService;
+
 
 import java.time.LocalDateTime;
 

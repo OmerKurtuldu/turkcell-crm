@@ -1,10 +1,11 @@
 package com.turkcell.commonpackage.utils.constants;
 
 public class Paths {
-    public static final String ConfigurationBasePackage = "com.turkcell.commonpackage.configuration";
+    public static final String ConfigurationBasePackage = "com.turkcell.corepackage";
+
 
     public static class Customer {
-        public static final String ServiceBasePackage = "com.turkcell.customerservice";
+        public static final String ServiceBasePackage = "com.turkcell.CustomerService";
     }
 
     public static class Search {

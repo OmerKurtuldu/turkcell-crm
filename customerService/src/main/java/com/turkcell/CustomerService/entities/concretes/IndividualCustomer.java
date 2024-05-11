@@ -1,7 +1,8 @@
 package com.turkcell.CustomerService.entities.concretes;
 
-import com.turkcell.CustomerService.core.entities.BaseEntity;
+
 import com.turkcell.commonpackage.utils.enums.GenderType;
+import com.turkcell.corepackage.entities.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

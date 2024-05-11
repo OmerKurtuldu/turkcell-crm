@@ -1,7 +1,8 @@
-package com.turkcell.CustomerService.core.business.concretes;
+package com.turkcell.corepackage.business.concretes;
 
 
-import com.turkcell.CustomerService.core.business.abstracts.MessageService;
+
+import com.turkcell.corepackage.business.abstracts.MessageService;
 import lombok.AllArgsConstructor;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
