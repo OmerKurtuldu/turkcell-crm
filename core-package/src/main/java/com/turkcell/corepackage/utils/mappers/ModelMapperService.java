@@ -1,4 +1,4 @@
-package com.turkcell.commonpackage.utils.mappers;
+package com.turkcell.corepackage.utils.mappers;
 
 import org.modelmapper.ModelMapper;
 

@@ -1,9 +1,9 @@
-package com.turkcell.CustomerService.core.crossCuttingConcerns.exceptions.handlers;
+package com.turkcell.corepackage.utils.exceptions.handler;
 
 
-import com.turkcell.CustomerService.core.crossCuttingConcerns.exceptions.problemDetails.BusinessProblemDetails;
-import com.turkcell.CustomerService.core.crossCuttingConcerns.exceptions.problemDetails.ValidationProblemDetails;
-import com.turkcell.CustomerService.core.crossCuttingConcerns.exceptions.types.BusinessException;
+import com.turkcell.corepackage.utils.exceptions.types.BusinessException;
+import com.turkcell.corepackage.utils.exceptions.problemDetails.BusinessProblemDetails;
+import com.turkcell.corepackage.utils.exceptions.problemDetails.ValidationProblemDetails;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;

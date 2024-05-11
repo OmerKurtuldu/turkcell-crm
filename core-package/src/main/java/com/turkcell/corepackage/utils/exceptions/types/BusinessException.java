@@ -1,4 +1,4 @@
-package com.turkcell.CustomerService.core.crossCuttingConcerns.exceptions.types;
+package com.turkcell.corepackage.utils.exceptions.types;
 
 public class BusinessException extends RuntimeException{
     public BusinessException(String message){

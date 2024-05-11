@@ -1,4 +1,4 @@
-package com.turkcell.CustomerService.core.crossCuttingConcerns.exceptions.problemDetails;
+package com.turkcell.corepackage.utils.exceptions.problemDetails;
 
 import lombok.Data;
 

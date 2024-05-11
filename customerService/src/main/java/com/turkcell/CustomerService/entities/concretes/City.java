@@ -1,6 +1,7 @@
 package com.turkcell.CustomerService.entities.concretes;
 
-import com.turkcell.CustomerService.core.entities.BaseEntity;
+
+import com.turkcell.corepackage.entities.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;

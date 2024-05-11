@@ -18,7 +18,7 @@ import com.turkcell.CustomerService.entities.concretes.Customer;
 
 import com.turkcell.CustomerService.kafka.producer.AddressProducer;
 import com.turkcell.commonpackage.events.address.CreatedAddressEvent;
-import com.turkcell.commonpackage.utils.mappers.ModelMapperService;
+import com.turkcell.corepackage.utils.mappers.ModelMapperService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
