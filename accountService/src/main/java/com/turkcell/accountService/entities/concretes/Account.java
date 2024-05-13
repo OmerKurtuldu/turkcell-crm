@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -23,7 +25,7 @@ public class Account extends BaseEntity<Integer> {
     private Boolean status;
 
     @OneToMany(mappedBy = "account")
-    private AccountTypes accountTypes;
+    private List<AccountTypes> accountTypes;
 
     @Column(name = "customer_id")
     private int customerId;

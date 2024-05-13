@@ -16,8 +16,7 @@ public class AccountAddresses extends BaseEntity<Integer> {
     @Column(name = "address_id")
     private int addressId;
 
-    @ManyToOne
-    @JoinColumn(name = "account_id")
-    private Account account;
+    @Column(name = "account_id")
+    private int accountID;
 
 }
