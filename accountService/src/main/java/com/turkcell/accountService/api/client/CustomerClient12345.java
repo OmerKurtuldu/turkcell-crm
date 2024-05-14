@@ -1,6 +1,6 @@
-package com.turkcell.accountService.api.controllers;
+package com.turkcell.accountService.api.client;
 
-import com.turkcell.accountService.consumer.CustomerConsumer;
+import com.turkcell.commonpackage.utils.dto.ClientResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,13 +10,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/accountservice/api/v1/customers")
-public class FeignController {
+public class CustomerClient12345 {
 
-    private final CustomerConsumer customerConsumer;
+    private final CustomerClient customerClient;
 
     @GetMapping("/CustomerGetById/{id}")
-    public Object örnekİstemciMetodu(@PathVariable int id) {
-        return customerConsumer.customerGetById(id);
+    public ClientResponse örnekİstemciMetodu(@PathVariable int id) {
+        return customerClient.customerGetById(id);
     }
 
 }

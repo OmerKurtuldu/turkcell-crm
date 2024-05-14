@@ -8,6 +8,7 @@ import com.turkcell.CustomerService.business.dtos.response.get.GetIndividualCust
 import com.turkcell.CustomerService.business.dtos.response.getAll.GetAllIndividualCustomerResponse;
 import com.turkcell.CustomerService.business.dtos.response.updated.UpdatedIndividualCustomerResponse;
 
+import com.turkcell.commonpackage.utils.dto.ClientResponse;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -50,5 +51,10 @@ public class IndividualCustomerController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable int id) {
         individualCustomerService.delete(id);
+    }
+
+    @GetMapping("/customerClient/{id}")
+    public ClientResponse checkIfCarAvailable(@PathVariable int id){
+        return individualCustomerService.checkIfCustomerAvailable(id);
     }
 }

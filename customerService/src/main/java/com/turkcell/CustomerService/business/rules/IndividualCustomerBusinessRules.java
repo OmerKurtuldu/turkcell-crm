@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @RequiredArgsConstructor
 @Service
@@ -27,6 +29,16 @@ public class IndividualCustomerBusinessRules {
         Optional<IndividualCustomer> individualCustomer = individualCustomerRepository.findByNationalityNo(nationalityNo);
         if(individualCustomer.isPresent()){
             throw new BusinessException(messageService.getMessage((Messages.CustomerErrors.IndividualCustomerWithThisIDNumberExist)));
+        }
+    }
+
+    public void checkNatioanlityNo(String nationalityNo){
+        String regex = "^[1-9]{1}[0-9]{9}[02468]{1}$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(nationalityNo);
+
+        if(!matcher.matches()){
+            throw new  BusinessException(messageService.getMessage(Messages.CustomerErrors.CheckNatioanlityNo));
         }
     }
 

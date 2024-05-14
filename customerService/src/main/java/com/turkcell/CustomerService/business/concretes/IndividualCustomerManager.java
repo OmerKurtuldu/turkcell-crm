@@ -17,7 +17,10 @@ import com.turkcell.CustomerService.entities.concretes.IndividualCustomer;
 import com.turkcell.CustomerService.kafka.producer.CustomerProducer;
 import com.turkcell.commonpackage.events.customer.CreatedCustomerEvent;
 
+import com.turkcell.commonpackage.utils.dto.ClientResponse;
+import com.turkcell.corepackage.utils.exceptions.types.BusinessException;
 import com.turkcell.corepackage.utils.mappers.ModelMapperService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +30,7 @@ import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
+@Transactional
 public class IndividualCustomerManager implements IndividualCustomerService {
 
     private final IndividualCustomerRepository individualCustomerRepository;
@@ -37,6 +41,7 @@ public class IndividualCustomerManager implements IndividualCustomerService {
 
     @Override
     public CreatedIndividualCustomerResponse add(CreatedIndividualCustomerRequest createIndividualCustomerRequest) {
+        individualCustomerBusinessRules.checkNatioanlityNo(createIndividualCustomerRequest.getNationalityNo());
         individualCustomerBusinessRules.nationalityNoCanNotBeDuplicated(createIndividualCustomerRequest.getNationalityNo());
         Customer customer = this.modelMapperService.forRequest().map(createIndividualCustomerRequest.getCreateCustomerRequest(), Customer.class);
 
@@ -96,5 +101,22 @@ public class IndividualCustomerManager implements IndividualCustomerService {
         //todo burayı dene, status değişecek
         individualCustomerBusinessRules.individualCustomerShouldBeExist(id);
         individualCustomerRepository.deleteById(id);
+    }
+
+    @Override
+    public ClientResponse checkIfCustomerAvailable(int id) {
+        var response = new ClientResponse();
+        validateCustomerAvailability(id,response);
+        return response;
+    }
+
+    private void validateCustomerAvailability(int id, ClientResponse response) {
+        try {
+            individualCustomerBusinessRules.individualCustomerShouldBeExist(id);
+            response.setSuccess(true);
+        } catch (BusinessException exception) {
+            response.setSuccess(false);
+            response.setMessage(exception.getMessage());
+        }
     }
 }
