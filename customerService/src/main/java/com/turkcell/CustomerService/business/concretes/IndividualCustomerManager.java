@@ -116,7 +116,6 @@ public class IndividualCustomerManager implements IndividualCustomerService {
             response.setSuccess(true);
         } catch (BusinessException exception) {
             response.setSuccess(false);
-            response.setMessage(exception.getMessage());
         }
     }
 }

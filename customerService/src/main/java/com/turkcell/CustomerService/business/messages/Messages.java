@@ -7,4 +7,9 @@ public class Messages {
         public static final String CheckNatioanlityNo = "checkNatioanlityNo";
 
     }
+
+    public static class AddressErrors{
+        public static final String AddressShouldBeExists = "addressShouldBeExists";
+
+    }
 }

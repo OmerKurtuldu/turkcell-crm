@@ -9,6 +9,7 @@ import com.turkcell.CustomerService.business.dtos.response.create.CreatedAddress
 import com.turkcell.CustomerService.business.dtos.response.get.GetAddressResponse;
 import com.turkcell.CustomerService.business.dtos.response.getAll.GetAllAddressResponse;
 import com.turkcell.CustomerService.business.dtos.response.updated.UpdatedAddressResponse;
+import com.turkcell.CustomerService.business.rules.AddressBusinessRules;
 import com.turkcell.CustomerService.dataAccess.abstracts.AddressRepository;
 import com.turkcell.CustomerService.dataAccess.abstracts.CityRepository;
 import com.turkcell.CustomerService.dataAccess.abstracts.CustomerRepository;
@@ -18,6 +19,8 @@ import com.turkcell.CustomerService.entities.concretes.Customer;
 
 import com.turkcell.CustomerService.kafka.producer.AddressProducer;
 import com.turkcell.commonpackage.events.address.CreatedAddressEvent;
+import com.turkcell.commonpackage.utils.dto.ClientResponse;
+import com.turkcell.corepackage.utils.exceptions.types.BusinessException;
 import com.turkcell.corepackage.utils.mappers.ModelMapperService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -35,6 +38,7 @@ public class AddressManager implements AddressService {
     private final CustomerRepository customerRepository;
     private final CityRepository cityRepository;
     private final AddressProducer addressProducer;
+    private final AddressBusinessRules addressBusinessRules;
 
     @Override
     public CreatedAddressResponse add(CreatedAddressRequest createdAddressRequest) {
@@ -51,6 +55,8 @@ public class AddressManager implements AddressService {
         CreatedAddressResponse addressResponse = this.modelMapperService.forResponse().map(address, CreatedAddressResponse.class);
         return addressResponse;
     }
+
+
 
     @Override
     public UpdatedAddressResponse update(UpdatedAddressRequest updatedAddressRequest) {
@@ -86,6 +92,22 @@ public class AddressManager implements AddressService {
     public void delete(int id) {
         //todo iş kuralı
         addressRepository.deleteById(id);
+    }
+
+    @Override
+    public ClientResponse checkIfAddressAvailable(int id) {
+        var response = new ClientResponse();
+        validateAddressAvailability(id,response);
+        return response;
+    }
+
+    private void validateAddressAvailability(int id, ClientResponse response) {
+        try {
+            addressBusinessRules.addressShouldBeExist(id);
+            response.setSuccess(true);
+        } catch (BusinessException exception) {
+            response.setSuccess(false);
+        }
     }
 
 }

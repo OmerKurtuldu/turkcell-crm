@@ -10,13 +10,18 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/accountservice/api/v1/customers")
-public class CustomerClient12345 {
+public class CustomerServiceCheck {
 
-    private final CustomerClient customerClient;
+    private final CustomerServiceClient customerServiceClient;
 
-    @GetMapping("/CustomerGetById/{id}")
-    public ClientResponse örnekİstemciMetodu(@PathVariable int id) {
-        return customerClient.customerGetById(id);
+    @GetMapping("/CustomerCheck/{id}")
+    public ClientResponse CustomerCheck(@PathVariable int id) {
+        return customerServiceClient.customerGetById(id);
+    }
+
+    @GetMapping("/AddressCheck/{id}")
+    public ClientResponse AddressCheck(@PathVariable int id) {
+        return customerServiceClient.addressGetById(id);
     }
 
 }

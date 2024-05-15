@@ -1,11 +1,6 @@
 package com.turkcell.accountService.business.dtos.request.created;
 
-import com.turkcell.accountService.entities.concretes.AccountTypes;
 import com.turkcell.accountService.entities.enums.Action;
-import jakarta.persistence.Column;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,4 +19,5 @@ public class CreatedAccountRequest {
     private Action action;
     private Set<Integer> accountTypes;
     private int customerId;
+    private int addressId;
 }
