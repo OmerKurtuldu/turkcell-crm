@@ -54,7 +54,7 @@ public class IndividualCustomerController {
     }
 
     @GetMapping("/customerClient/{id}")
-    public ClientResponse checkIfCarAvailable(@PathVariable int id){
+    public ClientResponse checkIfCustomerAvailable(@PathVariable int id){
         return individualCustomerService.checkIfCustomerAvailable(id);
     }
 }

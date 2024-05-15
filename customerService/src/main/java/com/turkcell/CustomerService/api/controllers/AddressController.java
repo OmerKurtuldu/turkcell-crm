@@ -7,6 +7,7 @@ import com.turkcell.CustomerService.business.dtos.response.create.CreatedAddress
 import com.turkcell.CustomerService.business.dtos.response.get.GetAddressResponse;
 import com.turkcell.CustomerService.business.dtos.response.getAll.GetAllAddressResponse;
 import com.turkcell.CustomerService.business.dtos.response.updated.UpdatedAddressResponse;
+import com.turkcell.commonpackage.utils.dto.ClientResponse;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -49,5 +50,11 @@ public class AddressController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable int id){
         addressService.delete(id);
+    }
+
+    @GetMapping("/addressClient/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public ClientResponse checkIfAddressAvailable(@PathVariable int id){
+        return addressService.checkIfAddressAvailable(id);
     }
 }

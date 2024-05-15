@@ -11,5 +11,4 @@ import lombok.Setter;
 @AllArgsConstructor
 public class ClientResponse {
     private boolean isSuccess;
-    private String message;
 }

@@ -6,6 +6,7 @@ import com.turkcell.CustomerService.business.dtos.response.create.CreatedAddress
 import com.turkcell.CustomerService.business.dtos.response.get.GetAddressResponse;
 import com.turkcell.CustomerService.business.dtos.response.getAll.GetAllAddressResponse;
 import com.turkcell.CustomerService.business.dtos.response.updated.UpdatedAddressResponse;
+import com.turkcell.commonpackage.utils.dto.ClientResponse;
 
 import java.util.List;
 
@@ -21,5 +22,7 @@ public interface AddressService {
     List<GetAllAddressResponse> getAll();
 
     void delete(int id);
+
+    ClientResponse checkIfAddressAvailable(int id);
 
 }
