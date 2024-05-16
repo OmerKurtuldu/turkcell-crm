@@ -12,6 +12,7 @@
         <option value="$PROJECT_DIR$/searchService/pom.xml" />
         <option value="$PROJECT_DIR$/common-package/pom.xml" />
         <option value="$PROJECT_DIR$/accountService/pom.xml" />
+        <option value="$PROJECT_DIR$/core-package/pom.xml" />
       </list>
     </option>
   </component>

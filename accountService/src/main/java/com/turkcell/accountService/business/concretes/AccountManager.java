@@ -9,11 +9,9 @@ import com.turkcell.accountService.business.dtos.response.getAll.GetAllAccountRe
 import com.turkcell.accountService.business.dtos.response.updated.UpdatedAccountResponse;
 import com.turkcell.accountService.business.messages.Messages;
 import com.turkcell.accountService.business.rules.AccountBusinessRules;
-import com.turkcell.accountService.dataAccess.abstracts.AccountAddressRepository;
 import com.turkcell.accountService.dataAccess.abstracts.AccountRepository;
 import com.turkcell.accountService.dataAccess.abstracts.AccountTypesRepository;
 import com.turkcell.accountService.entities.concretes.Account;
-import com.turkcell.accountService.entities.concretes.AccountAddresses;
 import com.turkcell.accountService.entities.concretes.AccountTypes;
 import com.turkcell.corepackage.business.abstracts.MessageService;
 import com.turkcell.corepackage.utils.exceptions.types.BusinessException;
@@ -32,12 +30,15 @@ public class AccountManager implements AccountService {
     private final MessageService messageService;
     private final AccountTypesRepository accountTypesRepository; //todo konusalacak
     private final AccountBusinessRules accountBusinessRules;
-    private final AccountAddressRepository accountAddressRepository;
 
     @Override
     public CreatedAccountResponse add(CreatedAccountRequest createdAccountRequest) {
 
         accountBusinessRules.checkCustomerAvailabilityForAccount(createdAccountRequest.getCustomerId());
+
+        for(int address : createdAccountRequest.getAddressId()){
+            accountBusinessRules.checkAddressAvailabilityForAccount(address);
+        }
 
         Account account = this.modelMapperService.forRequest().map(createdAccountRequest, Account.class);
 
@@ -45,10 +46,6 @@ public class AccountManager implements AccountService {
         account.setAccountTypes(accountTypes);
 
         accountRepository.save(account);
-        AccountAddresses accountAddresses = this.modelMapperService.forRequest().map(createdAccountRequest,AccountAddresses.class);
-        accountAddresses.setAccountID(account.getId());
-
-        accountAddressRepository.save(accountAddresses);
 
         return this.modelMapperService.forResponse().map(account, CreatedAccountResponse.class);
     }
@@ -57,6 +54,9 @@ public class AccountManager implements AccountService {
 
         accountBusinessRules.accountShoulBeExist(updatedAccountRequest.getId());
         accountBusinessRules.checkCustomerAvailabilityForAccount(updatedAccountRequest.getCustomerId());
+        for(int address : updatedAccountRequest.getAddressId()){
+            accountBusinessRules.checkAddressAvailabilityForAccount(address);
+        }
 
         Account account = this.modelMapperService.forRequest().map(updatedAccountRequest, Account.class);
 

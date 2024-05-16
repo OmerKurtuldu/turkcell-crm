@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
 import java.util.Set;
 
 @AllArgsConstructor
@@ -19,5 +20,6 @@ public class UpdatedAccountRequest {
     private Action action;
     private Set<Integer> accountTypes;
     private int customerId;
+    private List<Integer> addressId;
 
 }

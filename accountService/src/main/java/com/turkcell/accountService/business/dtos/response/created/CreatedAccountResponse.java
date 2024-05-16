@@ -19,4 +19,5 @@ public class CreatedAccountResponse {
     private Action action;
     private Set<AccountTypes> accountTypes;
     private int customerId;
+    private List<Integer> addressId;
 }

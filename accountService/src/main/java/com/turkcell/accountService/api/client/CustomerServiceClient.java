@@ -11,6 +11,6 @@ public interface CustomerServiceClient {
     @GetMapping("/individualcustomerservice/api/v1/customers/customerClient/{id}")
     ClientResponse customerGetById(@PathVariable int id);
 
-    @GetMapping("/individualcustomerservice/api/v1/customers/addressClient/{id}")
+    @GetMapping("/customerservice/api/v1/address/addressClient/{id}")
     ClientResponse addressGetById(@PathVariable int id);
 }

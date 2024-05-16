@@ -19,5 +19,5 @@ public class CreatedAccountRequest {
     private Action action;
     private Set<Integer> accountTypes;
     private int customerId;
-    private int addressId;
+    private List<Integer> addressId;
 }
