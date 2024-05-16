@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
 import java.util.Set;
 
 @NoArgsConstructor
@@ -18,5 +19,6 @@ public class UpdatedAccountResponse {
     private Boolean status;
     private Action action;
     private Set<AccountTypes> accountTypes;
+    private List<Integer> addressId;
 
 }

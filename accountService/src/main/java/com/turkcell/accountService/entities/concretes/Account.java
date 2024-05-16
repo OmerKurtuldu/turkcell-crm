@@ -44,6 +44,6 @@ public class Account extends BaseEntity<Integer> {
     private int customerId;
 
     @Column(name = "account_address_id")
-    private int accountAddressId;
+    private List<Integer> accountAddressId;
 
 }

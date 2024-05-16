@@ -9,6 +9,8 @@
         <outputRelativeToContentRoot value="true" />
         <module name="CustomerService" />
         <module name="identityService" />
+        <module name="core-package" />
+        <module name="customerService" />
         <module name="gatewayService" />
         <module name="configServer" />
         <module name="searchService" />
@@ -23,10 +25,12 @@
       <module name="CustomerService" options="-parameters" />
       <module name="accountService" options="-parameters" />
       <module name="common-package" options="-parameters" />
-      <module name="configServer" options="" />
+      <module name="configServer" options="-parameters" />
+      <module name="core-package" options="-parameters" />
+      <module name="customerService" options="-parameters" />
       <module name="discoveryServer" options="-parameters" />
-      <module name="gatewayService" options="" />
-      <module name="identityService" options="" />
+      <module name="gatewayService" options="-parameters" />
+      <module name="identityService" options="-parameters" />
       <module name="searchService" options="-parameters" />
     </option>
   </component>
