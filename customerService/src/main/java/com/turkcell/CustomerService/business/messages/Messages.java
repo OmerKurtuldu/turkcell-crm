@@ -5,6 +5,7 @@ public class Messages {
         public static final String IndividualCustomerShouldBeExists = "individualCustomerShouldBeExists";
         public static final String IndividualCustomerWithThisIDNumberExist ="individualCustomerWithThisIDNumberExist";
         public static final String CheckNatioanlityNo = "checkNatioanlityNo";
+        public static final String CheckCustomerActive = "checkCustomerActive";
 
     }
 

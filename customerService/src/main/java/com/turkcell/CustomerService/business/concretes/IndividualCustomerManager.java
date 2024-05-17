@@ -32,7 +32,7 @@ import java.util.Optional;
 @Service
 @Transactional
 public class IndividualCustomerManager implements IndividualCustomerService {
-
+ //todo soft delete için get getall update gözden geçirilecek
     private final IndividualCustomerRepository individualCustomerRepository;
     private final ModelMapperService modelMapperService;
     private final CustomerRepository customerRepository;
@@ -101,6 +101,13 @@ public class IndividualCustomerManager implements IndividualCustomerService {
     }
 
     @Override
+    public void setStatus(int id) {
+        individualCustomerBusinessRules.individualCustomerShouldBeExist(id);
+        individualCustomerBusinessRules.checkCustomerPassive(id);
+        customerRepository.setActiveCustomer(id);
+    }
+
+    @Override
     public ClientResponse checkIfCustomerAvailable(int id) {
         var response = new ClientResponse();
         validateCustomerAvailability(id,response);
@@ -109,6 +116,7 @@ public class IndividualCustomerManager implements IndividualCustomerService {
 
     private void validateCustomerAvailability(int id, ClientResponse response) {
         try {
+            individualCustomerBusinessRules.checkCustomerActive(id);
             individualCustomerBusinessRules.individualCustomerShouldBeExist(id);
             response.setSuccess(true);
         } catch (BusinessException exception) {
