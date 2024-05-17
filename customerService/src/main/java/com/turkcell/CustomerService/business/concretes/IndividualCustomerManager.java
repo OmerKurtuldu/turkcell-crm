@@ -44,7 +44,6 @@ public class IndividualCustomerManager implements IndividualCustomerService {
         individualCustomerBusinessRules.checkNatioanlityNo(createIndividualCustomerRequest.getNationalityNo());
         individualCustomerBusinessRules.nationalityNoCanNotBeDuplicated(createIndividualCustomerRequest.getNationalityNo());
         Customer customer = this.modelMapperService.forRequest().map(createIndividualCustomerRequest.getCreateCustomerRequest(), Customer.class);
-
         IndividualCustomer individualCustomer = this.modelMapperService.forRequest().map(createIndividualCustomerRequest, IndividualCustomer.class);
         individualCustomer.setCustomer(customer);
 
@@ -98,9 +97,7 @@ public class IndividualCustomerManager implements IndividualCustomerService {
 
     @Override
     public void delete(int id) {
-        //todo burayı dene, status değişecek
-        individualCustomerBusinessRules.individualCustomerShouldBeExist(id);
-        individualCustomerRepository.deleteById(id);
+        customerRepository.softDelete(id);
     }
 
     @Override
