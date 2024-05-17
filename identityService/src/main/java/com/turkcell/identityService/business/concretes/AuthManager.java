@@ -1,29 +1,30 @@
 package com.turkcell.identityService.business.concretes;
 
+import com.turkcell.corepackage.jwt.JwtService;
 import com.turkcell.identityService.business.abstracts.AuthService;
-import com.turkcell.identityService.business.abstracts.RefreshTokenService;
 import com.turkcell.identityService.business.abstracts.UserService;
 import com.turkcell.identityService.business.dtos.requests.LoginRequest;
-import com.turkcell.identityService.business.messages.AuthMessages;
-import com.turkcell.identityService.core.services.JwtService;
-import com.turkcell.identityService.core.utilities.exceptions.types.BusinessException;
-import com.turkcell.identityService.entities.concretes.RefreshToken;
-import com.turkcell.identityService.entities.concretes.User;
+import com.turkcell.identityService.business.dtos.requests.RegisterRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import java.util.HashMap;
-import java.util.Map;
 
 @AllArgsConstructor
 @Service
 public class AuthManager implements AuthService {
-    private final UserService userService;
+    private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
-    private final RefreshTokenService refreshTokenService;
+    private final UserService userService;
+    @Override
+    public void register(RegisterRequest request) {
+        userService.add(request);
+    }
 
     @Override
     public String login(LoginRequest request) {
@@ -31,29 +32,11 @@ public class AuthManager implements AuthService {
                 .authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
 
         if(!authentication.isAuthenticated())
-            throw new BusinessException(AuthMessages.LOGIN_FAILED);
+            throw new RuntimeException("E-posta veya şifre hatalı.");
 
-        User user = userService.findByUsername(request.getEmail());
-        String jwt = generateJwt(user);
-        refreshTokenService.create(user);
+        UserDetails user = userService.loadUserByUsername(request.getEmail());
 
-        return jwt;
-    }
-
-    @Override
-    public String refreshToken(String refreshToken) {
-        RefreshToken token = refreshTokenService.verifyRefreshToken(refreshToken);
-        User user = token.getUser();
-        return generateJwt(user);
-    }
-
-
-    private String generateJwt(User user)
-    {
-        Map<String,Object> claims = new HashMap<>();
-        claims.put("username", user.getUsername());
-        claims.put("id",user.getId());
-        return jwtService.generateToken(claims, user.getEmail());
+        return jwtService.generateToken(user.getUsername(), user.getAuthorities().stream().map(GrantedAuthority::getAuthority).toList());
     }
 }
 // 9:10

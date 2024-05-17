@@ -1,6 +1,5 @@
 package com.turkcell.identityService.entities.concretes;
 
-import com.turkcell.identityService.core.entities.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,7 +18,11 @@ import java.util.Set;
 @Setter
 @Entity
 @Table(name="users")
-public class User extends BaseEntity<Integer> implements UserDetails {
+public class User implements UserDetails {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private int id;
 
     @Column(name="password")
     private String password;
@@ -27,19 +30,17 @@ public class User extends BaseEntity<Integer> implements UserDetails {
     @Column(name="email")
     private String email;
 
-    @Column(name="birthDate")
-    private LocalDate birthDate;
+    @Column(name="firstName")
+    private String firstName;
+
+    @Column(name="lastName")
+    private String lastName;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name="user_role",
             joinColumns = @JoinColumn(name="user_id"),
             inverseJoinColumns = @JoinColumn(name="role_id"))
     private Set<Role> authorities;
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
-    }
 
     @Override
     public String getUsername() {

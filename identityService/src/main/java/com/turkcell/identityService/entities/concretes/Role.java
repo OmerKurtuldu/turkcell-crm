@@ -1,10 +1,6 @@
 package com.turkcell.identityService.entities.concretes;
 
-import com.turkcell.identityService.core.entities.BaseEntity;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,7 +15,11 @@ import java.util.Set;
 @Setter
 @Entity
 @Table(name="roles")
-public class Role extends BaseEntity<Integer> implements GrantedAuthority {
+public class Role implements GrantedAuthority {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private int id;
 
     @Column(name="name")
     private String name;
