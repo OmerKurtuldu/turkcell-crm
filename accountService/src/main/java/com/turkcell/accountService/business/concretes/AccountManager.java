@@ -1,20 +1,17 @@
 package com.turkcell.accountService.business.concretes;
 
 import com.turkcell.accountService.business.abstracts.AccountService;
+import com.turkcell.accountService.business.abstracts.AccountTypeService;
 import com.turkcell.accountService.business.dtos.request.created.CreatedAccountRequest;
 import com.turkcell.accountService.business.dtos.request.updated.UpdatedAccountRequest;
 import com.turkcell.accountService.business.dtos.response.created.CreatedAccountResponse;
 import com.turkcell.accountService.business.dtos.response.get.GetAccountResponse;
 import com.turkcell.accountService.business.dtos.response.getAll.GetAllAccountResponse;
 import com.turkcell.accountService.business.dtos.response.updated.UpdatedAccountResponse;
-import com.turkcell.accountService.business.messages.Messages;
 import com.turkcell.accountService.business.rules.AccountBusinessRules;
 import com.turkcell.accountService.dataAccess.abstracts.AccountRepository;
-import com.turkcell.accountService.dataAccess.abstracts.AccountTypesRepository;
 import com.turkcell.accountService.entities.concretes.Account;
-import com.turkcell.accountService.entities.concretes.AccountTypes;
-import com.turkcell.corepackage.business.abstracts.MessageService;
-import com.turkcell.corepackage.utils.exceptions.types.BusinessException;
+import com.turkcell.accountService.entities.concretes.AccountType;
 import com.turkcell.corepackage.utils.mappers.ModelMapperService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -27,8 +24,7 @@ public class AccountManager implements AccountService {
 
     private final AccountRepository accountRepository;
     private final ModelMapperService modelMapperService;
-    private final MessageService messageService;
-    private final AccountTypesRepository accountTypesRepository; //todo konusalacak
+    private final AccountTypeService accountTypeService;
     private final AccountBusinessRules accountBusinessRules;
 
     @Override
@@ -42,7 +38,7 @@ public class AccountManager implements AccountService {
 
         Account account = this.modelMapperService.forRequest().map(createdAccountRequest, Account.class);
 
-        Set<AccountTypes> accountTypes  = accountTypeForControl(createdAccountRequest.getAccountTypes());
+        Set<AccountType> accountTypes  = accountTypeForControl(createdAccountRequest.getAccountTypes());
         account.setAccountTypes(accountTypes);
 
         accountRepository.save(account);
@@ -60,7 +56,7 @@ public class AccountManager implements AccountService {
 
         Account account = this.modelMapperService.forRequest().map(updatedAccountRequest, Account.class);
 
-        Set<AccountTypes> accountTypes  = accountTypeForControl(updatedAccountRequest.getAccountTypes());
+        Set<AccountType> accountTypes  = accountTypeForControl(updatedAccountRequest.getAccountTypes());
         account.setAccountTypes(accountTypes);
 
         accountRepository.save(account);
@@ -92,15 +88,13 @@ public class AccountManager implements AccountService {
         accountRepository.deleteById(id);
     }
 
-    public Set<AccountTypes> accountTypeForControl(Set<Integer> AccountTypes){
+    public Set<AccountType> accountTypeForControl(Set<Integer> AccountTypes){
 
-        Set<AccountTypes> accountTypes = new HashSet<AccountTypes>();
+        Set<AccountType> accountTypes = new HashSet<AccountType>();
         for (Integer accountTypeId : AccountTypes) {
-            AccountTypes accountType = accountTypesRepository.findById(accountTypeId).orElseThrow(()
-                    -> new BusinessException(messageService.getMessage(Messages.AccountErrors.AccountTypeShouldBeExists)));
+            AccountType accountType = accountTypeService.getById(accountTypeId);
             accountTypes.add(accountType);
         }
-
         return accountTypes;
     }
 
