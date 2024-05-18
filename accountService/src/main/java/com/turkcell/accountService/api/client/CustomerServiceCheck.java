@@ -24,4 +24,8 @@ public class CustomerServiceCheck {
         return customerServiceClient.addressGetById(id);
     }
 
+    @GetMapping("/customer/{id}")
+    public Object customer(@PathVariable int id) {
+        return customerServiceClient.customer(id);
+    }
 }

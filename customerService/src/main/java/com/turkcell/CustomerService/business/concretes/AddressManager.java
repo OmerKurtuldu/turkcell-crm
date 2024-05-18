@@ -2,10 +2,8 @@ package com.turkcell.CustomerService.business.concretes;
 
 import com.turkcell.CustomerService.business.abstracts.AddressService;
 import com.turkcell.CustomerService.business.dtos.request.create.CreatedAddressRequest;
-
 import com.turkcell.CustomerService.business.dtos.request.update.UpdatedAddressRequest;
 import com.turkcell.CustomerService.business.dtos.response.create.CreatedAddressResponse;
-
 import com.turkcell.CustomerService.business.dtos.response.get.GetAddressResponse;
 import com.turkcell.CustomerService.business.dtos.response.getAll.GetAllAddressResponse;
 import com.turkcell.CustomerService.business.dtos.response.updated.UpdatedAddressResponse;
@@ -16,9 +14,6 @@ import com.turkcell.CustomerService.dataAccess.abstracts.CustomerRepository;
 import com.turkcell.CustomerService.entities.concretes.Address;
 import com.turkcell.CustomerService.entities.concretes.City;
 import com.turkcell.CustomerService.entities.concretes.Customer;
-
-import com.turkcell.CustomerService.kafka.producer.AddressProducer;
-import com.turkcell.commonpackage.events.address.CreatedAddressEvent;
 import com.turkcell.commonpackage.utils.dto.ClientResponse;
 import com.turkcell.corepackage.utils.exceptions.types.BusinessException;
 import com.turkcell.corepackage.utils.mappers.ModelMapperService;
@@ -37,7 +32,6 @@ public class AddressManager implements AddressService {
     private final AddressRepository addressRepository;
     private final CustomerRepository customerRepository;
     private final CityRepository cityRepository;
-    private final AddressProducer addressProducer;
     private final AddressBusinessRules addressBusinessRules;
 
     @Override
@@ -48,10 +42,6 @@ public class AddressManager implements AddressService {
         City city = cityRepository.findById(createdAddressRequest.getCityId()).orElseThrow();
         address.setCity(city);
         addressRepository.save(address);
-        CreatedAddressEvent createdAddressEvent = this.modelMapperService.forResponse().map(address,CreatedAddressEvent.class);
-        createdAddressEvent.setMessages("address status is in pending state");
-        createdAddressEvent.setStatus("PENDING");
-        addressProducer.sendMessage(createdAddressEvent);
         CreatedAddressResponse addressResponse = this.modelMapperService.forResponse().map(address, CreatedAddressResponse.class);
         return addressResponse;
     }
