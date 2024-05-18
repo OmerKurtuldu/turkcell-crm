@@ -1,16 +1,16 @@
-package com.turkcell.CustomerService;
+package com.turkcell.categoryService;
 
 import com.turkcell.commonpackage.utils.constants.Paths;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
-@SpringBootApplication(scanBasePackages = {Paths.ConfigurationBasePackage,Paths.Customer.ServiceBasePackage})
+@SpringBootApplication(scanBasePackages = {Paths.ConfigurationBasePackage,Paths.Category.ServiceBasePackage})
 @EnableJpaAuditing
-public class CustomerServiceApplication {
+public class CategoryServiceApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(CustomerServiceApplication.class, args);
+		SpringApplication.run(CategoryServiceApplication.class, args);
 	}
 
 }

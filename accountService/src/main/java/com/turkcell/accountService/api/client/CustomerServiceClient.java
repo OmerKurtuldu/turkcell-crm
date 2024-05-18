@@ -8,9 +8,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 @FeignClient(name = "customer-service", url = "http://localhost:9001")
 public interface CustomerServiceClient {
 
-    @GetMapping("/individualcustomerservice/api/v1/customers/customerClient/{id}")
+    @GetMapping("/customerservice/api/v1/individualcustomers/customerClient/{id}")
     ClientResponse customerGetById(@PathVariable int id);
 
     @GetMapping("/customerservice/api/v1/address/addressClient/{id}")
     ClientResponse addressGetById(@PathVariable int id);
+
+    @GetMapping("/customerservice/api/v1/individualcustomers/{id}")
+    Object customer(@PathVariable int id);
 }

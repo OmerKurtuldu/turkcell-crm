@@ -10,7 +10,6 @@ import com.turkcell.commonpackage.utils.dto.ClientResponse;
 
 import java.util.List;
 
-
 public interface AddressService {
 
     CreatedAddressResponse add(CreatedAddressRequest createdAddressRequest);
