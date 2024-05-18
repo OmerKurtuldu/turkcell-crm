@@ -46,14 +46,14 @@ public class IndividualCustomerBusinessRules {
     }
 
     public void checkCustomerActive(int customerId){
-        boolean isActiveCustomer = customerRepository.isActiveCustomer(customerId);
+        Boolean isActiveCustomer = customerRepository.isActiveCustomer(customerId);
         if (!isActiveCustomer){
            throw new BusinessException(messageService.getMessage(Messages.CustomerErrors.CheckCustomerActive));
         }
     }
 
     public void checkCustomerPassive(int customerId){
-        boolean isActiveCustomer = customerRepository.isActiveCustomer(customerId);
+        Boolean isActiveCustomer = customerRepository.isActiveCustomer(customerId);
         if (isActiveCustomer){
             throw new BusinessException(messageService.getMessage(Messages.CustomerErrors.CheckCustomerActive));
         }

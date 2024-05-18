@@ -17,7 +17,7 @@ public interface CustomerRepository extends JpaRepository<Customer,Integer> {
 //    @Query("SELECT isActive FROM Customer WHERE Customer.id = :id")
 //    boolean isActiveCustomer(int id);
     @Query("SELECT CASE WHEN c.isActive = true THEN true ELSE false END FROM Customer c WHERE c.id = :id")
-    boolean isActiveCustomer(@Param("id") int id);
+    Boolean isActiveCustomer(@Param("id") int id);
 
     @Transactional
     @Modifying

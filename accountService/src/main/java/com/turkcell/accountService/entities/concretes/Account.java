@@ -38,7 +38,7 @@ public class Account extends BaseEntity<Integer> {
             joinColumns = @JoinColumn(name = "account_id"),
             inverseJoinColumns = @JoinColumn(name = "account_type_id")
     )
-    private Set<AccountTypes> accountTypes;
+    private Set<AccountType> accountTypes;
 
     @Column(name = "customer_id")
     private int customerId;

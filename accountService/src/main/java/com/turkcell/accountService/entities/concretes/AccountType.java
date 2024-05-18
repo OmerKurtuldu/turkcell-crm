@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Data
 @Entity
 @Table(name = "account_types")
-public class AccountTypes extends BaseEntity<Integer> {
+public class AccountType extends BaseEntity<Integer> {
     @Column(name = "account_name")
     private String accountTypeName;
 }
