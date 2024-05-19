@@ -14,10 +14,8 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Service
 public class AddressBusinessRules {
-
     private final AddressRepository addressRepository;
     private final MessageService messageService;
-
     public void addressShouldBeExist(int id){
         Optional<Address> address = addressRepository.findById(id);
         if (address.isEmpty()){
