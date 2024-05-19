@@ -7,4 +7,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 public interface UserService extends UserDetailsService
 {
     void add(RegisterRequest request);
+    void giveRole(Integer id, Integer roleId);
+    void updateEmail(Integer id, String email);
 }

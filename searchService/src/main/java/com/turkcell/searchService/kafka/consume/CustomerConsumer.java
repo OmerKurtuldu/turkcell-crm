@@ -2,7 +2,6 @@ package com.turkcell.searchService.kafka.consume;
 
 
 import com.turkcell.commonpackage.events.customer.CreatedCustomerEvent;
-
 import com.turkcell.corepackage.utils.mappers.ModelMapperService;
 import com.turkcell.searchService.entities.concretes.Customer;
 import com.turkcell.searchService.repositories.CustomerRepository;

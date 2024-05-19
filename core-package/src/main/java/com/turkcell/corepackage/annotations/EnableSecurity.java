@@ -9,5 +9,5 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
-@ComponentScan(basePackages = {"com.turkcell"})
+@ComponentScan(basePackages = {"com.turkcell.identityservice"})
 public @interface EnableSecurity { }

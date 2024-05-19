@@ -2,7 +2,6 @@ package com.turkcell.CustomerService.kafka.producer;
 
 import com.turkcell.commonpackage.events.customer.CreatedCustomerEvent;
 import lombok.AllArgsConstructor;
-import org.apache.kafka.clients.admin.NewTopic;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 

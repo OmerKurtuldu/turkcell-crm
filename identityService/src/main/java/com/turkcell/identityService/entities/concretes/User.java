@@ -30,12 +30,6 @@ public class User implements UserDetails {
     @Column(name="email")
     private String email;
 
-    @Column(name="firstName")
-    private String firstName;
-
-    @Column(name="lastName")
-    private String lastName;
-
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name="user_role",
             joinColumns = @JoinColumn(name="user_id"),
