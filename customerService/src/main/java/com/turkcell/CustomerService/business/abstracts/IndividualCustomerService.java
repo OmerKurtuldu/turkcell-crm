@@ -17,5 +17,5 @@ public interface IndividualCustomerService {
     List<GetAllIndividualCustomerResponse> getAll();
     void delete(int id);
     ClientResponse checkIfCustomerAvailable(int id);
-
+    void setStatus(int id);
 }

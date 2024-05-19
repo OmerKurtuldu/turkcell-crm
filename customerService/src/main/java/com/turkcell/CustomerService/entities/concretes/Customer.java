@@ -21,6 +21,9 @@ public class Customer extends BaseEntity<Integer> {
     @Column(name = "mobile_phone")
     private String mobilePhone;
 
+    @Column(name = "is_active")
+    private boolean isActive = true;
+
     @OneToOne(mappedBy = "customer")
     private IndividualCustomer individualCustomer;
 

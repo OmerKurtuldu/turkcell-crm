@@ -18,7 +18,7 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/individualcustomerservice/api/v1/customers")
+@RequestMapping("/customerservice/api/v1/individualcustomers")
 public class IndividualCustomerController {
 
     private IndividualCustomerService individualCustomerService;
@@ -49,8 +49,14 @@ public class IndividualCustomerController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable int id) {
+    public void softDelete(@PathVariable int id) {
         individualCustomerService.delete(id);
+    }
+
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void setStatus(@PathVariable int id) {
+        individualCustomerService.setStatus(id);
     }
 
     @GetMapping("/customerClient/{id}")

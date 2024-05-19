@@ -1,6 +1,6 @@
 package com.turkcell.accountService.business.dtos.response.updated;
 
-import com.turkcell.accountService.entities.concretes.AccountTypes;
+import com.turkcell.accountService.entities.concretes.AccountType;
 import com.turkcell.accountService.entities.enums.Action;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,7 +18,7 @@ public class UpdatedAccountResponse {
     private String AccountNumber;
     private Boolean status;
     private Action action;
-    private Set<AccountTypes> accountTypes;
+    private Set<AccountType> accountTypes;
     private List<Integer> addressId;
 
 }

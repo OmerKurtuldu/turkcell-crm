@@ -1,7 +1,9 @@
 package com.turkcell.CustomerService.business.rules;
 
 import com.turkcell.CustomerService.business.messages.Messages;
+import com.turkcell.CustomerService.dataAccess.abstracts.CustomerRepository;
 import com.turkcell.CustomerService.dataAccess.abstracts.IndividualCustomerRepository;
+import com.turkcell.CustomerService.entities.concretes.Customer;
 import com.turkcell.CustomerService.entities.concretes.IndividualCustomer;
 import com.turkcell.corepackage.business.abstracts.MessageService;
 import com.turkcell.corepackage.utils.exceptions.types.BusinessException;
@@ -16,6 +18,7 @@ import java.util.regex.Pattern;
 @Service
 public class IndividualCustomerBusinessRules {
     private final IndividualCustomerRepository individualCustomerRepository;
+    private final CustomerRepository customerRepository;
     private final MessageService messageService;
 
     public void individualCustomerShouldBeExist(int individualCustomerId) {
@@ -42,6 +45,18 @@ public class IndividualCustomerBusinessRules {
         }
     }
 
+    public void checkCustomerActive(int customerId){
+        Boolean isActiveCustomer = customerRepository.isActiveCustomer(customerId);
+        if (!isActiveCustomer){
+           throw new BusinessException(messageService.getMessage(Messages.CustomerErrors.CheckCustomerActive));
+        }
+    }
 
+    public void checkCustomerPassive(int customerId){
+        Boolean isActiveCustomer = customerRepository.isActiveCustomer(customerId);
+        if (isActiveCustomer){
+            throw new BusinessException(messageService.getMessage(Messages.CustomerErrors.CheckCustomerActive));
+        }
+    }
 
 }

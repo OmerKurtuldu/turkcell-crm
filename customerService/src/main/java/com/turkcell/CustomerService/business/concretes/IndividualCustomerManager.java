@@ -1,5 +1,6 @@
 package com.turkcell.CustomerService.business.concretes;
 
+import com.turkcell.CustomerService.business.abstracts.CustomerService;
 import com.turkcell.CustomerService.business.abstracts.IndividualCustomerService;
 
 import com.turkcell.CustomerService.business.dtos.request.create.CreatedIndividualCustomerRequest;
@@ -8,6 +9,7 @@ import com.turkcell.CustomerService.business.dtos.response.create.CreatedIndivid
 import com.turkcell.CustomerService.business.dtos.response.get.GetIndividualCustomerResponse;
 import com.turkcell.CustomerService.business.dtos.response.getAll.GetAllIndividualCustomerResponse;
 import com.turkcell.CustomerService.business.dtos.response.updated.UpdatedIndividualCustomerResponse;
+import com.turkcell.CustomerService.business.rules.CustomerBusinessRules;
 import com.turkcell.CustomerService.business.rules.IndividualCustomerBusinessRules;
 import com.turkcell.CustomerService.dataAccess.abstracts.CustomerRepository;
 import com.turkcell.CustomerService.dataAccess.abstracts.IndividualCustomerRepository;
@@ -35,21 +37,24 @@ public class IndividualCustomerManager implements IndividualCustomerService {
 
     private final IndividualCustomerRepository individualCustomerRepository;
     private final ModelMapperService modelMapperService;
-    private final CustomerRepository customerRepository;
+    private final CustomerService customerService;
     private final IndividualCustomerBusinessRules individualCustomerBusinessRules;
     private final CustomerProducer customerProducer;
+    private final CustomerBusinessRules customerBusinessRules;
 
     @Override
     public CreatedIndividualCustomerResponse add(CreatedIndividualCustomerRequest createIndividualCustomerRequest) {
         individualCustomerBusinessRules.checkNatioanlityNo(createIndividualCustomerRequest.getNationalityNo());
         individualCustomerBusinessRules.nationalityNoCanNotBeDuplicated(createIndividualCustomerRequest.getNationalityNo());
+
         Customer customer = this.modelMapperService.forRequest().map(createIndividualCustomerRequest.getCreateCustomerRequest(), Customer.class);
 
         IndividualCustomer individualCustomer = this.modelMapperService.forRequest().map(createIndividualCustomerRequest, IndividualCustomer.class);
         individualCustomer.setCustomer(customer);
 
-        customerRepository.save(customer);
+        customerService.saveCustomer(customer);
         individualCustomerRepository.save(individualCustomer);
+
         CreatedCustomerEvent createdCustomerEvent = this.modelMapperService.forResponse().map(individualCustomer,CreatedCustomerEvent.class);
         createdCustomerEvent.setMessages("customer status is in pending state");
         createdCustomerEvent.setStatus("PENDING");
@@ -70,7 +75,7 @@ public class IndividualCustomerManager implements IndividualCustomerService {
 
         individualCustomer.setCustomer(customer);
         //todo : updateCustomerEvent
-        customerRepository.save(customer);
+        customerService.saveCustomer(customer);
         individualCustomerRepository.save(individualCustomer);
 
         return this.modelMapperService.forResponse().map(individualCustomer, UpdatedIndividualCustomerResponse.class);
@@ -98,9 +103,14 @@ public class IndividualCustomerManager implements IndividualCustomerService {
 
     @Override
     public void delete(int id) {
-        //todo burayı dene, status değişecek
+        customerService.deleteCustomer(id);
+    }
+
+    @Override
+    public void setStatus(int id) {
         individualCustomerBusinessRules.individualCustomerShouldBeExist(id);
-        individualCustomerRepository.deleteById(id);
+        individualCustomerBusinessRules.checkCustomerPassive(id);
+        customerService.setActiveCustomer(id);
     }
 
     @Override
@@ -113,6 +123,7 @@ public class IndividualCustomerManager implements IndividualCustomerService {
     private void validateCustomerAvailability(int id, ClientResponse response) {
         try {
             individualCustomerBusinessRules.individualCustomerShouldBeExist(id);
+            individualCustomerBusinessRules.checkCustomerActive(id);
             response.setSuccess(true);
         } catch (BusinessException exception) {
             response.setSuccess(false);

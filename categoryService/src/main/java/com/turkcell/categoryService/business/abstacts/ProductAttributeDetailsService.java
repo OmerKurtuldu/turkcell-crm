@@ -1,0 +1,12 @@
+package com.turkcell.categoryService.business.abstacts;
+
+import com.turkcell.categoryService.business.dtos.request.create.CreatedProductAttributeDetailsRequest;
+import com.turkcell.categoryService.business.dtos.request.update.UpdatedProductAttributeDetailsRequest;
+import com.turkcell.categoryService.business.dtos.response.create.CreatedProductAttributeDetailsResponse;
+import com.turkcell.categoryService.business.dtos.response.update.UpdatedProductAttributeDetailsResponse;
+
+public interface ProductAttributeDetailsService {
+
+    CreatedProductAttributeDetailsResponse add(CreatedProductAttributeDetailsRequest createdProductAttributeDetailsRequest);
+    UpdatedProductAttributeDetailsResponse update(UpdatedProductAttributeDetailsRequest updatedProductAttributeDetailsRequest);
+}
