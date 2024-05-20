@@ -27,7 +27,7 @@ public class CustomerConsumer {
         Customer customer = this.modelMapperService.forRequest().map(event, Customer.class);
         customerRepository.save(customer);
         System.out.println(customer.toString());
-        LOGGER.info(String.format("Customer event recieved in stock service => %s", event.toString()));
+        LOGGER.info(String.format("Customer event recieved in search service => %s", event.toString()));
     }
 
 }
