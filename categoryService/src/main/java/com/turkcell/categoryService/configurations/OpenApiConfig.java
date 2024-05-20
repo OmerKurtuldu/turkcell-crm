@@ -1,11 +1,10 @@
-package com.turkcell.CustomerService.core.configurations;
+package com.turkcell.categoryService.configurations;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeIn;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
 import io.swagger.v3.oas.annotations.info.Contact;
 import io.swagger.v3.oas.annotations.info.Info;
-import io.swagger.v3.oas.annotations.info.License;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import io.swagger.v3.oas.annotations.servers.Server;
@@ -13,27 +12,23 @@ import io.swagger.v3.oas.annotations.servers.Server;
 @OpenAPIDefinition(
         info = @Info(
                 contact = @Contact(
-                        name = "Pair5",
-                        email = "contact@aliboucoding.com",
-                        url = "https://aliboucoding.com/course"
+                        name = "Pair5"
+//                        email = "",
+//                        url = ""
                 ),
-                description = "OpenApi documentation for Spring Security",
-                title = "OpenApi specification - Alibou",
-                version = "1.0",
-                license = @License(
-                        name = "Licence name",
-                        url = "https://some-url.com"
-                ),
-                termsOfService = "Terms of service"
+                description = "Pair5 Category Service"
+//                title = "OpenApi specification",
+//                version = "1.0",
+//                license = @License(
+//                        name = "Licence name",
+//                        url = "https://some-url.com"
+//                ),
+//                termsOfService = "Terms of service"
         ),
         servers = {
                 @Server(
                         description = "Local ENV",
-                        url = "http://localhost:9001"
-                ),
-                @Server(
-                        description = "PROD ENV",
-                        url = "https://aliboucoding.com/course"
+                        url = "http://localhost:9005"
                 )
         },
         security = {

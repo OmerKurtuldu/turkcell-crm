@@ -1,7 +1,6 @@
-package com.turkcell.CustomerService.core.configurations;
+package com.turkcell.CustomerService.configurations;
 
 import com.turkcell.corepackage.configuration.BaseSecurityService;
-import jakarta.ws.rs.HttpMethod;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,9 +19,6 @@ public class SecurityConfiguration {
         baseSecurityService.configureCoreSecurity(http);
         http
                 .authorizeHttpRequests(req -> req
-//                        .requestMatchers(HttpMethod.GET, "/customerservice/api/v1/individualcustomers/").hasAnyAuthority("admin")
-//                        .requestMatchers(HttpMethod.POST, "/api/v1/auth/login").permitAll()
-//                        .requestMatchers(HttpMethod.POST, "/api/v1/test/**").hasAnyAuthority("admin")
                         .requestMatchers("/customerservice/api/**").hasAnyAuthority("admin")
                         .anyRequest().authenticated()
                 );
