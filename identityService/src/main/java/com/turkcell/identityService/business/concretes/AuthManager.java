@@ -38,15 +38,5 @@ public class AuthManager implements AuthService {
 
         return jwtService.generateToken(user.getUsername(), user.getAuthorities().stream().map(GrantedAuthority::getAuthority).toList());
     }
-
-    @Override
-    public void giveRole(Integer id, Integer roleId) {
-        userService.giveRole(id, roleId);
-    }
-
-    @Override
-    public void updateEmail(Integer id, String email) {
-        userService.updateEmail(id, email);
-    }
 }
 // 9:10
