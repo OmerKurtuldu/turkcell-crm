@@ -1,9 +1,0 @@
-spring:
-  config:
-    import: configserver:${configurl}
-  application:
-    name: categoryservice
-  cloud:
-    config:
-      profile: dev
-configurl: http://localhost:8050/

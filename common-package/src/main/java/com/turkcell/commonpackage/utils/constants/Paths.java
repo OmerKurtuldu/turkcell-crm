@@ -5,7 +5,7 @@ public class Paths {
 
 
     public static class Customer {
-        public static final String ServiceBasePackage = "com.turkcell.CustomerService";
+        public static final String ServiceBasePackage = "com.turkcell.customerService";
     }
 
     public static class Search {
@@ -24,7 +24,7 @@ public class Paths {
         public static final String ServiceBasePackage = "com.turkcell.discoveryserver";
     }
 
-    public static class Category {
-        public static final String ServiceBasePackage = "com.turkcell.categoryservice";
+    public static class Catalog {
+        public static final String ServiceBasePackage = "com.turkcell.catalogservice";
     }
 }
