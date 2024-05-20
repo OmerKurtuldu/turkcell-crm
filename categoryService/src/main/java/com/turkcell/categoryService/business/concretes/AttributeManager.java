@@ -21,7 +21,9 @@ public class AttributeManager implements AttributeService {
     @Override
     public CreatedAttributeResponse add(CreatedAttributeRequest createdAttributeRequest) {
         Attribute attribute = this.modelMapperService.forRequest().map(createdAttributeRequest,Attribute.class);
+
         attributeRepository.save(attribute);
+
         return this.modelMapperService.forResponse().map(attribute,CreatedAttributeResponse.class);
     }
 
