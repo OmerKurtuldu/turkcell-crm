@@ -1,4 +1,4 @@
-idpackage com.turkcell.searchService.configurations;
+package com.turkcell.searchService.configurations;
 
 import com.turkcell.corepackage.configuration.BaseSecurityService;
 import lombok.RequiredArgsConstructor;
