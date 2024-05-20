@@ -28,16 +28,4 @@ public class AuthController {
         return authService.login(request);
     }
 
-    @PostMapping("/role/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public void giveRole(@PathVariable Integer id, @RequestParam Integer roleId)
-    {
-        authService.giveRole(id, roleId);
-    }
-    @PutMapping("/email/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public void updateEmail(@PathVariable Integer id, @RequestParam String email)
-    {
-        authService.updateEmail(id, email);
-    }
 }
