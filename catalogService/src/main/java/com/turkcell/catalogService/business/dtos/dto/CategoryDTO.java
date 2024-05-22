@@ -4,9 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
-@AllArgsConstructor
 @NoArgsConstructor
-public class AttributeDTO {
-    private int id;
+@AllArgsConstructor
+@Data
+public class CategoryDTO {
+    private int categoryId;
 }

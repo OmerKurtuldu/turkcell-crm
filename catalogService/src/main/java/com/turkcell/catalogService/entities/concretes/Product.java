@@ -24,13 +24,8 @@ public class Product extends BaseEntity<Integer> {
     @Column(name = "price", nullable = false)
     private Double price;
 
-    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER, optional = false)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "category_id")
     private Category category;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "product_attributes",
-            joinColumns = @JoinColumn(name = "product_id"),
-            inverseJoinColumns = @JoinColumn(name = "attribute_id"))
-    private List<Attribute> attributes;
 }

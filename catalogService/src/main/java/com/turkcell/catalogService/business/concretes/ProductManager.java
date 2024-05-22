@@ -2,19 +2,27 @@ package com.turkcell.catalogService.business.concretes;
 
 import com.turkcell.catalogService.business.abstacts.ProductService;
 import com.turkcell.catalogService.business.dtos.request.create.CreatedProductRequest;
-import com.turkcell.catalogService.business.dtos.request.update.UpdatedProductRequest;
+
+import com.turkcell.catalogService.business.dtos.request.create.ProductFeatureRequest;
 import com.turkcell.catalogService.business.dtos.response.create.CreatedProductResponse;
-import com.turkcell.catalogService.business.dtos.response.update.UpdatedProductResponse;
-import com.turkcell.catalogService.dataAccess.abstracts.AttributeRepository;
+
+
+import com.turkcell.catalogService.business.dtos.response.create.ProductFeatureResponse;
+import com.turkcell.catalogService.dataAccess.abstracts.CategoryRepository;
+import com.turkcell.catalogService.dataAccess.abstracts.FeatureRepository;
+import com.turkcell.catalogService.dataAccess.abstracts.ProductFeatureRepository;
 import com.turkcell.catalogService.dataAccess.abstracts.ProductRepository;
-import com.turkcell.catalogService.entities.concretes.Attribute;
+import com.turkcell.catalogService.entities.concretes.Category;
+import com.turkcell.catalogService.entities.concretes.Feature;
 import com.turkcell.catalogService.entities.concretes.Product;
-import com.turkcell.corepackage.business.abstracts.MessageService;
+import com.turkcell.catalogService.entities.concretes.ProductFeature;
 import com.turkcell.corepackage.utils.mappers.ModelMapperService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -23,33 +31,35 @@ public class ProductManager implements ProductService {
 
     private final ModelMapperService modelMapperService;
     private final ProductRepository productRepository;
-    private final AttributeRepository attributeRepository;
-    private final MessageService messageService;
+    private final FeatureRepository featureRepository;
+    private final ProductFeatureRepository productFeatureRepository;
+    private final CategoryRepository categoryRepository;
 
     @Override
-    public CreatedProductResponse add(CreatedProductRequest createdProductRequest) {
-        //todo category var mı yok mu kontrol edilicek.
-        Product product = this.modelMapperService.forRequest().map(createdProductRequest,Product.class);
-        List<Attribute> attributes = createdProductRequest.getAttributeId().stream()
-                .map(attributeId -> attributeRepository.findById(attributeId)
-                        .orElseThrow(() -> new IllegalArgumentException("Attribute not found")))
-                .collect(Collectors.toList());
-        product.setAttributes(attributes);
-        productRepository.save(product);
-        return this.modelMapperService.forResponse().map(product,CreatedProductResponse.class);
-    }
+    public CreatedProductResponse addProduct(CreatedProductRequest createdProductRequest) {
+        //todo aynı feature id den eklenemesin iş kuralı
+        Product product = this.modelMapperService.forRequest().map(createdProductRequest, Product.class);
+        Product savedProduct = productRepository.save(product);
 
-    @Override
-    public UpdatedProductResponse update(UpdatedProductRequest updatedProductRequest) {
-        //todo category var mı yok mu kontrol edilicek.
-        //todo böyle bir product var mı.
-        Product product = this.modelMapperService.forRequest().map(updatedProductRequest,Product.class);
-        List<Attribute> attributes = updatedProductRequest.getAttributeId().stream()
-                .map(attributeId -> attributeRepository.findById(attributeId)
-                        .orElseThrow(() -> new IllegalArgumentException("Attribute not found")))
+        List<ProductFeature> productFeatures = new ArrayList<>();
+        for (ProductFeatureRequest featureRequest : createdProductRequest.getProductFeatures()) {
+            Feature feature = featureRepository.findById(featureRequest.getFeatureId())
+                    .orElse(null);
+            ProductFeature productFeature = new ProductFeature();
+            productFeature.setProduct(savedProduct);
+            productFeature.setFeature(feature);
+            productFeature.setValue(featureRequest.getValue());
+            productFeatures.add(productFeature);
+        }
+        productFeatureRepository.saveAll(productFeatures);
+
+        List<ProductFeatureResponse> productFeatureResponses = productFeatures.stream()
+                .map(productFeature -> this.modelMapperService.forResponse().map(productFeature, ProductFeatureResponse.class))
                 .collect(Collectors.toList());
-        product.setAttributes(attributes);
-        productRepository.save(product);
-        return this.modelMapperService.forResponse().map(product,UpdatedProductResponse.class);
+
+        CreatedProductResponse createdProductResponse = this.modelMapperService.forResponse().map(savedProduct, CreatedProductResponse.class);
+        createdProductResponse.setProductFeatures(productFeatureResponses);
+
+        return createdProductResponse;
     }
 }
