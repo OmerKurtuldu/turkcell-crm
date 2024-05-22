@@ -29,8 +29,8 @@ public class Product extends BaseEntity<Integer> {
     private Category category;
 
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "product_attributes",
+    @JoinTable(name = "product_attributes_details",
             joinColumns = @JoinColumn(name = "product_id"),
-            inverseJoinColumns = @JoinColumn(name = "attribute_id"))
-    private List<Attribute> attributes;
+            inverseJoinColumns = @JoinColumn(name = "product_attribute_detail_id"))
+    private List<ProductAttributeDetails> productAttributeDetails;
 }

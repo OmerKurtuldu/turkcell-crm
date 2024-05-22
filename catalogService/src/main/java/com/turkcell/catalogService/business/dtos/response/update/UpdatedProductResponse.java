@@ -1,6 +1,7 @@
 package com.turkcell.catalogService.business.dtos.response.update;
 
 import com.turkcell.catalogService.business.dtos.response.create.CreatedAttributeResponse;
+import com.turkcell.catalogService.business.dtos.response.create.CreatedProductAttributeDetailsResponse;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,5 +18,6 @@ public class UpdatedProductResponse {
     private int quantity;
     private Double price;
     private int categoryId;
-    private List<CreatedAttributeResponse> attributes;
+    private List<CreatedProductAttributeDetailsResponse> attributes;
+
 }

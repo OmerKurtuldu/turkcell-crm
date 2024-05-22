@@ -15,5 +15,5 @@ public class UpdatedProductRequest {
     private int quantity;
     private Double price;
     private int categoryId;
-    private List<Integer> attributeId;
+    private List<Integer> attributeDetailsId;
 }

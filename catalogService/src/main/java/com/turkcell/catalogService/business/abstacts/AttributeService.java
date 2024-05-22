@@ -3,6 +3,7 @@ package com.turkcell.catalogService.business.abstacts;
 import com.turkcell.catalogService.business.dtos.request.create.CreatedAttributeRequest;
 import com.turkcell.catalogService.business.dtos.request.update.UpdatedAttributeRequest;
 import com.turkcell.catalogService.business.dtos.response.create.CreatedAttributeResponse;
+import com.turkcell.catalogService.business.dtos.response.get.GetProductAttributeDetailsResponse;
 import com.turkcell.catalogService.business.dtos.response.update.UpdatedAttributeResponse;
 
 public interface AttributeService {

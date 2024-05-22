@@ -18,8 +18,6 @@ public class Attribute extends BaseEntity<Integer> {
     @Column(name = "attribute_name")
     private String attributeName;
 
-    @ManyToMany(mappedBy = "attributes")
-    private List<Product> products;
 
     @OneToMany(mappedBy = "attribute")
     private List<ProductAttributeDetails> productAttributeDetails;
