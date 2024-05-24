@@ -44,7 +44,9 @@ public class ProductManager implements ProductService {
     public CreatedProductResponse addProduct(CreatedProductRequest createdProductRequest) {
         //todo aynı feature id den eklenemesin iş kuralı
         Product product = this.modelMapperService.forRequest().map(createdProductRequest, Product.class);
+        product.setId(0);
         Product savedProduct = productRepository.save(product);
+
 
         List<ProductFeature> productFeatures = new ArrayList<>();
         for (ProductFeatureRequest featureRequest : createdProductRequest.getProductFeatures()) {
@@ -71,39 +73,12 @@ public class ProductManager implements ProductService {
     @Override
     public UpdatedProductResponse updateProduct(UpdatedProductRequest updatedProductRequest) {
         Product product = this.modelMapperService.forRequest().map(updatedProductRequest, Product.class);
-
         Product savedProduct = productRepository.save(product);
-        productFeatureService.updateFeatureForProduct(updatedProductRequest.getProductFeatures());
 
-
-        List<ProductFeatureResponse> productFeatureResponses = productFeatureRepository.findByProductId(updatedProductRequest.getId()).stream()
-                .map(productFeature -> {
-                    ProductFeatureResponse response = new ProductFeatureResponse();
-                    response.setValue(productFeature.getValue());
-                    response.setFeatureName(productFeature.getFeature().getName());
-                    return response;
-                })
-                .collect(Collectors.toList());
-
-
-
-//        List<ProductFeature> productFeatures = new ArrayList<>();
-//        for (ProductFeatureRequest featureRequest : updatedProductRequest.getProductFeatures()) {
-//            Feature feature = featureRepository.findById(featureRequest.getFeatureId())
-//                    .orElse(null);
-//            ProductFeature productFeature = new ProductFeature();
-//            productFeature.setProduct(savedProduct);
-//            productFeature.setFeature(feature);
-//            productFeature.setValue(featureRequest.getValue());
-//            productFeatures.add(productFeature);
-//        }
-//        productFeatureRepository.saveAll(productFeatures);
-
-//        List<ProductFeatureResponse> productFeatureResponses = productFeatures.stream()
-//                .map(productFeature -> this.modelMapperService.forResponse().map(productFeature, ProductFeatureResponse.class))
-//                .collect(Collectors.toList());
+        List<ProductFeatureResponse> productFeatureResponses =  productFeatureService.updateFeatureForProduct(updatedProductRequest.getId(), updatedProductRequest.getProductFeatures());
 
         UpdatedProductResponse updatedProductResponse = this.modelMapperService.forResponse().map(savedProduct, UpdatedProductResponse.class);
+
         updatedProductResponse.setProductFeatures(productFeatureResponses);
 
         return updatedProductResponse;

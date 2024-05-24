@@ -7,6 +7,7 @@ import com.turkcell.catalogService.business.dtos.response.create.CreatedFeatureR
 import com.turkcell.catalogService.business.dtos.response.get.GetFeatureResponse;
 import com.turkcell.catalogService.business.dtos.response.getall.GetAllFeatureResponse;
 import com.turkcell.catalogService.business.dtos.response.update.UpdatedFeatureResponse;
+import com.turkcell.catalogService.business.rules.FeatureBusinessRules;
 import com.turkcell.catalogService.dataAccess.abstracts.FeatureRepository;
 import com.turkcell.catalogService.entities.concretes.Feature;
 import com.turkcell.corepackage.utils.mappers.ModelMapperService;
@@ -22,9 +23,11 @@ import java.util.Optional;
 public class FeatureManager implements FeatureService {
     private final ModelMapperService modelMapperService;
     private final FeatureRepository featureRepository;
+    private final FeatureBusinessRules featureBusinessRules;
 
     @Override
     public CreatedFeatureResponse addFeature(CreatedFeatureRequest createdFeatureRequest) {
+        featureBusinessRules.featureNameCanNotBeDuplicated(createdFeatureRequest.getName());
         Feature feature = this.modelMapperService.forRequest().map(createdFeatureRequest, Feature.class);
         featureRepository.save(feature);
         return this.modelMapperService.forResponse().map(feature, CreatedFeatureResponse.class);
@@ -32,6 +35,8 @@ public class FeatureManager implements FeatureService {
 
     @Override
     public UpdatedFeatureResponse updateFeature(UpdatedFeatureRequest updatedFeatureRequest) {
+        featureBusinessRules.featureShouldBeExist(updatedFeatureRequest.getId());
+        featureBusinessRules.featureNameCanNotBeDuplicated(updatedFeatureRequest.getName());
         Feature feature = this.modelMapperService.forRequest().map(updatedFeatureRequest, Feature.class);
         featureRepository.save(feature);
         return this.modelMapperService.forResponse().map(feature, UpdatedFeatureResponse.class);
@@ -39,6 +44,7 @@ public class FeatureManager implements FeatureService {
 
     @Override
     public GetFeatureResponse getById(int id) {
+        featureBusinessRules.featureShouldBeExist(id);
         Optional<Feature> feature = featureRepository.findById(id);
         return this.modelMapperService.forResponse().map(feature.get(),GetFeatureResponse.class);
     }
@@ -56,6 +62,8 @@ public class FeatureManager implements FeatureService {
 
     @Override
     public void delete(int id) {
+        //todo : baglı olup olmadığı bakılıp silinecek
+        featureBusinessRules.featureShouldBeExist(id);
         featureRepository.deleteById(id);
     }
 }

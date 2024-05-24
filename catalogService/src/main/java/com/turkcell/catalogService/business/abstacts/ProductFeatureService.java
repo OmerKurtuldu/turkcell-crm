@@ -6,5 +6,5 @@ import com.turkcell.catalogService.business.dtos.response.create.ProductFeatureR
 import java.util.List;
 
 public interface ProductFeatureService {
-    void updateFeatureForProduct( List<ProductFeatureRequest> productFeatureRequest);
+    List<ProductFeatureResponse> updateFeatureForProduct(int productId, List<ProductFeatureRequest> productFeatureRequests);
 }
