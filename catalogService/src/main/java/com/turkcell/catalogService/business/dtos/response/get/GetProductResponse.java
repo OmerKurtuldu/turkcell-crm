@@ -12,9 +12,11 @@ import java.util.List;
 @AllArgsConstructor
 @Data
 public class GetProductResponse {
+    //todo : int -> Integer
     private int id;
     private String name;
     private int quantity;
+    private Integer categoryId;
     private BigDecimal price;
     private List<ProductFeatureResponse> productFeatures;
 }

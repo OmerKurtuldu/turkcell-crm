@@ -7,6 +7,7 @@ import com.turkcell.catalogService.business.dtos.response.create.CreatedCategory
 import com.turkcell.catalogService.business.dtos.response.get.GetCategoryResponse;
 import com.turkcell.catalogService.business.dtos.response.getall.GetAllCategoryResponse;
 import com.turkcell.catalogService.business.dtos.response.update.UpdatedCategoryResponse;
+import com.turkcell.catalogService.business.rules.CategoryBusinessRules;
 import com.turkcell.catalogService.dataAccess.abstracts.CategoryRepository;
 import com.turkcell.catalogService.entities.concretes.Category;
 import com.turkcell.corepackage.utils.mappers.ModelMapperService;
@@ -23,6 +24,7 @@ public class CategoryManager implements CategoryService {
 
     private final ModelMapperService modelMapperService;
     private final CategoryRepository categoryRepository;
+    private final CategoryBusinessRules categoryBusinessRules;
 
     @Override
     public CreatedCategoryResponse add(CreatedCategoryRequest createdCategoryRequest) {
@@ -33,7 +35,7 @@ public class CategoryManager implements CategoryService {
 
     @Override
     public UpdatedCategoryResponse update(UpdatedCategoryRequest updatedCategoryRequest) {
-        //todo iş kuralı eklenecek
+        categoryBusinessRules.categoryShouldBeExist(updatedCategoryRequest.getId());
         Category category = this.modelMapperService.forRequest().map(updatedCategoryRequest,Category.class);
         categoryRepository.save(category);
         return this.modelMapperService.forResponse().map(category,UpdatedCategoryResponse.class);
@@ -41,6 +43,7 @@ public class CategoryManager implements CategoryService {
 
     @Override
     public GetCategoryResponse getById(int id) {
+        categoryBusinessRules.categoryShouldBeExist(id);
         Optional<Category> category = categoryRepository.findById(id);
         return this.modelMapperService.forResponse().map(category.get(),GetCategoryResponse.class);
     }
@@ -58,7 +61,9 @@ public class CategoryManager implements CategoryService {
 
     @Override
     public void delete(int id) {
-     categoryRepository.deleteById(id);
+        //todo: herhangi bir product ile bu kategori ilişkili mi?
+        categoryBusinessRules.categoryShouldBeExist(id);
+        categoryRepository.deleteById(id);
     }
 
 }

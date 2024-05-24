@@ -11,8 +11,10 @@ import com.turkcell.corepackage.utils.mappers.ModelMapperService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -21,14 +23,27 @@ public class ProductFeatureManager implements ProductFeatureService {
     private final ProductFeatureRepository productFeatureRepository;
     private final FeatureRepository featureRepository;
 
-    @Override
-    public void updateFeatureForProduct(List<ProductFeatureRequest> productFeatureRequest) {
-        for (ProductFeatureRequest featureRequest : productFeatureRequest){
-            //todo : iş kuralı gelecek
-            Optional<ProductFeature> productFeature = productFeatureRepository.findById(featureRequest.getFeatureId());
-            productFeature.get().setValue(featureRequest.getValue());
+    public List<ProductFeatureResponse> updateFeatureForProduct(int productId, List<ProductFeatureRequest> productFeatureRequests) {
+        List<ProductFeature> existingProductFeatures = productFeatureRepository.findByProductId(productId);
 
-            productFeatureRepository.save(productFeature.get());
+        List<ProductFeatureResponse> productFeatureResponses = new ArrayList<ProductFeatureResponse>();
+        for (ProductFeatureRequest featureRequest : productFeatureRequests) {
+            for (ProductFeature existingFeature : existingProductFeatures) {
+                if (existingFeature.getFeature().getId() == featureRequest.getFeatureId()) {
+                    existingFeature.setValue(featureRequest.getValue());
+                    productFeatureRepository.save(existingFeature);
+                }
+            }
+            productFeatureResponses = productFeatureRepository.findByProductId(productId).stream()
+                    .map(productFeature -> {
+                        ProductFeatureResponse response = new ProductFeatureResponse();
+                        response.setValue(productFeature.getValue());
+                        response.setFeatureName(productFeature.getFeature().getName());
+                        return response;
+                    })
+                    .collect(Collectors.toList());
+
         }
+        return productFeatureResponses;
     }
 }
