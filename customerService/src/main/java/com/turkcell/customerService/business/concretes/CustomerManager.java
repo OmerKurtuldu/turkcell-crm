@@ -4,7 +4,6 @@ import com.turkcell.customerService.business.abstracts.CustomerService;
 import com.turkcell.customerService.business.rules.CustomerBusinessRules;
 import com.turkcell.customerService.dataAccess.abstracts.CustomerRepository;
 import com.turkcell.customerService.entities.concretes.Customer;
-import com.turkcell.corepackage.business.abstracts.MessageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +13,6 @@ import java.util.Optional;
 @Service
 public class CustomerManager implements CustomerService {
     private final CustomerRepository customerRepository;
-    private final MessageService messageService;
     private final CustomerBusinessRules customerBusinessRules;
 
     @Override

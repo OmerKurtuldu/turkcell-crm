@@ -9,6 +9,7 @@ import com.turkcell.accountService.business.dtos.response.get.GetAccountResponse
 import com.turkcell.accountService.business.dtos.response.getAll.GetAllAccountResponse;
 import com.turkcell.accountService.business.dtos.response.updated.UpdatedAccountResponse;
 import com.turkcell.accountService.business.rules.AccountBusinessRules;
+import com.turkcell.accountService.business.rules.AccountTypeBusinessRules;
 import com.turkcell.accountService.dataAccess.abstracts.AccountRepository;
 import com.turkcell.accountService.entities.concretes.Account;
 import com.turkcell.accountService.entities.concretes.AccountType;
@@ -27,14 +28,12 @@ public class AccountManager implements AccountService {
     private final AccountTypeService accountTypeService;
     private final AccountBusinessRules accountBusinessRules;
 
+
     @Override
     public CreatedAccountResponse add(CreatedAccountRequest createdAccountRequest) {
 
         accountBusinessRules.checkCustomerAvailabilityForAccount(createdAccountRequest.getCustomerId());
-
-        for(int address : createdAccountRequest.getAddressId()){
-            accountBusinessRules.checkAddressAvailabilityForAccount(address);
-        }
+        accountBusinessRules.checkAddressAvailabilityForAccount(createdAccountRequest.getAddressId());
 
         Account account = this.modelMapperService.forRequest().map(createdAccountRequest, Account.class);
 
@@ -50,9 +49,7 @@ public class AccountManager implements AccountService {
 
         accountBusinessRules.accountShoulBeExist(updatedAccountRequest.getId());
         accountBusinessRules.checkCustomerAvailabilityForAccount(updatedAccountRequest.getCustomerId());
-        for(int address : updatedAccountRequest.getAddressId()){
-            accountBusinessRules.checkAddressAvailabilityForAccount(address);
-        }
+        accountBusinessRules.checkAddressAvailabilityForAccount(updatedAccountRequest.getAddressId());
 
         Account account = this.modelMapperService.forRequest().map(updatedAccountRequest, Account.class);
 

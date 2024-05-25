@@ -10,6 +10,7 @@ import com.turkcell.corepackage.utils.exceptions.types.BusinessException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -18,20 +19,24 @@ public class AccountBusinessRules {
     private final AccountRepository accountRepository;
     private final MessageService messageService;
     private final CustomerServiceClient customerServiceClient;
-    private final AccountTypesRepository accountTypesRepository;
+
 
     public void checkCustomerAvailabilityForAccount(int customerId){
+
        var response = customerServiceClient.customerGetById(customerId);
        if(!response.isSuccess()){
             throw new BusinessException(messageService.getMessage(Messages.AccountCustomerErrors.CustomerRegistrationShouldBeExist));
        }
     }
 
-    public void checkAddressAvailabilityForAccount(int addressId){
-        var response = customerServiceClient.addressGetById(addressId);
-        if(!response.isSuccess()){
-            throw new BusinessException(messageService.getMessage(Messages.AccountAddressErrors.AdressRegistrationShouldBeExist));
+    public void checkAddressAvailabilityForAccount(List<Integer> addressIds){
+        for (int addressId : addressIds){
+            var response = customerServiceClient.addressGetById(addressId);
+            if(!response.isSuccess()){
+                throw new BusinessException(messageService.getMessage(Messages.AccountAddressErrors.AdressRegistrationShouldBeExist));
+            }
         }
+
     }
 
 //    public void accountTypeShouldBeExists(int id){

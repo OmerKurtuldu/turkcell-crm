@@ -36,13 +36,11 @@ public class AddressManager implements AddressService {
     private final CustomerService customerService;
     private final CityService cityService;
     private final AddressBusinessRules addressBusinessRules;
-    private final CityBusinessRules cityBusinessRules;
-    private final CustomerBusinessRules customerBusinessRules;
 
     @Override
     public CreatedAddressResponse add(CreatedAddressRequest createdAddressRequest) {
-        customerBusinessRules.customerShouldBeExist(createdAddressRequest.getCustomerId());
-        cityBusinessRules.cityShouldBeExist(createdAddressRequest.getCityId());
+        customerService.getById(createdAddressRequest.getCustomerId());
+        cityService.getById(createdAddressRequest.getCityId());
 
         Address address = this.modelMapperService.forRequest().map(createdAddressRequest, Address.class);
 
@@ -61,8 +59,8 @@ public class AddressManager implements AddressService {
     @Override
     public UpdatedAddressResponse update(UpdatedAddressRequest updatedAddressRequest) {
         addressBusinessRules.addressShouldBeExist(updatedAddressRequest.getId());
-        customerBusinessRules.customerShouldBeExist(updatedAddressRequest.getCustomerId());
-        cityBusinessRules.cityShouldBeExist(updatedAddressRequest.getCityId());
+        customerService.getById(updatedAddressRequest.getCustomerId());
+        cityService.getById(updatedAddressRequest.getCityId());
 
         Address address = this.modelMapperService.forRequest().map(updatedAddressRequest, Address.class);
 
