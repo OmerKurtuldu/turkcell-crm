@@ -22,7 +22,6 @@ public class UpdatedIndividualCustomerRequest {
     private GenderType genderType;
     private String fatherName;
     private String motherName;
-    private String nationalityNo;
     private String homePhone;
     private UpdatedCustomerRequest updatedCustomerRequest;
 

@@ -1,5 +1,6 @@
 package com.turkcell.catalogService.business.concretes;
 
+import com.turkcell.catalogService.business.abstacts.CategoryService;
 import com.turkcell.catalogService.business.abstacts.FeatureService;
 import com.turkcell.catalogService.business.abstacts.ProductFeatureService;
 import com.turkcell.catalogService.business.abstacts.ProductService;
@@ -40,15 +41,15 @@ public class ProductManager implements ProductService {
     private final ModelMapperService modelMapperService;
     private final ProductRepository productRepository;
     private final FeatureService featureService;
+    private final CategoryService categoryService;
     private final ProductFeatureService productFeatureService;
-    private final ProductFeatureRepository productFeatureRepository;
     private final ProductBusinessRules productBusinessRules;
-    private final CategoryBusinessRules categoryBusinessRules;
+
 
     @Override
     public CreatedProductResponse addProduct(CreatedProductRequest createdProductRequest) {
 
-        categoryBusinessRules.categoryShouldBeExist(createdProductRequest.getCategoryId());
+        categoryService.getById(createdProductRequest.getCategoryId());
         productBusinessRules.featureNameCanNotRepeat(createdProductRequest.getProductFeatures());
 
         Product product = this.modelMapperService.forRequest().map(createdProductRequest, Product.class);
@@ -65,7 +66,7 @@ public class ProductManager implements ProductService {
             productFeature.setValue(featureRequest.getValue());
             productFeatures.add(productFeature);
         }
-        productFeatureRepository.saveAll(productFeatures);
+        productFeatureService.saveAll(productFeatures);
 
         List<ProductFeatureResponse> productFeatureResponses = productFeatures.stream()
                 .map(productFeature -> this.modelMapperService.forResponse().map(productFeature, ProductFeatureResponse.class))
@@ -82,7 +83,7 @@ public class ProductManager implements ProductService {
 
         productBusinessRules.productShouldBeExist(updatedProductRequest.getId());
         productBusinessRules.featureNameCanNotRepeat(updatedProductRequest.getProductFeatures());
-        categoryBusinessRules.categoryShouldBeExist(updatedProductRequest.getCategoryDTO().getCategoryId());
+        categoryService.getById(updatedProductRequest.getId());
 
         Product product = this.modelMapperService.forRequest().map(updatedProductRequest, Product.class);
         Product savedProduct = productRepository.save(product);
@@ -100,14 +101,9 @@ public class ProductManager implements ProductService {
     public GetProductResponse getById(int id) {
         productBusinessRules.productShouldBeExist(id);
         Optional<Product> productOptional = productRepository.findById(id);
-        if (productOptional.isEmpty()) {
-            // Hata durumu ele alınmalı
-            throw new RuntimeException("Product not found");
-        }
         Product product = productOptional.get();
 
-        // Ürün özelliklerini al ve ProductFeatureResponse listesine dönüştür
-        List<ProductFeatureResponse> productFeatureResponses = productFeatureRepository.findByProductId(id).stream()
+        List<ProductFeatureResponse> productFeatureResponses = productFeatureService.findByProductId(id).stream()
                 .map(productFeature -> {
                     ProductFeatureResponse response = new ProductFeatureResponse();
                     response.setValue(productFeature.getValue());
@@ -116,7 +112,6 @@ public class ProductManager implements ProductService {
                 })
                 .collect(Collectors.toList());
 
-        // Ürünü GetProductResponse'ye dönüştür
         GetProductResponse getProductResponse = this.modelMapperService.forResponse().map(product, GetProductResponse.class);
         getProductResponse.setProductFeatures(productFeatureResponses);
 
@@ -129,7 +124,7 @@ public class ProductManager implements ProductService {
         List<GetAllProductResponse> responses = new ArrayList<>();
 
         for (Product product : products) {
-            List<ProductFeatureResponse> productFeatureResponses = productFeatureRepository.findByProductId(product.getId()).stream()
+            List<ProductFeatureResponse> productFeatureResponses = productFeatureService.findByProductId(product.getId()).stream()
                     .map(productFeature -> {
                         ProductFeatureResponse response = new ProductFeatureResponse();
                         response.setValue(productFeature.getValue());

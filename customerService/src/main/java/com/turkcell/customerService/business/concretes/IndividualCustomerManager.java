@@ -9,7 +9,6 @@ import com.turkcell.customerService.business.dtos.response.create.CreatedIndivid
 import com.turkcell.customerService.business.dtos.response.get.GetIndividualCustomerResponse;
 import com.turkcell.customerService.business.dtos.response.getAll.GetAllIndividualCustomerResponse;
 import com.turkcell.customerService.business.dtos.response.updated.UpdatedIndividualCustomerResponse;
-import com.turkcell.customerService.business.rules.CustomerBusinessRules;
 import com.turkcell.customerService.business.rules.IndividualCustomerBusinessRules;
 import com.turkcell.customerService.dataAccess.abstracts.IndividualCustomerRepository;
 import com.turkcell.customerService.entities.concretes.Customer;
@@ -37,7 +36,7 @@ public class IndividualCustomerManager implements IndividualCustomerService {
     private final CustomerService customerService;
     private final IndividualCustomerBusinessRules individualCustomerBusinessRules;
     private final CustomerProducer customerProducer;
-    private final CustomerBusinessRules customerBusinessRules;
+
 
     @Override
     public CreatedIndividualCustomerResponse add(CreatedIndividualCustomerRequest createIndividualCustomerRequest) {
@@ -110,6 +109,7 @@ public class IndividualCustomerManager implements IndividualCustomerService {
         customerService.setActiveCustomer(id);
     }
 
+    //todo : kullanım değerlendirilecek
     @Override
     public ClientResponse checkIfCustomerAvailable(int id) {
         var response = new ClientResponse();
