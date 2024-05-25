@@ -1,5 +1,6 @@
 package com.turkcell.catalogService.business.concretes;
 
+import com.turkcell.catalogService.business.abstacts.FeatureService;
 import com.turkcell.catalogService.business.abstacts.ProductFeatureService;
 import com.turkcell.catalogService.business.abstacts.ProductService;
 import com.turkcell.catalogService.business.dtos.request.create.CreatedProductRequest;
@@ -10,6 +11,7 @@ import com.turkcell.catalogService.business.dtos.response.create.CreatedProductR
 
 
 import com.turkcell.catalogService.business.dtos.response.create.ProductFeatureResponse;
+import com.turkcell.catalogService.business.dtos.response.get.GetFeatureResponse;
 import com.turkcell.catalogService.business.dtos.response.get.GetProductResponse;
 import com.turkcell.catalogService.business.dtos.response.getall.GetAllProductResponse;
 import com.turkcell.catalogService.business.dtos.response.update.UpdatedProductResponse;
@@ -37,10 +39,9 @@ public class ProductManager implements ProductService {
 
     private final ModelMapperService modelMapperService;
     private final ProductRepository productRepository;
-    private final FeatureRepository featureRepository;
-    private final ProductFeatureRepository productFeatureRepository;
-    private final CategoryRepository categoryRepository;
+    private final FeatureService featureService;
     private final ProductFeatureService productFeatureService;
+    private final ProductFeatureRepository productFeatureRepository;
     private final ProductBusinessRules productBusinessRules;
     private final CategoryBusinessRules categoryBusinessRules;
 
@@ -56,8 +57,8 @@ public class ProductManager implements ProductService {
 
         List<ProductFeature> productFeatures = new ArrayList<>();
         for (ProductFeatureRequest featureRequest : createdProductRequest.getProductFeatures()) {
-            Feature feature = featureRepository.findById(featureRequest.getFeatureId())
-                    .orElse(null);
+            GetFeatureResponse getFeatureResponse = featureService.getById(featureRequest.getFeatureId());
+            Feature feature =this.modelMapperService.forResponse().map(getFeatureResponse,Feature.class);
             ProductFeature productFeature = new ProductFeature();
             productFeature.setProduct(savedProduct);
             productFeature.setFeature(feature);

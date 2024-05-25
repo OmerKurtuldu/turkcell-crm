@@ -19,9 +19,8 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Service
 public class ProductFeatureManager implements ProductFeatureService {
-    private final ModelMapperService modelMapperService;
+
     private final ProductFeatureRepository productFeatureRepository;
-    private final FeatureRepository featureRepository;
 
     public List<ProductFeatureResponse> updateFeatureForProduct(int productId, List<ProductFeatureRequest> productFeatureRequests) {
         List<ProductFeature> existingProductFeatures = productFeatureRepository.findByProductId(productId);
