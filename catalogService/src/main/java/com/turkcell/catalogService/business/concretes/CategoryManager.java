@@ -28,6 +28,7 @@ public class CategoryManager implements CategoryService {
 
     @Override
     public CreatedCategoryResponse add(CreatedCategoryRequest createdCategoryRequest) {
+        categoryBusinessRules.categoryNameCanNotBeDuplicated(createdCategoryRequest.getName());
         Category category = this.modelMapperService.forRequest().map(createdCategoryRequest,Category.class);
         categoryRepository.save(category);
         return this.modelMapperService.forResponse().map(category,CreatedCategoryResponse.class);
