@@ -13,6 +13,8 @@ import com.turkcell.catalogService.business.dtos.response.create.ProductFeatureR
 import com.turkcell.catalogService.business.dtos.response.get.GetProductResponse;
 import com.turkcell.catalogService.business.dtos.response.getall.GetAllProductResponse;
 import com.turkcell.catalogService.business.dtos.response.update.UpdatedProductResponse;
+import com.turkcell.catalogService.business.rules.CategoryBusinessRules;
+import com.turkcell.catalogService.business.rules.ProductBusinessRules;
 import com.turkcell.catalogService.dataAccess.abstracts.CategoryRepository;
 import com.turkcell.catalogService.dataAccess.abstracts.FeatureRepository;
 import com.turkcell.catalogService.dataAccess.abstracts.ProductFeatureRepository;
@@ -39,14 +41,18 @@ public class ProductManager implements ProductService {
     private final ProductFeatureRepository productFeatureRepository;
     private final CategoryRepository categoryRepository;
     private final ProductFeatureService productFeatureService;
+    private final ProductBusinessRules productBusinessRules;
+    private final CategoryBusinessRules categoryBusinessRules;
 
     @Override
     public CreatedProductResponse addProduct(CreatedProductRequest createdProductRequest) {
-        //todo aynı feature id den eklenemesin iş kuralı
+
+        categoryBusinessRules.categoryShouldBeExist(createdProductRequest.getCategoryId());
+        productBusinessRules.featureNameCanNotRepeat(createdProductRequest.getProductFeatures());
+
         Product product = this.modelMapperService.forRequest().map(createdProductRequest, Product.class);
         product.setId(0);
         Product savedProduct = productRepository.save(product);
-
 
         List<ProductFeature> productFeatures = new ArrayList<>();
         for (ProductFeatureRequest featureRequest : createdProductRequest.getProductFeatures()) {
@@ -72,6 +78,11 @@ public class ProductManager implements ProductService {
 
     @Override
     public UpdatedProductResponse updateProduct(UpdatedProductRequest updatedProductRequest) {
+
+        productBusinessRules.productShouldBeExist(updatedProductRequest.getId());
+        productBusinessRules.featureNameCanNotRepeat(updatedProductRequest.getProductFeatures());
+        categoryBusinessRules.categoryShouldBeExist(updatedProductRequest.getCategoryDTO().getCategoryId());
+
         Product product = this.modelMapperService.forRequest().map(updatedProductRequest, Product.class);
         Product savedProduct = productRepository.save(product);
 
@@ -86,6 +97,7 @@ public class ProductManager implements ProductService {
 
     @Override
     public GetProductResponse getById(int id) {
+        productBusinessRules.productShouldBeExist(id);
         Optional<Product> productOptional = productRepository.findById(id);
         if (productOptional.isEmpty()) {
             // Hata durumu ele alınmalı
@@ -134,6 +146,7 @@ public class ProductManager implements ProductService {
 
     @Override
     public void delete(int id) {
+        productBusinessRules.productShouldBeExist(id);
         Optional<Product> productOptional = productRepository.findById(id);
         if (productOptional.isEmpty()) {
 

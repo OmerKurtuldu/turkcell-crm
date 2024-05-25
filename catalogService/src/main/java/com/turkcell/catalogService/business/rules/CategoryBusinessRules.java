@@ -1,6 +1,5 @@
 package com.turkcell.catalogService.business.rules;
 
-import com.turkcell.catalogService.business.abstacts.ProductService;
 import com.turkcell.catalogService.business.messages.Messages;
 import com.turkcell.catalogService.dataAccess.abstracts.CategoryRepository;
 import com.turkcell.catalogService.entities.concretes.Category;
@@ -16,12 +15,18 @@ import java.util.Optional;
 public class CategoryBusinessRules {
     private final MessageService messageService;
     private final CategoryRepository categoryRepository;
-    private final ProductService productService;
 
     public void categoryShouldBeExist (int categoryId){
         Optional<Category> category = categoryRepository.findById(categoryId);
         if(category.isEmpty()){
             throw new BusinessException(messageService.getMessageWithArgs(Messages.CategoryErrors.CategoryShouldBeExist));
+        }
+    }
+
+    public void categoryNameCanNotBeDuplicated(String name){
+        Optional<Category> category = categoryRepository.findByCategoryName(name);
+        if(category.isPresent()){
+            throw new BusinessException(messageService.getMessage(Messages.CategoryErrors.CategoryNameCanNotBeDuplicated));
         }
     }
 
