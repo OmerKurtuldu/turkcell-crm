@@ -41,6 +41,42 @@ services:
       - KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS=kafka:9093
       - KAFKA_CLUSTERS_0_ZOOKEEPER=localhost:2181
 
+  configserver:
+    build: ./configServer
+    restart: always
+    container_name: configserver
+    volumes:
+      - ./configServer:/app
+    environment:
+        SPRING_PROFILES_ACTIVE: prod
+    
+    ports:
+      - 8050:8050
+
+  discoveryserver:
+    build: ./discoveryServer
+    restart: always
+    container_name: discoveryserver
+    volumes:
+      - ./discoveryServer:/app
+    ports:
+      - 8761:8761
+    depends_on:
+      - configserver
+
+  gatewayservice:
+    build: ./gatewayService
+    container_name: gatewayservice
+    restart: always
+    ports:
+      - 9002:9002
+    volumes:
+      - ./gatewayService:/app
+    depends_on:
+      - configserver
+      - discoveryserver
+    
+
 volumes:
   zookeeper_data:
     driver: local

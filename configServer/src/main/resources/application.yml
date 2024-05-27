@@ -6,5 +6,7 @@ spring:
       server:
         git:
           uri: https://github.com/OmerKurtuldu/turkcellCRM-config-server.git
+  profiles:
+    active: dev
 server:
   port: 8050
