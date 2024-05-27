@@ -33,9 +33,9 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.turkcell</groupId>
+			<groupId>io.github.yozyazici</groupId>
 			<artifactId>core-package</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>1.0.0</version>
 		</dependency>
 
 	</dependencies>
