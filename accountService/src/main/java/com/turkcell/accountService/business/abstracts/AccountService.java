@@ -6,6 +6,7 @@ import com.turkcell.accountService.business.dtos.response.created.CreatedAccount
 import com.turkcell.accountService.business.dtos.response.get.GetAccountResponse;
 import com.turkcell.accountService.business.dtos.response.getAll.GetAllAccountResponse;
 import com.turkcell.accountService.business.dtos.response.updated.UpdatedAccountResponse;
+import com.turkcell.commonpackage.utils.dto.ClientResponse;
 
 import java.util.List;
 
@@ -15,4 +16,5 @@ public interface AccountService {
     GetAccountResponse getById(int id);
     List<GetAllAccountResponse> getAll();
     void delete(int id);
+    ClientResponse checkIfAccountAvailable(int id);
 }

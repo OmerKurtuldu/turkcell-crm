@@ -8,6 +8,7 @@ import com.turkcell.accountService.business.dtos.response.get.GetAccountResponse
 import com.turkcell.accountService.business.dtos.response.getAll.GetAllAccountResponse;
 import com.turkcell.accountService.business.dtos.response.updated.UpdatedAccountResponse;
 import com.turkcell.accountService.entities.concretes.Account;
+import com.turkcell.commonpackage.utils.dto.ClientResponse;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -50,4 +51,10 @@ public class AccountController {
     public void delete(@PathVariable int id){
         accountService.delete(id);
     }
+
+    @GetMapping("/accountClient/{id}")
+    public ClientResponse checkIfAccountAvailable(@PathVariable int id){
+        return accountService.checkIfAccountAvailable(id);
+    }
+
 }

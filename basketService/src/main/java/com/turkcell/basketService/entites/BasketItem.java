@@ -6,13 +6,15 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class BasketItem implements Serializable {
 
     private String id;
-    private String productId;
+    private int productId;
     private String productName;
-    private double price;
+    private Double price;
+
 }
