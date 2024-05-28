@@ -43,7 +43,7 @@
 		<dependency>
 			<groupId>io.github.yozyazici</groupId>
 			<artifactId>common-package</artifactId>
-			<version>1.0.0</version>
+			<version>1.0.1</version>
 		</dependency>
 		<dependency>
 			<groupId>redis.clients</groupId>

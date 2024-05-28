@@ -4,7 +4,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
-@SpringBootApplication
+import java.nio.file.Paths;
+
+@SpringBootApplication(scanBasePackages = {Paths.ConfigurationBasePackage,Paths.Basket.ServiceBasePackage})
 @EnableDiscoveryClient
 public class BasketServiceApplication {
 
