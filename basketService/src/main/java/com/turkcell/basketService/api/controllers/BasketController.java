@@ -15,8 +15,8 @@ public class BasketController {
     private BasketService basketService;
 
     @PostMapping
-    public void addItem(@RequestParam String customerId,@RequestParam String productId){
-        basketService.add(customerId,productId);
+    public void addItem(@RequestParam String accountId,@RequestParam int productId){
+        basketService.add(accountId,productId);
     }
 
     @GetMapping

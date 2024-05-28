@@ -13,6 +13,8 @@ import com.turkcell.accountService.business.rules.AccountTypeBusinessRules;
 import com.turkcell.accountService.dataAccess.abstracts.AccountRepository;
 import com.turkcell.accountService.entities.concretes.Account;
 import com.turkcell.accountService.entities.concretes.AccountType;
+import com.turkcell.commonpackage.utils.dto.ClientResponse;
+import com.turkcell.corepackage.utils.exceptions.types.BusinessException;
 import com.turkcell.corepackage.utils.mappers.ModelMapperService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -85,6 +87,26 @@ public class AccountManager implements AccountService {
         accountRepository.deleteById(id);
     }
 
+    //todo : kullanım değerlendirilecek
+    @Override
+    public ClientResponse checkIfAccountAvailable(int id) {
+        var response = new ClientResponse();
+        validateCustomerAvailability(id,response);
+        return response;
+    }
+
+
+
+    private void validateCustomerAvailability(int id, ClientResponse response) {
+        try {
+            accountBusinessRules.accountShoulBeExist(id);
+            response.setSuccess(true);
+        } catch (BusinessException exception) {
+            response.setSuccess(false);
+        }
+    }
+
+    //todo : isim kontrol
     public Set<AccountType> accountTypeForControl(Set<Integer> AccountTypes){
 
         Set<AccountType> accountTypes = new HashSet<AccountType>();

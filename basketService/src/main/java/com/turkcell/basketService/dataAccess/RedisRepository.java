@@ -14,7 +14,7 @@ public class RedisRepository {
     public static final String Key="BASKET";
 
     private RedisTemplate<String, Object> redisTemplate;
-    private HashOperations<String,String, Basket> hashOperations;
+    private HashOperations<String,String,Basket> hashOperations;
 
     public RedisRepository(RedisTemplate<String, Object> redisTemplate) {
         this.redisTemplate = redisTemplate;
@@ -26,12 +26,12 @@ public class RedisRepository {
     }
 
     public void addItem(Basket basket){
-        this.hashOperations.put(Key,basket.getId()+"_"+basket.getCustomerId(),basket);
+        this.hashOperations.put(Key,basket.getId()+"_"+basket.getAccountId(),basket);
     }
 
-    public Basket getBasketByCustomerId(String customerId) {
+    public Basket getBasketByAccountId(String accountId) {
         return hashOperations.entries(Key).values().stream()
-                .filter(basket -> customerId.equals(basket.getCustomerId()))
+                .filter(basket -> accountId.equals(basket.getAccountId()))
                 .findFirst()
                 .orElse(null);
     }

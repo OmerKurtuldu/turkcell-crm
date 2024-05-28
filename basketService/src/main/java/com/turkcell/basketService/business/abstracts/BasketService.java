@@ -4,6 +4,7 @@ import com.turkcell.basketService.entites.Basket;
 import java.util.Map;
 
 public interface BasketService {
-    void add(String customerId,String productId);
+    void add(String accountId,int productId);
     Map<String, Basket> getAllItems();
+
 }

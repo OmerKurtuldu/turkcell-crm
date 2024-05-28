@@ -19,6 +19,7 @@ public class SecurityConfiguration {
         baseSecurityService.configureCoreSecurity(http);
         http
                 .authorizeHttpRequests(req -> req
+                        .requestMatchers("/catalogservice/api/v1/products/{id}").permitAll()
                         .requestMatchers("/catalogservice/api/**").hasAnyAuthority("admin")
                         .anyRequest().authenticated()
                 );
