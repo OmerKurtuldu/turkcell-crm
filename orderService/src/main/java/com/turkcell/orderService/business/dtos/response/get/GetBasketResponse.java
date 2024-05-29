@@ -14,5 +14,5 @@ public class GetBasketResponse {
     private String id;
     private String accountId;
     private Double totalPrice;
-    private List<OrderItem> orderItems;
+    private List<OrderItem> basketItems;
 }

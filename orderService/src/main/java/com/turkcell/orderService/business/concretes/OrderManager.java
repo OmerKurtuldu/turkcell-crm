@@ -21,7 +21,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
@@ -36,44 +35,53 @@ public class OrderManager implements OrderService {
     @Override
     public CreateOrderResponse createOrder(CreateOrderRequest createOrderRequest) {
 
+        // Basket bilgilerini al
         GetBasketResponse getBasketResponse = basketServiceClient.basketGetById(createOrderRequest.getBasketId());
         Order order = new Order();
-        order.setOrderItems(getBasketResponse.getOrderItems());
+        order.setOrderItems(new ArrayList<>(getBasketResponse.getBasketItems()));  // Derin kopyalama
         order.setBasketId(getBasketResponse.getId());
         order.setTotalPrice(getBasketResponse.getTotalPrice());
-        order.setId(0);
-        GetAccountResponse getAccountResponse = accountServiceClient.accountGetById(Integer.valueOf(getBasketResponse.getAccountId()));
+        order.setId(0);  // Yeni bir sipariş oluşturduğunuzdan, ID'yi 0 olarak ayarlayın
 
-        List <GetProductResponse> getProductResponses = new ArrayList<>();
+        // Account bilgilerini al
+        GetAccountResponse getAccountResponse = accountServiceClient.accountGetById(Integer.parseInt(getBasketResponse.getAccountId()));
+
+        // Product ve Address listeleri oluştur
+        List<GetProductResponse> getProductResponses = new ArrayList<>();
         List<GetAddressResponse> getAddressResponses = new ArrayList<>();
 
-        OrderItem orderItem = new OrderItem();
-        for(var basket : getBasketResponse.getOrderItems()){
-            orderItem.setProductName(basket.getProductName());
-            orderItem.setProductId(basket.getProductId());
-            orderItem.setPrice(basket.getPrice());
-            order.getOrderItems().add(orderItem);
+        // OrderItem listesi oluştur ve Order nesnesine ekle
+        List<OrderItem> orderItems = new ArrayList<>();
+        for (OrderItem basketItem : getBasketResponse.getBasketItems()) {
+            OrderItem orderItem = new OrderItem();
+            orderItem.setProductName(basketItem.getProductName());
+            orderItem.setProductId(basketItem.getProductId());
+            orderItem.setPrice(basketItem.getPrice());
+            orderItems.add(orderItem);
 
-
+            // Ürün bilgilerini al ve listeye ekle
             GetProductResponse getProductResponse = catalogServiceClient.productGetById(orderItem.getProductId());
             getProductResponses.add(getProductResponse);
-
         }
-        for(int addressId : getAccountResponse.getAddressId()){
+        order.setOrderItems(orderItems);  // Yeni orderItems listesini ayarla
+
+        // Adres bilgilerini al ve listeye ekle
+        for (int addressId : getAccountResponse.getAddressId()) {
             GetAddressResponse getAddressResponse = customerServiceClient.addressGetById(addressId);
             getAddressResponses.add(getAddressResponse);
-
         }
+
+        // Order nesnesini veritabanına kaydet
         orderRepository.save(order);
+
+        // CreateOrderResponse oluştur ve döndür
         CreateOrderResponse createOrderResponse = new CreateOrderResponse();
         createOrderResponse.setTotalPrice(order.getTotalPrice());
         createOrderResponse.setGetProductResponse(getProductResponses);
         createOrderResponse.setGetAccountResponse(getAccountResponse);
         createOrderResponse.setGetAddressResponse(getAddressResponses);
         return createOrderResponse;
-
     }
-
 }
 
 
