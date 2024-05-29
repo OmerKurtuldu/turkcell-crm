@@ -41,7 +41,7 @@ public class AccountManager implements AccountService {
 
         Set<AccountType> accountTypes  = accountTypeForControl(createdAccountRequest.getAccountTypes());
         account.setAccountTypes(accountTypes);
-
+        account.setId(0);
         accountRepository.save(account);
 
         return this.modelMapperService.forResponse().map(account, CreatedAccountResponse.class);
