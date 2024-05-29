@@ -49,6 +49,7 @@
 			<artifactId>common-package</artifactId>
 			<version>1.0.1</version>
 		</dependency>
+
 	</dependencies>
 	<dependencyManagement>
 		<dependencies>

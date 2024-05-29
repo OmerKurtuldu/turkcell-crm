@@ -1,5 +1,6 @@
 package com.turkcell.basketService.api.controllers;
 
+import com.turkcell.basketService.business.dtos.response.get.GetBasketResponse;
 import com.turkcell.basketService.dataAccess.RedisRepository;
 import com.turkcell.basketService.entites.Basket;
 import com.turkcell.basketService.business.abstracts.BasketService;
@@ -27,7 +28,7 @@ public class BasketController {
     }
 
     @GetMapping("/{basketId}")
-    public Basket getById(@PathVariable String basketId){
+    public GetBasketResponse getById(@PathVariable String basketId){
         return basketService.getByItems(basketId);
     }
 

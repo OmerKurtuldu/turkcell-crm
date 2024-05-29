@@ -1,6 +1,6 @@
-package com.turkcell.basketService.api.client;
+package com.turkcell.orderService.api.clients;
 
-import com.turkcell.basketService.business.dtos.response.get.GetProductResponse;
+import com.turkcell.orderService.business.dtos.response.get.GetProductResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,7 +10,5 @@ public interface CatalogServiceClient {
 
     @GetMapping("/catalogservice/api/v1/products/{id}")
     GetProductResponse productGetById(@PathVariable int id);
-
-
 
 }
