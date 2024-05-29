@@ -1,4 +1,4 @@
-package com.turkcell.basketService.api.client;
+package com.turkcell.basketService.api.clients;
 
 
 import com.turkcell.basketService.business.dtos.response.get.GetProductResponse;

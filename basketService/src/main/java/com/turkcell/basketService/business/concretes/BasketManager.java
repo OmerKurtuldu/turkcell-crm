@@ -1,5 +1,6 @@
 package com.turkcell.basketService.business.concretes;
 
+import com.turkcell.basketService.business.dtos.response.get.GetBasketResponse;
 import com.turkcell.basketService.business.dtos.response.get.GetProductResponse;
 import com.turkcell.basketService.business.rules.BasketBusinessRules;
 import com.turkcell.basketService.entites.Basket;
@@ -49,11 +50,11 @@ public class BasketManager implements BasketService {
     }
 
     @Override
-    public Basket getByItems(String basketId) {
+    public GetBasketResponse getByItems(String basketId) {
 
         basketBusinessRules.checkExistBasketByBasketId(basketId);
-
-        return redisRepository.getByBasket(basketId);
+        Basket basket = redisRepository.getByBasket(basketId);
+        return this.modelMapperService.forResponse().map(basket,GetBasketResponse.class);
     }
 
     @Override

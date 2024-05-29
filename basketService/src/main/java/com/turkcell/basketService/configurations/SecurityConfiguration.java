@@ -20,6 +20,7 @@ public class SecurityConfiguration {
         baseSecurityService.configureCoreSecurity(http);
         http
                 .authorizeHttpRequests(req -> req
+                        .requestMatchers("basketservice/api/v1/basket/{basketId}").permitAll()
                         .requestMatchers("/basketservice/api/**").hasAnyAuthority("admin")
                         .anyRequest().authenticated()
                 );

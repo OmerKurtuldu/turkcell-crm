@@ -1,4 +1,4 @@
-package com.turkcell.orderService.business.dtos.response;
+package com.turkcell.orderService.business.dtos.request.create;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,5 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CreateOrderResponse {
+public class CreateOrderRequest {
+    private String basketId;
+
 }
