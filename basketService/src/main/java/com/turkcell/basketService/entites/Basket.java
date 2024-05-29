@@ -1,5 +1,6 @@
 package com.turkcell.basketService.entites;
 
+import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
