@@ -1,0 +1,15 @@
+package com.turkcell.orderService.business.dtos.response.getAll;
+
+import com.turkcell.orderService.business.dtos.response.get.GetOrderResponse;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.util.List;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
+public class GetAllOrderResponse {
+    List<GetOrderResponse> orders;
+}

@@ -13,6 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CreateOrderResponse {
+    private String orderNumber;
     private GetAccountResponse getAccountResponse;
     private List<GetProductResponse> getProductResponse;
     private List<GetAddressResponse> getAddressResponse;
