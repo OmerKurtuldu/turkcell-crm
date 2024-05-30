@@ -10,12 +10,14 @@ import com.turkcell.orderService.business.dtos.request.create.CreateOrderRequest
 import com.turkcell.orderService.business.dtos.response.create.CreateOrderResponse;
 import com.turkcell.orderService.business.dtos.response.get.*;
 import com.turkcell.orderService.business.dtos.response.getAll.GetAllOrderResponse;
+import com.turkcell.orderService.business.rules.OrderBusinessRules;
 import com.turkcell.orderService.dataAccess.OrderRepository;
 import com.turkcell.orderService.entities.Order;
 import com.turkcell.orderService.entities.OrderItem;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,18 +30,11 @@ public class OrderManager implements OrderService {
     private final CatalogServiceClient catalogServiceClient;
     private final AccountServiceClient accountServiceClient;
     private final CustomerServiceClient customerServiceClient;
+    private final OrderBusinessRules orderBusinessRules;
 
     @Override
     public CreateOrderResponse createOrder(CreateOrderRequest createOrderRequest) {
-        GetBasketResponse getBasketResponse = basketServiceClient.basketGetById(createOrderRequest.getBasketId());
-
-        Order order = new Order();
-        order.setOrderItems(getBasketResponse.getBasketItems());
-        order.setBasketId(createOrderRequest.getBasketId());
-        order.setTotalPrice(getBasketResponse.getTotalPrice());
-        order.setId(0);
-
-        GetAccountResponse getAccountResponse = accountServiceClient.accountGetById(Integer.parseInt(getBasketResponse.getAccountId()));
+        GetBasketResponse getBasketResponse = orderBusinessRules.checkProductAvailabilityForBasket(createOrderRequest.getBasketId());
 
         List<OrderItem> orderItems = getBasketResponse.getBasketItems().stream()
                 .map(basketItem -> {
@@ -47,8 +42,13 @@ public class OrderManager implements OrderService {
                     return orderItem;
                 })
                 .collect(Collectors.toList());
-
+        Order order = new Order();
         order.setOrderItems(orderItems);
+        order.setBasketId(createOrderRequest.getBasketId());
+        order.setTotalPrice(getBasketResponse.getTotalPrice());
+        order.setId(0);
+
+        GetAccountResponse getAccountResponse = accountServiceClient.accountGetById(Integer.parseInt(getBasketResponse.getAccountId()));
 
         List<GetProductResponse> getProductResponses = orderItems.stream()
                 .map(product -> catalogServiceClient.productGetById(product.getProductId()))
@@ -72,6 +72,8 @@ public class OrderManager implements OrderService {
 
     @Override
     public GetOrderResponse getOrderById(int orderId) {
+        orderBusinessRules.checkExistOrderByOrderId(orderId);
+
         // Sipariş bilgisini al
         Order order = orderRepository.findById(orderId).orElseThrow(() -> new RuntimeException("Order not found"));
 
@@ -144,9 +146,9 @@ public class OrderManager implements OrderService {
 
     @Override
     public void deleteOrder(int orderId) {
-        if (!orderRepository.existsById(orderId)) {
-            throw new RuntimeException("Order not found");
-        }
+
+        orderBusinessRules.checkExistOrderByOrderId(orderId);
+
         orderRepository.deleteById(orderId);
     }
 }
