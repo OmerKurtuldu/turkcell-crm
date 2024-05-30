@@ -83,7 +83,8 @@ public class IndividualCustomerManager implements IndividualCustomerService {
     @Override
     public GetIndividualCustomerResponse getById(int id) {
         individualCustomerBusinessRules.individualCustomerShouldBeExist(id);
-        Optional<IndividualCustomer> foundIndividualCustomer = individualCustomerRepository.findById(id);
+        individualCustomerBusinessRules.individualCustomerShouldBeActive(id);
+        Optional<IndividualCustomer> foundIndividualCustomer = individualCustomerRepository.findByIdActiveIndividualCustomers(id);
         GetIndividualCustomerResponse getIndividualCustomerResponse =
                 this.modelMapperService.forResponse().map(foundIndividualCustomer.get(), GetIndividualCustomerResponse.class);
         return getIndividualCustomerResponse;
@@ -91,7 +92,7 @@ public class IndividualCustomerManager implements IndividualCustomerService {
 
     @Override
     public List<GetAllIndividualCustomerResponse> getAll() {
-        List<IndividualCustomer> individualCustomers = individualCustomerRepository.findAll();
+        List<IndividualCustomer> individualCustomers = individualCustomerRepository.findAllActiveIndividualCustomers();
         List<GetAllIndividualCustomerResponse> getAllIndividualCustomerResponses = new ArrayList<GetAllIndividualCustomerResponse>();
         for (var customer : individualCustomers){
             GetAllIndividualCustomerResponse getAllIndividualCustomerResponse = this.modelMapperService.forResponse().map(customer,GetAllIndividualCustomerResponse.class);

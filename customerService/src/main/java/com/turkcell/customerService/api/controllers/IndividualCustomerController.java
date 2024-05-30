@@ -31,7 +31,7 @@ public class IndividualCustomerController {
 
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
-    public UpdatedIndividualCustomerResponse add(@Valid @RequestBody UpdatedIndividualCustomerRequest updatedIndividualCustomerRequest) {
+    public UpdatedIndividualCustomerResponse update(@Valid @RequestBody UpdatedIndividualCustomerRequest updatedIndividualCustomerRequest) {
         return individualCustomerService.update(updatedIndividualCustomerRequest);
     }
 
@@ -53,7 +53,7 @@ public class IndividualCustomerController {
         individualCustomerService.delete(id);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/setActive/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void setStatus(@PathVariable int id) {
         individualCustomerService.setStatus(id);

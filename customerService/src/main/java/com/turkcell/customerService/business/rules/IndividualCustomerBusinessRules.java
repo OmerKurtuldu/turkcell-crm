@@ -29,6 +29,13 @@ public class IndividualCustomerBusinessRules {
         }
     }
 
+    public void individualCustomerShouldBeActive(int individualCustomerId) {
+        Optional<IndividualCustomer> foundOptionalIndividualCustomer = individualCustomerRepository.findByIdActiveIndividualCustomers(individualCustomerId);
+        if (foundOptionalIndividualCustomer.isEmpty()) {
+            throw new BusinessException(messageService.getMessage(Messages.CustomerErrors.IndividualCustomerShouldBeExists));
+        }
+    }
+
     public void nationalityNoCanNotBeDuplicated(String nationalityNo ){
         Optional<IndividualCustomer> individualCustomer = individualCustomerRepository.findByNationalityNo(nationalityNo);
         if(individualCustomer.isPresent()){
@@ -65,6 +72,8 @@ public class IndividualCustomerBusinessRules {
             throw new BusinessException(messageService.getMessage(Messages.MernisErrors.PersonShouldBeExists));
         }
     }
+
+
 
 
 }
