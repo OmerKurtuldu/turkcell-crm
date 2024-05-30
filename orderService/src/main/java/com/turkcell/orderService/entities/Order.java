@@ -2,10 +2,8 @@ package com.turkcell.orderService.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.turkcell.corepackage.entities.BaseEntity;
-import jakarta.persistence.ElementCollection;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.Table;
+import com.turkcell.orderService.util.OrderNumberGenerator;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,4 +23,13 @@ public class Order extends BaseEntity<Integer> {
     @JsonIgnore
     @ElementCollection(fetch = FetchType.LAZY)
     private List<OrderItem> orderItems;
+
+    @PrePersist
+    private void prePersist() {
+        if (this.orderNumber == null || this.orderNumber.isEmpty()) {
+            this.orderNumber = OrderNumberGenerator.generateOrderNumber();
+        }
+    }
 }
+
+
