@@ -1,5 +1,6 @@
 package com.turkcell.customerService.business.rules;
 
+import com.turkcell.customerService.business.abstracts.ICustomerCheckService;
 import com.turkcell.customerService.business.messages.Messages;
 import com.turkcell.customerService.dataAccess.abstracts.CustomerRepository;
 import com.turkcell.customerService.dataAccess.abstracts.IndividualCustomerRepository;
@@ -19,6 +20,7 @@ public class IndividualCustomerBusinessRules {
     private final IndividualCustomerRepository individualCustomerRepository;
     private final CustomerRepository customerRepository;
     private final MessageService messageService;
+    private final ICustomerCheckService customerCheckService;
 
     public void individualCustomerShouldBeExist(int individualCustomerId) {
         Optional<IndividualCustomer> foundOptionalIndividualCustomer = individualCustomerRepository.findById(individualCustomerId);
@@ -57,5 +59,12 @@ public class IndividualCustomerBusinessRules {
             throw new BusinessException(messageService.getMessage(Messages.CustomerErrors.CheckCustomerActive));
         }
     }
+
+    public void checkIfRealPerson(IndividualCustomer individualCustomer) {
+        if (!customerCheckService.checkIfRealPerson(individualCustomer)) {
+            throw new BusinessException(messageService.getMessage(Messages.MernisErrors.PersonShouldBeExists));
+        }
+    }
+
 
 }

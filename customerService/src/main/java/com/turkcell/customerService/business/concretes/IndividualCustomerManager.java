@@ -1,6 +1,7 @@
 package com.turkcell.customerService.business.concretes;
 
 import com.turkcell.customerService.business.abstracts.CustomerService;
+import com.turkcell.customerService.business.abstracts.ICustomerCheckService;
 import com.turkcell.customerService.business.abstracts.IndividualCustomerService;
 
 import com.turkcell.customerService.business.dtos.request.create.CreatedIndividualCustomerRequest;
@@ -36,6 +37,7 @@ public class IndividualCustomerManager implements IndividualCustomerService {
     private final CustomerService customerService;
     private final IndividualCustomerBusinessRules individualCustomerBusinessRules;
     private final CustomerProducer customerProducer;
+    private final ICustomerCheckService customerCheckService;
 
 
     @Override
@@ -46,6 +48,7 @@ public class IndividualCustomerManager implements IndividualCustomerService {
         Customer customer = this.modelMapperService.forRequest().map(createIndividualCustomerRequest.getCreateCustomerRequest(), Customer.class);
 
         IndividualCustomer individualCustomer = this.modelMapperService.forRequest().map(createIndividualCustomerRequest, IndividualCustomer.class);
+        individualCustomerBusinessRules.checkIfRealPerson(individualCustomer);
         individualCustomer.setCustomer(customer);
 
         customerService.saveCustomer(customer);
