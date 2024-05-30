@@ -20,5 +20,9 @@ public class Messages {
 
     }
 
+    public static class MernisErrors{
+        public static final String PersonShouldBeExists = "personShouldBeExists";
+
+    }
 
 }
