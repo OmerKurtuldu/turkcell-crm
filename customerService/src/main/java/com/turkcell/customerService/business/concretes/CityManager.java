@@ -16,13 +16,10 @@ public class CityManager implements CityService {
     private final CityRepository cityRepository;
     private final CityBusinessRules cityBusinessRules;
 
-
     @Override
     public City getById(int id) {
         cityBusinessRules.cityShouldBeExist(id);
         Optional<City> city = cityRepository.findById(id);
         return city.get();
     }
-
-
 }
