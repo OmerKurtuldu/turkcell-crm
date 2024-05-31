@@ -59,7 +59,7 @@ public class ProductManager implements ProductService {
         List<ProductFeature> productFeatures = new ArrayList<>();
         for (ProductFeatureRequest featureRequest : createdProductRequest.getProductFeatures()) {
             GetFeatureResponse getFeatureResponse = featureService.getById(featureRequest.getFeatureId());
-            Feature feature =this.modelMapperService.forResponse().map(getFeatureResponse,Feature.class);
+            Feature feature = this.modelMapperService.forResponse().map(getFeatureResponse, Feature.class);
             ProductFeature productFeature = new ProductFeature();
             productFeature.setProduct(savedProduct);
             productFeature.setFeature(feature);
@@ -88,7 +88,7 @@ public class ProductManager implements ProductService {
         Product product = this.modelMapperService.forRequest().map(updatedProductRequest, Product.class);
         Product savedProduct = productRepository.save(product);
 
-        List<ProductFeatureResponse> productFeatureResponses =  productFeatureService.updateFeatureForProduct(updatedProductRequest.getId(), updatedProductRequest.getProductFeatures());
+        List<ProductFeatureResponse> productFeatureResponses = productFeatureService.updateFeatureForProduct(updatedProductRequest.getId(), updatedProductRequest.getProductFeatures());
 
         UpdatedProductResponse updatedProductResponse = this.modelMapperService.forResponse().map(savedProduct, UpdatedProductResponse.class);
 
