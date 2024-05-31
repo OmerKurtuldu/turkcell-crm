@@ -1,9 +1,7 @@
 package com.turkcell.customerService.business.concretes;
 
 import com.turkcell.customerService.business.abstracts.CustomerService;
-import com.turkcell.customerService.business.abstracts.ICustomerCheckService;
 import com.turkcell.customerService.business.abstracts.IndividualCustomerService;
-
 import com.turkcell.customerService.business.dtos.request.create.CreatedIndividualCustomerRequest;
 import com.turkcell.customerService.business.dtos.request.update.UpdatedIndividualCustomerRequest;
 import com.turkcell.customerService.business.dtos.response.create.CreatedIndividualCustomerResponse;
@@ -37,7 +35,6 @@ public class IndividualCustomerManager implements IndividualCustomerService {
     private final CustomerService customerService;
     private final IndividualCustomerBusinessRules individualCustomerBusinessRules;
     private final CustomerProducer customerProducer;
-    private final ICustomerCheckService customerCheckService;
 
 
     @Override
