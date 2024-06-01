@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: configServer
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/OmerKurtuldu/turkcellCRM-config-server.git
+          default-label: main
+  profiles:
+    active: prod
+
+server:
+  port: 8051

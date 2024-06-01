@@ -3,4 +3,4 @@ WORKDIR /app
 COPY . /app/
 RUN mvn clean package -DskipTests
 ENV SPRING_CLOUD_CONFIG_SERVER_GIT_URI=https://github.com/OmerKurtuldu/turkcellCRM-config-server.git
-CMD ["mvn","spring-boot:run"]
+CMD ["mvn", "spring-boot:run", "-Dspring-boot.run.arguments=--spring.config.location=classpath:/application-docker.yml"]

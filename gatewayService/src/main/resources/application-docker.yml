@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: gatewayService
+  cloud:
+    config:
+      profile: prod
+  config:
+    import: configserver:http://configserver:8051
+
+server:
+  port: 8760
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://discoveryserver:8761/eureka
