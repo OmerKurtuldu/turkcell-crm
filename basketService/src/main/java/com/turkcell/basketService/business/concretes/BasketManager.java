@@ -1,7 +1,9 @@
 package com.turkcell.basketService.business.concretes;
 
-import com.turkcell.basketService.business.dtos.response.get.GetBasketResponse;
-import com.turkcell.basketService.business.dtos.response.get.GetProductResponse;
+import com.turkcell.basketService.business.dtos.request.CreatedBasketRequest;
+import com.turkcell.basketService.business.dtos.response.CreatedBasketResponse;
+import com.turkcell.basketService.business.dtos.response.GetBasketResponse;
+import com.turkcell.basketService.business.dtos.response.GetProductResponse;
 import com.turkcell.basketService.business.rules.BasketBusinessRules;
 import com.turkcell.basketService.entites.Basket;
 import com.turkcell.basketService.entites.BasketItem;
@@ -23,25 +25,27 @@ public class BasketManager implements BasketService {
     private final ModelMapperService modelMapperService;
 
     @Override
-    public void add(String accountId, int productId) {
+    public CreatedBasketResponse add(CreatedBasketRequest createdBasketRequest) {
+        //Defensive programming
+        basketBusinessRules.checkAccountAvailabilityForBasket(createdBasketRequest.getAccountId());
+        GetProductResponse getProductResponse = basketBusinessRules.checkProductAvailabilityForBasket(createdBasketRequest.getProductId());
 
-        basketBusinessRules.checkAccountAvailabilityForBasket(accountId);
-        GetProductResponse getProductResponse = basketBusinessRules.checkProductAvailabilityForBasket(productId);
-
-        Basket basket = redisRepository.getBasketByAccountId(accountId);
+        Basket basket = redisRepository.getBasketByAccountId(createdBasketRequest.getAccountId());
 
         if (basket == null) {
-            basket = new Basket();
-            basket.setAccountId(accountId);
-            basket.setTotalPrice(0.0);
+            basket = new Basket(createdBasketRequest.getAccountId());
         }
 
         BasketItem basketItem = this.modelMapperService.forResponse().map(getProductResponse, BasketItem.class);
         basketItem.setId(UUID.randomUUID().toString());
-        basket.setAccountId(accountId);
+        basket.setAccountId(createdBasketRequest.getAccountId());
         basket.setTotalPrice(basket.getTotalPrice()+basketItem.getPrice());
         basket.getBasketItems().add(basketItem);
-        redisRepository.addItem(basket);
+        redisRepository.addBasket(basket);
+
+        CreatedBasketResponse createdBasketResponse = this.modelMapperService.forResponse().map(basket,CreatedBasketResponse.class);
+
+        return createdBasketResponse;
     }
 
     @Override
@@ -53,7 +57,7 @@ public class BasketManager implements BasketService {
     public GetBasketResponse getByItems(String basketId) {
 
         basketBusinessRules.checkExistBasketByBasketId(basketId);
-        Basket basket = redisRepository.getByBasket(basketId);
+        Basket basket = redisRepository.getByBasketId(basketId);
         return this.modelMapperService.forResponse().map(basket,GetBasketResponse.class);
     }
 
@@ -70,7 +74,7 @@ public class BasketManager implements BasketService {
 
         basketBusinessRules.checkExistBasketByBasketId(basketId);
 
-        redisRepository.deleteItem(basketId);
+        redisRepository.deleteBasket(basketId);
     }
 
 }

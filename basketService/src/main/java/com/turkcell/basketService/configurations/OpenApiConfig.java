@@ -25,12 +25,6 @@ import io.swagger.v3.oas.annotations.servers.Server;
 //                ),
 //                termsOfService = "Terms of service"
         ),
-        servers = {
-                @Server(
-                        description = "Local ENV",
-                        url = "http://localhost:8084"
-                )
-        },
         security = {
                 @SecurityRequirement(
                         name = "bearerAuth"

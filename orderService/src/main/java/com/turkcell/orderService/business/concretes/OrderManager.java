@@ -1,5 +1,6 @@
 package com.turkcell.orderService.business.concretes;
 
+import com.sun.jdi.IntegerValue;
 import com.turkcell.corepackage.utils.mappers.ModelMapperService;
 import com.turkcell.orderService.api.clients.AccountServiceClient;
 import com.turkcell.orderService.api.clients.BasketServiceClient;
@@ -42,7 +43,9 @@ public class OrderManager implements OrderService {
                     return orderItem;
                 })
                 .collect(Collectors.toList());
+
         Order order = new Order();
+        order.setAccountId(Integer.parseInt(getBasketResponse.getAccountId()));
         order.setOrderItems(orderItems);
         order.setBasketId(createOrderRequest.getBasketId());
         order.setTotalPrice(getBasketResponse.getTotalPrice());
@@ -60,8 +63,9 @@ public class OrderManager implements OrderService {
 
         orderRepository.save(order);
 
-        CreateOrderResponse createOrderResponse = new CreateOrderResponse();
-        createOrderResponse.setTotalPrice(order.getTotalPrice());
+        basketServiceClient.basketDeleteById(createOrderRequest.getBasketId());
+
+        CreateOrderResponse createOrderResponse = modelMapperService.forResponse().map(order, CreateOrderResponse.class);
         createOrderResponse.setGetProductResponse(getProductResponses);
         createOrderResponse.setGetAccountResponse(getAccountResponse);
         createOrderResponse.setGetAddressResponse(getAddressResponses);
@@ -77,9 +81,8 @@ public class OrderManager implements OrderService {
         // Sipariş bilgisini al
         Order order = orderRepository.findById(orderId).orElseThrow(() -> new RuntimeException("Order not found"));
 
-        GetBasketResponse getBasketResponse = basketServiceClient.basketGetById(order.getBasketId());
         // Account bilgilerini al
-        GetAccountResponse getAccountResponse = accountServiceClient.accountGetById(Integer.parseInt(getBasketResponse.getAccountId()));
+        GetAccountResponse getAccountResponse = accountServiceClient.accountGetById(order.getAccountId());
 
         // Product ve Address listeleri oluştur
         List<GetProductResponse> getProductResponses = order.getOrderItems().stream()
@@ -91,33 +94,29 @@ public class OrderManager implements OrderService {
                 .collect(Collectors.toList());
 
         // GetOrderResponse oluştur ve döndür
-        GetOrderResponse getOrderResponse = new GetOrderResponse();
-        getOrderResponse.setOrderId(order.getId());
+        GetOrderResponse getOrderResponse = modelMapperService.forResponse().map(order, GetOrderResponse.class);
         getOrderResponse.setGetAccountResponse(getAccountResponse);
         getOrderResponse.setGetProductResponse(getProductResponses);
         getOrderResponse.setGetAddressResponse(getAddressResponses);
-        getOrderResponse.setTotalPrice(order.getTotalPrice());
         getOrderResponse.setOrderNumber(order.getOrderNumber());
 
         return getOrderResponse;
     }
 
     @Override
-    public GetAllOrderResponse getAllOrders() {
+    public List<GetOrderResponse> getAllOrders() {
         // Tüm sipariş bilgilerini al
         List<Order> orders = orderRepository.findAll();
 
         // Listeyi dönüşüm yaparak oluştur
-        List<GetOrderResponse> orderResponses = orders.stream()
+        List<GetOrderResponse> getOrderResponses = orders.stream()
                 .map(order -> {
-                    // Basket bilgilerini al
-                    GetBasketResponse getBasketResponse = basketServiceClient.basketGetById(order.getBasketId());
 
                     // Account bilgilerini al
-                    GetAccountResponse getAccountResponse = accountServiceClient.accountGetById(Integer.parseInt(getBasketResponse.getAccountId()));
+                    GetAccountResponse getAccountResponse = accountServiceClient.accountGetById(order.getAccountId());
 
                     // Product ve Address listeleri oluştur
-                    List<GetProductResponse> getProductResponses = getBasketResponse.getBasketItems().stream()
+                    List<GetProductResponse> getProductResponses = order.getOrderItems().stream()
                             .map(item -> catalogServiceClient.productGetById(item.getProductId()))
                             .collect(Collectors.toList());
 
@@ -126,22 +125,18 @@ public class OrderManager implements OrderService {
                             .collect(Collectors.toList());
 
                     // GetOrderResponse oluştur
-                    GetOrderResponse getOrderResponse = new GetOrderResponse();
-                    getOrderResponse.setOrderId(order.getId());
+                    GetOrderResponse getOrderResponse = modelMapperService.forResponse().map(order, GetOrderResponse.class);
                     getOrderResponse.setGetAccountResponse(getAccountResponse);
                     getOrderResponse.setGetProductResponse(getProductResponses);
                     getOrderResponse.setGetAddressResponse(getAddressResponses);
-                    getOrderResponse.setTotalPrice(order.getTotalPrice());
                     getOrderResponse.setOrderNumber(order.getOrderNumber());
-
 
                     return getOrderResponse;
                 })
                 .collect(Collectors.toList());
 
         // GetAllOrdersResponse oluştur ve döndür
-        return new GetAllOrderResponse(orderResponses);
-
+        return getOrderResponses;
     }
 
     @Override

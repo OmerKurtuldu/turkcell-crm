@@ -1,4 +1,4 @@
-package com.turkcell.basketService.business.dtos.response.get;
+package com.turkcell.basketService.business.dtos.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,11 +11,12 @@ import java.util.List;
 @AllArgsConstructor
 @Data
 public class GetProductResponse {
-    //todo : int -> Integer
+
     private int id;
     private String name;
     private int quantity;
     private Integer categoryId;
     private BigDecimal price;
     private List<ProductFeatureResponse> productFeatures;
+
 }

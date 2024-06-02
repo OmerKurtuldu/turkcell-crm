@@ -23,4 +23,11 @@ public class Basket implements Serializable {
         this.basketItems = new ArrayList<>();
         this.id= UUID.randomUUID().toString();
     }
+
+    public Basket(String accountId){
+        this.basketItems = new ArrayList<>();
+        this.id= UUID.randomUUID().toString();
+        this.totalPrice=0.0;
+        this.accountId=accountId;
+    }
 }

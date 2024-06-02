@@ -1,10 +1,12 @@
 package com.turkcell.basketService.api.controllers;
 
-import com.turkcell.basketService.business.dtos.response.get.GetBasketResponse;
-import com.turkcell.basketService.dataAccess.RedisRepository;
+import com.turkcell.basketService.business.dtos.request.CreatedBasketRequest;
+import com.turkcell.basketService.business.dtos.response.CreatedBasketResponse;
+import com.turkcell.basketService.business.dtos.response.GetBasketResponse;
 import com.turkcell.basketService.entites.Basket;
 import com.turkcell.basketService.business.abstracts.BasketService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,8 +20,9 @@ public class BasketController {
     private BasketService basketService;
 
     @PostMapping
-    public void addItem(@RequestParam String accountId,@RequestParam int productId){
-        basketService.add(accountId,productId);
+    @ResponseStatus(HttpStatus.CREATED)
+    public CreatedBasketResponse addItem(@RequestBody CreatedBasketRequest createdBasketRequest){
+        return basketService.add(createdBasketRequest);
     }
 
     @GetMapping

@@ -4,6 +4,7 @@ import com.turkcell.corepackage.configuration.BaseSecurityService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -20,7 +21,8 @@ public class SecurityConfiguration {
         baseSecurityService.configureCoreSecurity(http);
         http
                 .authorizeHttpRequests(req -> req
-                        .requestMatchers("basketservice/api/v1/basket/{basketId}").permitAll()
+                        .requestMatchers(HttpMethod.GET,"basketservice/api/v1/basket/{basketId}").permitAll()
+                        .requestMatchers(HttpMethod.DELETE,"basketservice/api/v1/basket/{basketId}").permitAll()
                         .requestMatchers("/basketservice/api/**").hasAnyAuthority("admin")
                         .anyRequest().authenticated()
                 );
