@@ -1,0 +1,31 @@
+spring:
+  application:
+    name: identity-service
+  cloud:
+    config:
+      profile: prod
+  config:
+    import: configserver:http://configserver:8051
+  datasource:
+    url: jdbc:postgresql://identitydbprod:5432/identitydbprod
+    username: postgres
+    password: 12345
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        javax:
+          persistence:
+            validation:
+              mode: none
+    show-sql: true
+
+server:
+  port: 8763
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://discoveryserver:8761/eureka
