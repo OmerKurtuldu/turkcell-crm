@@ -38,13 +38,14 @@ public class AccountManager implements AccountService {
 
         Account account = this.modelMapperService.forRequest().map(createdAccountRequest, Account.class);
 
-        Set<AccountType> accountTypes  = accountTypeForControl(createdAccountRequest.getAccountTypes());
+        Set<AccountType> accountTypes = accountTypeForControl(createdAccountRequest.getAccountTypes());
         account.setAccountTypes(accountTypes);
         account.setId(0);
         accountRepository.save(account);
 
         return this.modelMapperService.forResponse().map(account, CreatedAccountResponse.class);
     }
+
     @Override
     public UpdatedAccountResponse update(UpdatedAccountRequest updatedAccountRequest) {
 
@@ -54,30 +55,30 @@ public class AccountManager implements AccountService {
 
         Account account = this.modelMapperService.forRequest().map(updatedAccountRequest, Account.class);
 
-        Set<AccountType> accountTypes  = accountTypeForControl(updatedAccountRequest.getAccountTypes());
+        Set<AccountType> accountTypes = accountTypeForControl(updatedAccountRequest.getAccountTypes());
         account.setAccountTypes(accountTypes);
 
         accountRepository.save(account);
 
-        return this.modelMapperService.forResponse().map(account,UpdatedAccountResponse.class);
+        return this.modelMapperService.forResponse().map(account, UpdatedAccountResponse.class);
     }
 
     @Override
     public GetAccountResponse getById(int id) {
         accountBusinessRules.accountShoulBeExist(id);
         Optional<Account> account = accountRepository.findById(id);
-        this.deleteIfNotAnActiveCustomer(id,account.get().getCustomerId());
+        this.deleteIfNotAnActiveCustomer(id, account.get().getCustomerId());
         account.get().setAccountAddressId(accountBusinessRules.checkActiveAddressesForAccount(account.get().getAccountAddressId()));
-        return this.modelMapperService.forResponse().map(account.get(),GetAccountResponse.class);
+        return this.modelMapperService.forResponse().map(account.get(), GetAccountResponse.class);
     }
 
     @Override
     public List<GetAllAccountResponse> getAll() {
         List<Account> accounts = accountRepository.findAll();
         List<GetAllAccountResponse> getAllAccountResponses = new ArrayList<GetAllAccountResponse>();
-        for (var account : accounts){
+        for (var account : accounts) {
             account.setAccountAddressId(accountBusinessRules.checkActiveAddressesForAccount(account.getAccountAddressId()));
-            GetAllAccountResponse getAllAccountResponse = this.modelMapperService.forResponse().map(account,GetAllAccountResponse.class);
+            GetAllAccountResponse getAllAccountResponse = this.modelMapperService.forResponse().map(account, GetAllAccountResponse.class);
             getAllAccountResponses.add(getAllAccountResponse);
         }
         return getAllAccountResponses;
@@ -93,10 +94,9 @@ public class AccountManager implements AccountService {
     @Override
     public ClientResponse checkIfAccountAvailable(int id) {
         var response = new ClientResponse();
-        validateCustomerAvailability(id,response);
+        validateCustomerAvailability(id, response);
         return response;
     }
-
 
 
     private void validateCustomerAvailability(int id, ClientResponse response) {
@@ -109,7 +109,7 @@ public class AccountManager implements AccountService {
     }
 
     //todo : isim kontrol
-    public Set<AccountType> accountTypeForControl(Set<Integer> AccountTypes){
+    public Set<AccountType> accountTypeForControl(Set<Integer> AccountTypes) {
 
         Set<AccountType> accountTypes = new HashSet<AccountType>();
         for (Integer accountTypeId : AccountTypes) {
@@ -119,7 +119,7 @@ public class AccountManager implements AccountService {
         return accountTypes;
     }
 
-    private void deleteIfNotAnActiveCustomer(int accountId, int customerId){
+    private void deleteIfNotAnActiveCustomer(int accountId, int customerId) {
         boolean isActiveCustomer = accountBusinessRules.isCustomerActive(customerId);
         if (!isActiveCustomer) {
             this.delete(accountId);

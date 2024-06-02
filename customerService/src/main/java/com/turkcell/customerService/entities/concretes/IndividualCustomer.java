@@ -14,7 +14,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Data
 @Entity
-@Table(name="individualCustomers")
+@Table(name = "individualCustomers")
 public class IndividualCustomer extends BaseEntity<Integer> {
 
     @Column(name = "first_name")

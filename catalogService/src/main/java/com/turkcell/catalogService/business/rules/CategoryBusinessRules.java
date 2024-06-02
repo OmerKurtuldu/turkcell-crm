@@ -16,22 +16,19 @@ public class CategoryBusinessRules {
     private final MessageService messageService;
     private final CategoryRepository categoryRepository;
 
-    public void categoryShouldBeExist (int categoryId){
+    public void categoryShouldBeExist(int categoryId) {
         Optional<Category> category = categoryRepository.findById(categoryId);
-        if(category.isEmpty()){
+        if (category.isEmpty()) {
             throw new BusinessException(messageService.getMessageWithArgs(Messages.CategoryErrors.CategoryShouldBeExist));
         }
     }
 
-    public void categoryNameCanNotBeDuplicated(String name){
+    public void categoryNameCanNotBeDuplicated(String name) {
         Optional<Category> category = categoryRepository.findByCategoryName(name);
-        if(category.isPresent()){
+        if (category.isPresent()) {
             throw new BusinessException(messageService.getMessage(Messages.CategoryErrors.CategoryNameCanNotBeDuplicated));
         }
     }
-
-
-
 
 
 }

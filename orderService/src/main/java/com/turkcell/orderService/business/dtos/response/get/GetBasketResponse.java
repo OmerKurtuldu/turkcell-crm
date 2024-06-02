@@ -1,6 +1,5 @@
 package com.turkcell.orderService.business.dtos.response.get;
 
-import com.turkcell.orderService.entities.OrderItem;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

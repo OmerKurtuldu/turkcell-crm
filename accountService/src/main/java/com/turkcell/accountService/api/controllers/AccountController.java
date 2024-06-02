@@ -7,7 +7,6 @@ import com.turkcell.accountService.business.dtos.response.created.CreatedAccount
 import com.turkcell.accountService.business.dtos.response.get.GetAccountResponse;
 import com.turkcell.accountService.business.dtos.response.getAll.GetAllAccountResponse;
 import com.turkcell.accountService.business.dtos.response.updated.UpdatedAccountResponse;
-import com.turkcell.accountService.entities.concretes.Account;
 import com.turkcell.commonpackage.utils.dto.ClientResponse;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -24,36 +23,36 @@ public class AccountController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public CreatedAccountResponse add(@Valid @RequestBody CreatedAccountRequest createdAccountRequest){
+    public CreatedAccountResponse add(@Valid @RequestBody CreatedAccountRequest createdAccountRequest) {
         return accountService.add(createdAccountRequest);
     }
 
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
-    public UpdatedAccountResponse update(@Valid @RequestBody UpdatedAccountRequest updatedAccountRequest){
+    public UpdatedAccountResponse update(@Valid @RequestBody UpdatedAccountRequest updatedAccountRequest) {
         return accountService.update(updatedAccountRequest);
     }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public GetAccountResponse getById(@PathVariable int id){
+    public GetAccountResponse getById(@PathVariable int id) {
         return accountService.getById(id);
     }
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<GetAllAccountResponse> getAll(){
+    public List<GetAllAccountResponse> getAll() {
         return accountService.getAll();
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable int id){
+    public void delete(@PathVariable int id) {
         accountService.delete(id);
     }
 
     @GetMapping("/accountClient/{id}")
-    public ClientResponse checkIfAccountAvailable(@PathVariable int id){
+    public ClientResponse checkIfAccountAvailable(@PathVariable int id) {
         return accountService.checkIfAccountAvailable(id);
     }
 

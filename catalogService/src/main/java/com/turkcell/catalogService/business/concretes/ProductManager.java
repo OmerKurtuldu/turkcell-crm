@@ -5,22 +5,15 @@ import com.turkcell.catalogService.business.abstacts.FeatureService;
 import com.turkcell.catalogService.business.abstacts.ProductFeatureService;
 import com.turkcell.catalogService.business.abstacts.ProductService;
 import com.turkcell.catalogService.business.dtos.request.create.CreatedProductRequest;
-
 import com.turkcell.catalogService.business.dtos.request.create.ProductFeatureRequest;
 import com.turkcell.catalogService.business.dtos.request.update.UpdatedProductRequest;
 import com.turkcell.catalogService.business.dtos.response.create.CreatedProductResponse;
-
-
 import com.turkcell.catalogService.business.dtos.response.create.ProductFeatureResponse;
 import com.turkcell.catalogService.business.dtos.response.get.GetFeatureResponse;
 import com.turkcell.catalogService.business.dtos.response.get.GetProductResponse;
 import com.turkcell.catalogService.business.dtos.response.getall.GetAllProductResponse;
 import com.turkcell.catalogService.business.dtos.response.update.UpdatedProductResponse;
-import com.turkcell.catalogService.business.rules.CategoryBusinessRules;
 import com.turkcell.catalogService.business.rules.ProductBusinessRules;
-import com.turkcell.catalogService.dataAccess.abstracts.CategoryRepository;
-import com.turkcell.catalogService.dataAccess.abstracts.FeatureRepository;
-import com.turkcell.catalogService.dataAccess.abstracts.ProductFeatureRepository;
 import com.turkcell.catalogService.dataAccess.abstracts.ProductRepository;
 import com.turkcell.catalogService.entities.concretes.Feature;
 import com.turkcell.catalogService.entities.concretes.Product;

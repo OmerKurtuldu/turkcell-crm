@@ -1,11 +1,9 @@
 package com.turkcell.basketService.entites;
 
-import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -19,15 +17,15 @@ public class Basket implements Serializable {
     private Double totalPrice;
     private List<BasketItem> basketItems;
 
-    public Basket(){
+    public Basket() {
         this.basketItems = new ArrayList<>();
-        this.id= UUID.randomUUID().toString();
+        this.id = UUID.randomUUID().toString();
     }
 
-    public Basket(String accountId){
+    public Basket(String accountId) {
         this.basketItems = new ArrayList<>();
-        this.id= UUID.randomUUID().toString();
-        this.totalPrice=0.0;
-        this.accountId=accountId;
+        this.id = UUID.randomUUID().toString();
+        this.totalPrice = 0.0;
+        this.accountId = accountId;
     }
 }

@@ -12,5 +12,4 @@ public interface CatalogServiceClient {
     GetProductResponse productGetById(@PathVariable int id);
 
 
-
 }

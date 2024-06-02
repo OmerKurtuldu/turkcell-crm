@@ -49,7 +49,7 @@ public class ProductFeatureManager implements ProductFeatureService {
 
     @Override
     public List<ProductFeature> findByProductId(int id) {
-       List<ProductFeature> productFeatureResponses = productFeatureRepository.findByProductId(id);
-       return productFeatureResponses;
+        List<ProductFeature> productFeatureResponses = productFeatureRepository.findByProductId(id);
+        return productFeatureResponses;
     }
 }

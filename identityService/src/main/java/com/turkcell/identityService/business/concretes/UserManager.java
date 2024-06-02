@@ -1,15 +1,11 @@
 package com.turkcell.identityService.business.concretes;
 
 import com.turkcell.corepackage.business.abstracts.MessageService;
-import com.turkcell.corepackage.utils.exceptions.types.BusinessException;
 import com.turkcell.identityService.business.abstracts.UserService;
 import com.turkcell.identityService.business.dtos.requests.RegisterRequest;
-import com.turkcell.identityService.business.messages.Messages;
 import com.turkcell.identityService.dataAccess.abstracts.RoleRepository;
 import com.turkcell.identityService.dataAccess.abstracts.UserRepository;
-import com.turkcell.identityService.entities.concretes.Role;
 import com.turkcell.identityService.entities.concretes.User;
-import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.userdetails.UserDetails;

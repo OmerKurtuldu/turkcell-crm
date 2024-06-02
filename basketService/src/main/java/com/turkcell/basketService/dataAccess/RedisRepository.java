@@ -19,22 +19,22 @@ Redis, in-memory çalışan bir veritabanıdır ve key-value şeklinde veri tuta
 @Repository
 public class RedisRepository {
 
-    public static final String Key="BASKET";
+    public static final String Key = "BASKET";
 
     private RedisTemplate<String, Object> redisTemplate;
-    private HashOperations<String,String,Basket> hashOperations;
+    private HashOperations<String, String, Basket> hashOperations;
 
     public RedisRepository(RedisTemplate<String, Object> redisTemplate) {
         this.redisTemplate = redisTemplate;
-        this.hashOperations=redisTemplate.opsForHash();
+        this.hashOperations = redisTemplate.opsForHash();
     }
 
-    public Map<String,Basket> getAllItems(){
+    public Map<String, Basket> getAllItems() {
         return this.hashOperations.entries(Key);
     }
 
-    public void addBasket(Basket basket){
-        this.hashOperations.put(Key,basket.getId()+"_"+basket.getAccountId(),basket);
+    public void addBasket(Basket basket) {
+        this.hashOperations.put(Key, basket.getId() + "_" + basket.getAccountId(), basket);
     }
 
     public Basket getBasketByAccountId(String accountId) {
@@ -48,8 +48,8 @@ public class RedisRepository {
         return this.hashOperations.get(Key, basketId);
     }
 
-    public void deleteBasket(String basketId){
-        this.hashOperations.delete(Key,basketId);
+    public void deleteBasket(String basketId) {
+        this.hashOperations.delete(Key, basketId);
     }
 
     public void deleteBasketItem(String basketId, String basketItemId) {

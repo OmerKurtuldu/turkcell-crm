@@ -1,6 +1,5 @@
 package com.turkcell.orderService.business.concretes;
 
-import com.sun.jdi.IntegerValue;
 import com.turkcell.corepackage.utils.mappers.ModelMapperService;
 import com.turkcell.orderService.api.clients.AccountServiceClient;
 import com.turkcell.orderService.api.clients.BasketServiceClient;
@@ -10,7 +9,6 @@ import com.turkcell.orderService.business.abstracts.OrderService;
 import com.turkcell.orderService.business.dtos.request.create.CreateOrderRequest;
 import com.turkcell.orderService.business.dtos.response.create.CreateOrderResponse;
 import com.turkcell.orderService.business.dtos.response.get.*;
-import com.turkcell.orderService.business.dtos.response.getAll.GetAllOrderResponse;
 import com.turkcell.orderService.business.rules.OrderBusinessRules;
 import com.turkcell.orderService.dataAccess.OrderRepository;
 import com.turkcell.orderService.entities.Order;
@@ -18,7 +16,6 @@ import com.turkcell.orderService.entities.OrderItem;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 

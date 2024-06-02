@@ -7,7 +7,6 @@ import com.turkcell.customerService.entities.concretes.City;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-
 import java.util.Optional;
 
 @RequiredArgsConstructor

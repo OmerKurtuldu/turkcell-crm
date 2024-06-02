@@ -11,9 +11,13 @@ import java.util.List;
 
 public interface FeatureService {
     CreatedFeatureResponse addFeature(CreatedFeatureRequest createdFeatureRequest);
+
     UpdatedFeatureResponse updateFeature(UpdatedFeatureRequest updatedFeatureRequest);
+
     GetFeatureResponse getById(int id);
+
     List<GetAllFeatureResponse> getAll();
+
     void delete(int id);
 
 }

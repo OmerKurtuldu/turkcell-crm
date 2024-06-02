@@ -27,25 +27,25 @@ public class ProductController {
 
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
-    public UpdatedProductResponse updateProduct(@RequestBody UpdatedProductRequest updatedProductRequest){
+    public UpdatedProductResponse updateProduct(@RequestBody UpdatedProductRequest updatedProductRequest) {
         return productService.updateProduct(updatedProductRequest);
     }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public GetProductResponse getById(@PathVariable int id){
+    public GetProductResponse getById(@PathVariable int id) {
         return productService.getById(id);
     }
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<GetAllProductResponse> getAll(){
+    public List<GetAllProductResponse> getAll() {
         return productService.getAll();
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable int id){
+    public void delete(@PathVariable int id) {
         productService.delete(id);
     }
 }

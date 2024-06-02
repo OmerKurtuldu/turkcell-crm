@@ -15,7 +15,7 @@ public class CreatedProductRequest {
     private String name;
     private Integer quantity;
     private BigDecimal price;
-    private Integer categoryId ;
+    private Integer categoryId;
     private List<ProductFeatureRequest> productFeatures;
 }
 

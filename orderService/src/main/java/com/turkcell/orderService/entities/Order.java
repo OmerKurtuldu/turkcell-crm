@@ -2,7 +2,6 @@ package com.turkcell.orderService.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.turkcell.corepackage.entities.BaseEntity;
-import com.turkcell.orderService.business.dtos.response.get.GetOrderItemResponse;
 import com.turkcell.orderService.util.OrderNumberGenerator;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

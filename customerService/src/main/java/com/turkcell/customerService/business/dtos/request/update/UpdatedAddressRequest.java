@@ -14,7 +14,6 @@ public class UpdatedAddressRequest {
 
     private int cityId;
 
-
     private String street;
 
 

@@ -17,7 +17,7 @@ public class SearchController {
     private final SearchService searchService;
 
     @PostMapping("/customers")
-    public List<Customer> searchCustomers(@RequestBody Customer search){
+    public List<Customer> searchCustomers(@RequestBody Customer search) {
         return searchService.searchCustomer(search);
     }
 

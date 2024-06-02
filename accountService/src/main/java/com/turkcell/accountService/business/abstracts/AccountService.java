@@ -12,9 +12,14 @@ import java.util.List;
 
 public interface AccountService {
     CreatedAccountResponse add(CreatedAccountRequest createdAccountRequest);
+
     UpdatedAccountResponse update(UpdatedAccountRequest updatedAccountRequest);
+
     GetAccountResponse getById(int id);
+
     List<GetAllAccountResponse> getAll();
+
     void delete(int id);
+
     ClientResponse checkIfAccountAvailable(int id);
 }

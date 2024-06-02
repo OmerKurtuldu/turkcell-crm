@@ -1,5 +1,6 @@
 package com.turkcell.customerService.api.controllers;
 
+import com.turkcell.commonpackage.utils.dto.ClientResponse;
 import com.turkcell.customerService.business.abstracts.IndividualCustomerService;
 import com.turkcell.customerService.business.dtos.request.create.CreatedIndividualCustomerRequest;
 import com.turkcell.customerService.business.dtos.request.update.UpdatedIndividualCustomerRequest;
@@ -7,8 +8,6 @@ import com.turkcell.customerService.business.dtos.response.create.CreatedIndivid
 import com.turkcell.customerService.business.dtos.response.get.GetIndividualCustomerResponse;
 import com.turkcell.customerService.business.dtos.response.getAll.GetAllIndividualCustomerResponse;
 import com.turkcell.customerService.business.dtos.response.updated.UpdatedIndividualCustomerResponse;
-
-import com.turkcell.commonpackage.utils.dto.ClientResponse;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -60,7 +59,7 @@ public class IndividualCustomerController {
     }
 
     @GetMapping("/customerClient/{id}")
-    public ClientResponse checkIfCustomerAvailable(@PathVariable int id){
+    public ClientResponse checkIfCustomerAvailable(@PathVariable int id) {
         return individualCustomerService.checkIfCustomerAvailable(id);
     }
 }

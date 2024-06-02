@@ -23,18 +23,18 @@ public class AccountBusinessRules {
     private final MessageService messageService;
     private final CustomerServiceClient customerServiceClient;
 
-    public void checkCustomerAvailabilityForAccount(int customerId){
+    public void checkCustomerAvailabilityForAccount(int customerId) {
 
-       var response = customerServiceClient.customerGetById(customerId);
-       if(!response.isSuccess()){
+        var response = customerServiceClient.customerGetById(customerId);
+        if (!response.isSuccess()) {
             throw new BusinessException(messageService.getMessage(Messages.AccountCustomerErrors.CustomerRegistrationShouldBeExist));
-       }
+        }
     }
 
-    public void checkAddressAvailabilityForAccount(List<Integer> addressIds){
-        for (int addressId : addressIds){
+    public void checkAddressAvailabilityForAccount(List<Integer> addressIds) {
+        for (int addressId : addressIds) {
             var response = customerServiceClient.addressGetById(addressId);
-            if(!response.isSuccess()){
+            if (!response.isSuccess()) {
                 throw new BusinessException(messageService.getMessage(Messages.AccountAddressErrors.AdressRegistrationShouldBeExist + addressId));
             }
         }
@@ -47,9 +47,9 @@ public class AccountBusinessRules {
 //        }
 //    }
 
-    public void accountShoulBeExist(int accountId){
+    public void accountShoulBeExist(int accountId) {
         Optional<Account> foundOptionalAccount = accountRepository.findById(accountId);
-        if (foundOptionalAccount.isEmpty()){
+        if (foundOptionalAccount.isEmpty()) {
             throw new BusinessException(messageService.getMessage(Messages.AccountErrors.AccountShouldBeExist));
         }
     }
@@ -68,7 +68,7 @@ public class AccountBusinessRules {
         return accountAddressIds;
     }
 
-    public boolean isCustomerActive(int customerId){
+    public boolean isCustomerActive(int customerId) {
         var response = customerServiceClient.customerGetById(customerId);
         return response.isSuccess();
     }

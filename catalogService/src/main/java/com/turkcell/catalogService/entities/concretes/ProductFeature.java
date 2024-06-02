@@ -1,6 +1,5 @@
 package com.turkcell.catalogService.entities.concretes;
 
-import com.turkcell.corepackage.entities.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

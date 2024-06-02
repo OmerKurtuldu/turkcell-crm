@@ -23,7 +23,7 @@ public class CustomerConsumer {
     @KafkaListener(
             topics = "customer_topics", groupId = "search"
     )
-    public void consume(CreatedCustomerEvent event){
+    public void consume(CreatedCustomerEvent event) {
         Customer customer = this.modelMapperService.forRequest().map(event, Customer.class);
         customerRepository.save(customer);
         System.out.println(customer.toString());
