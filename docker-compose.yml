@@ -4,6 +4,7 @@ services:
     image: redis:latest
     ports:
       - "6379:6379"
+
   zookeeper:
     image: "docker.io/bitnami/zookeeper:3"
     ports:
@@ -12,6 +13,7 @@ services:
       - "zookeeper_data:/bitnami"
     environment:
       - ALLOW_ANONYMOUS_LOGIN=yes
+
   kafka:
     image: "docker.io/bitnami/kafka:2-debian-10"
     ports:
@@ -30,6 +32,7 @@ services:
       - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
     depends_on:
       - zookeeper
+
   kafka-ui:
     image: provectuslabs/kafka-ui
     container_name: kafka-ui
@@ -42,43 +45,98 @@ services:
       - KAFKA_CLUSTERS_0_ZOOKEEPER=localhost:2181
 
   configserver:
+    image: configserverimage
     build: ./configServer
     restart: always
     container_name: configserver
     volumes:
       - ./configServer:/app
-    environment:
-        SPRING_PROFILES_ACTIVE: prod
-    
     ports:
-      - 8050:8050
+      - "8051:8051"
 
   discoveryserver:
+    image: discoverserverimage
     build: ./discoveryServer
     restart: always
     container_name: discoveryserver
     volumes:
       - ./discoveryServer:/app
-    ports:
-      - 8761:8761
     depends_on:
       - configserver
+    ports:
+      - "8761:8761"
 
   gatewayservice:
+    image: gatewayserviceimage
     build: ./gatewayService
     container_name: gatewayservice
     restart: always
     ports:
-      - 9002:9002
+      - "8760:8760"
     volumes:
       - ./gatewayService:/app
     depends_on:
       - configserver
       - discoveryserver
-    
+
+  identitydbprod:
+    container_name: identitydbprod
+    image: postgres
+    ports:
+      - "5461:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=12345
+      - POSTGRES_DB=identitydbprod
+    volumes:
+      - "identity_data:/var/lib/postgresql/data"
+
+  identityservice:
+    build: ./identityService
+    container_name: identityservice
+    image: identityserviceimage
+    volumes:
+      - ./identityService:/app
+    ports:
+      - "8763:8763"
+    depends_on:
+      - discoveryserver
+      - configserver
+      - identitydbprod
+      - kafka
+
+  accountdb:
+    container_name: accountdb
+    image: postgres
+    ports:
+      - "5462:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=12345
+      - POSTGRES_DB=accountdb
+    volumes:
+      - "account_data:/var/lib/postgresql/data"
+
+  accountservice:
+    build: ./accountService
+    container_name: accountservice
+    image: accountserviceimage
+    volumes:
+      - ./accountService:/app
+    ports:
+      - "8764:8764"
+    depends_on:
+      - discoveryserver
+      - configserver
+      - accountdb
+
 
 volumes:
   zookeeper_data:
     driver: local
   kafka_data:
+    driver: local
+  identity_data:
+    name: identity_data
+  account_data:
     driver: local
