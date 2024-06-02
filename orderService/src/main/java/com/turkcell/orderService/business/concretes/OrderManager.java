@@ -58,7 +58,8 @@ public class OrderManager implements OrderService {
                 .map(addressId -> customerServiceClient.addressGetById(addressId))
                 .collect(Collectors.toList());
 
-        orderRepository.save(order);
+
+        Order savedOrder = orderRepository.save(order);
 
         basketServiceClient.basketDeleteById(createOrderRequest.getBasketId());
 
@@ -66,7 +67,7 @@ public class OrderManager implements OrderService {
         createOrderResponse.setGetProductResponse(getProductResponses);
         createOrderResponse.setGetAccountResponse(getAccountResponse);
         createOrderResponse.setGetAddressResponse(getAddressResponses);
-        createOrderResponse.setOrderNumber(order.getOrderNumber());
+        createOrderResponse.setOrderNumber(savedOrder.getOrderNumber());
 
         return createOrderResponse;
     }
