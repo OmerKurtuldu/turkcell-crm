@@ -3,12 +3,9 @@ package com.turkcell.searchService.entities.concretes;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
-
-import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
@@ -19,16 +16,16 @@ public class Customer {
     @Id
     private String id;
 
-    @Field(name="firstName")
+    @Field(name = "firstName")
     private String firstName;
 
-    @Field(name="lastName")
+    @Field(name = "lastName")
     private String lastName;
 
-    @Field(name="nationalityNumber")
+    @Field(name = "nationalityNumber")
     private String nationalityNumber;
 
-    @Field(name="mobilePhone")
+    @Field(name = "mobilePhone")
     private String mobilePhone;
 
 }

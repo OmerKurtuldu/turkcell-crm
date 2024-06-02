@@ -6,14 +6,17 @@ import com.turkcell.catalogService.business.dtos.response.create.CreatedCategory
 import com.turkcell.catalogService.business.dtos.response.get.GetCategoryResponse;
 import com.turkcell.catalogService.business.dtos.response.getall.GetAllCategoryResponse;
 import com.turkcell.catalogService.business.dtos.response.update.UpdatedCategoryResponse;
-import org.apache.commons.digester.annotations.rules.BeanPropertySetter;
 
 import java.util.List;
 
 public interface CategoryService {
     CreatedCategoryResponse add(CreatedCategoryRequest createdCategoryRequest);
+
     UpdatedCategoryResponse update(UpdatedCategoryRequest updatedCategoryRequest);
+
     GetCategoryResponse getById(int id);
+
     List<GetAllCategoryResponse> getAll();
+
     void delete(int id);
 }

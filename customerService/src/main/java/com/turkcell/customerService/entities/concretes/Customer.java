@@ -1,10 +1,11 @@
 package com.turkcell.customerService.entities.concretes;
 
 
-
 import com.turkcell.corepackage.entities.BaseEntity;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
@@ -12,7 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @Data
 @Entity
-@Table(name="customers")
+@Table(name = "customers")
 public class Customer extends BaseEntity<Integer> {
 
     @Column(name = "email")
@@ -29,7 +30,6 @@ public class Customer extends BaseEntity<Integer> {
 
     @OneToMany(mappedBy = "customer")
     private List<Address> addresses;
-
 
 
 }

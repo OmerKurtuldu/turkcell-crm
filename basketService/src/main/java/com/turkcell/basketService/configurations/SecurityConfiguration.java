@@ -16,13 +16,12 @@ public class SecurityConfiguration {
     private final BaseSecurityService baseSecurityService;
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception
-    {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         baseSecurityService.configureCoreSecurity(http);
         http
                 .authorizeHttpRequests(req -> req
-                        .requestMatchers(HttpMethod.GET,"basketservice/api/v1/basket/{basketId}").permitAll()
-                        .requestMatchers(HttpMethod.DELETE,"basketservice/api/v1/basket/{basketId}").permitAll()
+                        .requestMatchers(HttpMethod.GET, "basketservice/api/v1/basket/{basketId}").permitAll()
+                        .requestMatchers(HttpMethod.DELETE, "basketservice/api/v1/basket/{basketId}").permitAll()
                         .requestMatchers("/basketservice/api/**").hasAnyAuthority("admin")
                         .anyRequest().authenticated()
                 );

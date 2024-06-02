@@ -22,31 +22,31 @@ public class CategoryControlller {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public CreatedCategoryResponse add(@RequestBody CreatedCategoryRequest createdCategoryRequest){
+    public CreatedCategoryResponse add(@RequestBody CreatedCategoryRequest createdCategoryRequest) {
         return categoryService.add(createdCategoryRequest);
     }
 
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
-    public UpdatedCategoryResponse update(@RequestBody UpdatedCategoryRequest updatedCategoryRequest){
+    public UpdatedCategoryResponse update(@RequestBody UpdatedCategoryRequest updatedCategoryRequest) {
         return categoryService.update(updatedCategoryRequest);
     }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public GetCategoryResponse getById(@PathVariable int id){
+    public GetCategoryResponse getById(@PathVariable int id) {
         return categoryService.getById(id);
     }
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<GetAllCategoryResponse> getAll(){
+    public List<GetAllCategoryResponse> getAll() {
         return categoryService.getAll();
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable int id){
+    public void delete(@PathVariable int id) {
         categoryService.delete(id);
     }
 }

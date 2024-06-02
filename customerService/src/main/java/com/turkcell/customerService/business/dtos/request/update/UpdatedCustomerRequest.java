@@ -8,6 +8,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class UpdatedCustomerRequest {
-   private String email;
-   private String mobilePhone;
+    private String email;
+    private String mobilePhone;
 }

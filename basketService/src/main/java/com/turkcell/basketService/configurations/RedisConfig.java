@@ -11,7 +11,7 @@ import redis.clients.jedis.JedisPoolConfig;
 public class RedisConfig {
 
     @Bean
-    public JedisConnectionFactory jedisConnectionFactory(){
+    public JedisConnectionFactory jedisConnectionFactory() {
         JedisPoolConfig poolConfig = new JedisPoolConfig();
         poolConfig.setMaxTotal(10); // havuzdaki maximum bağlantı sayısı
         poolConfig.setMaxIdle(5);  // Havuzda boşta bekleyecek maximum bağlantı sayısı
@@ -20,8 +20,8 @@ public class RedisConfig {
     }
 
     @Bean
-    public RedisTemplate<String,Object> redisTemplate(){
-        RedisTemplate<String,Object> template = new RedisTemplate<>();
+    public RedisTemplate<String, Object> redisTemplate() {
+        RedisTemplate<String, Object> template = new RedisTemplate<>();
         template.setConnectionFactory(jedisConnectionFactory());
         return template;
     }

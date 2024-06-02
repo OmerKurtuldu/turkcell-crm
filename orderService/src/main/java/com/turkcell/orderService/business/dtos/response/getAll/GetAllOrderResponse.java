@@ -2,7 +2,6 @@ package com.turkcell.orderService.business.dtos.response.getAll;
 
 import com.turkcell.orderService.business.dtos.response.get.GetAccountResponse;
 import com.turkcell.orderService.business.dtos.response.get.GetAddressResponse;
-import com.turkcell.orderService.business.dtos.response.get.GetOrderResponse;
 import com.turkcell.orderService.business.dtos.response.get.GetProductResponse;
 import lombok.AllArgsConstructor;
 import lombok.Data;

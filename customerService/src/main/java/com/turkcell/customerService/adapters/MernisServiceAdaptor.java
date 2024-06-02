@@ -11,10 +11,10 @@ public class MernisServiceAdaptor implements ICustomerCheckService {
 
     @SneakyThrows
     @Override
-    public boolean checkIfRealPerson(IndividualCustomer individualCustomer){
+    public boolean checkIfRealPerson(IndividualCustomer individualCustomer) {
         VFNKPSPublicSoap client = new VFNKPSPublicSoap();
-        if (client.TCKimlikNoDogrula( Long.parseLong(individualCustomer.getNationalityNo())  ,individualCustomer.getFirstName().toUpperCase(),
-                individualCustomer.getLastName().toUpperCase(),individualCustomer.getBirthDate().getYear())){
+        if (client.TCKimlikNoDogrula(Long.parseLong(individualCustomer.getNationalityNo()), individualCustomer.getFirstName().toUpperCase(),
+                individualCustomer.getLastName().toUpperCase(), individualCustomer.getBirthDate().getYear())) {
             return true;
         }
         return false;

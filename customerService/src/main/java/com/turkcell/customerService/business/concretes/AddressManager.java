@@ -1,5 +1,8 @@
 package com.turkcell.customerService.business.concretes;
 
+import com.turkcell.commonpackage.utils.dto.ClientResponse;
+import com.turkcell.corepackage.utils.exceptions.types.BusinessException;
+import com.turkcell.corepackage.utils.mappers.ModelMapperService;
 import com.turkcell.customerService.business.abstracts.AddressService;
 import com.turkcell.customerService.business.abstracts.CityService;
 import com.turkcell.customerService.business.abstracts.CustomerService;
@@ -10,18 +13,12 @@ import com.turkcell.customerService.business.dtos.response.get.GetAddressRespons
 import com.turkcell.customerService.business.dtos.response.getAll.GetAllAddressResponse;
 import com.turkcell.customerService.business.dtos.response.updated.UpdatedAddressResponse;
 import com.turkcell.customerService.business.rules.AddressBusinessRules;
-import com.turkcell.customerService.business.rules.CityBusinessRules;
-import com.turkcell.customerService.business.rules.CustomerBusinessRules;
 import com.turkcell.customerService.dataAccess.abstracts.AddressRepository;
 import com.turkcell.customerService.entities.concretes.Address;
 import com.turkcell.customerService.entities.concretes.City;
 import com.turkcell.customerService.entities.concretes.Customer;
-import com.turkcell.commonpackage.utils.dto.ClientResponse;
-import com.turkcell.corepackage.utils.exceptions.types.BusinessException;
-import com.turkcell.corepackage.utils.mappers.ModelMapperService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
 
 import java.util.List;
 import java.util.Optional;

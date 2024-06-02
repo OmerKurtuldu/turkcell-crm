@@ -5,7 +5,6 @@ import com.turkcell.orderService.business.abstracts.OrderService;
 import com.turkcell.orderService.business.dtos.request.create.CreateOrderRequest;
 import com.turkcell.orderService.business.dtos.response.create.CreateOrderResponse;
 import com.turkcell.orderService.business.dtos.response.get.GetOrderResponse;
-import com.turkcell.orderService.business.dtos.response.getAll.GetAllOrderResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -21,25 +20,25 @@ public class OrderController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public CreateOrderResponse createOrder(@RequestBody CreateOrderRequest createOrderRequest){
-      return  orderService.createOrder(createOrderRequest);
+    public CreateOrderResponse createOrder(@RequestBody CreateOrderRequest createOrderRequest) {
+        return orderService.createOrder(createOrderRequest);
     }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public GetOrderResponse orderGetById(@PathVariable int id){
+    public GetOrderResponse orderGetById(@PathVariable int id) {
         return orderService.getOrderById(id);
     }
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<GetOrderResponse> getAll(){
+    public List<GetOrderResponse> getAll() {
         return orderService.getAllOrders();
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void orderDeleteById(@PathVariable int id){
+    public void orderDeleteById(@PathVariable int id) {
         orderService.deleteOrder(id);
     }
 }

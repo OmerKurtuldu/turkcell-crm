@@ -1,5 +1,9 @@
 package com.turkcell.customerService.business.concretes;
 
+import com.turkcell.commonpackage.events.customer.CreatedCustomerEvent;
+import com.turkcell.commonpackage.utils.dto.ClientResponse;
+import com.turkcell.corepackage.utils.exceptions.types.BusinessException;
+import com.turkcell.corepackage.utils.mappers.ModelMapperService;
 import com.turkcell.customerService.business.abstracts.CustomerService;
 import com.turkcell.customerService.business.abstracts.IndividualCustomerService;
 import com.turkcell.customerService.business.dtos.request.create.CreatedIndividualCustomerRequest;
@@ -13,10 +17,6 @@ import com.turkcell.customerService.dataAccess.abstracts.IndividualCustomerRepos
 import com.turkcell.customerService.entities.concretes.Customer;
 import com.turkcell.customerService.entities.concretes.IndividualCustomer;
 import com.turkcell.customerService.kafka.producer.CustomerProducer;
-import com.turkcell.commonpackage.events.customer.CreatedCustomerEvent;
-import com.turkcell.commonpackage.utils.dto.ClientResponse;
-import com.turkcell.corepackage.utils.exceptions.types.BusinessException;
-import com.turkcell.corepackage.utils.mappers.ModelMapperService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -51,7 +51,7 @@ public class IndividualCustomerManager implements IndividualCustomerService {
         customerService.saveCustomer(customer);
         individualCustomerRepository.save(individualCustomer);
 
-        CreatedCustomerEvent createdCustomerEvent = this.modelMapperService.forResponse().map(individualCustomer,CreatedCustomerEvent.class);
+        CreatedCustomerEvent createdCustomerEvent = this.modelMapperService.forResponse().map(individualCustomer, CreatedCustomerEvent.class);
         createdCustomerEvent.setMessages("customer status is in pending state");
         createdCustomerEvent.setStatus("PENDING");
         customerProducer.sendMessage(createdCustomerEvent);
@@ -91,8 +91,8 @@ public class IndividualCustomerManager implements IndividualCustomerService {
     public List<GetAllIndividualCustomerResponse> getAll() {
         List<IndividualCustomer> individualCustomers = individualCustomerRepository.findAllActiveIndividualCustomers();
         List<GetAllIndividualCustomerResponse> getAllIndividualCustomerResponses = new ArrayList<GetAllIndividualCustomerResponse>();
-        for (var customer : individualCustomers){
-            GetAllIndividualCustomerResponse getAllIndividualCustomerResponse = this.modelMapperService.forResponse().map(customer,GetAllIndividualCustomerResponse.class);
+        for (var customer : individualCustomers) {
+            GetAllIndividualCustomerResponse getAllIndividualCustomerResponse = this.modelMapperService.forResponse().map(customer, GetAllIndividualCustomerResponse.class);
             getAllIndividualCustomerResponses.add(getAllIndividualCustomerResponse);
         }
         return getAllIndividualCustomerResponses;
@@ -114,7 +114,7 @@ public class IndividualCustomerManager implements IndividualCustomerService {
     @Override
     public ClientResponse checkIfCustomerAvailable(int id) {
         var response = new ClientResponse();
-        validateCustomerAvailability(id,response);
+        validateCustomerAvailability(id, response);
         return response;
     }
 

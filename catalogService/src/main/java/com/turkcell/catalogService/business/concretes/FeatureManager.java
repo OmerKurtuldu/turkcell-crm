@@ -46,15 +46,15 @@ public class FeatureManager implements FeatureService {
     public GetFeatureResponse getById(int id) {
         featureBusinessRules.featureShouldBeExist(id);
         Optional<Feature> feature = featureRepository.findById(id);
-        return this.modelMapperService.forResponse().map(feature.get(),GetFeatureResponse.class);
+        return this.modelMapperService.forResponse().map(feature.get(), GetFeatureResponse.class);
     }
 
     @Override
     public List<GetAllFeatureResponse> getAll() {
         List<Feature> features = featureRepository.findAll();
         List<GetAllFeatureResponse> getAllFeatureResponses = new ArrayList<>();
-        for(var feature : features){
-            GetAllFeatureResponse getAllFeatureResponse = this.modelMapperService.forResponse().map(feature,GetAllFeatureResponse.class);
+        for (var feature : features) {
+            GetAllFeatureResponse getAllFeatureResponse = this.modelMapperService.forResponse().map(feature, GetAllFeatureResponse.class);
             getAllFeatureResponses.add(getAllFeatureResponse);
         }
         return getAllFeatureResponses;
