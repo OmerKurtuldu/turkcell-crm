@@ -1,11 +1,13 @@
 package com.turkcell.basketService.business.abstracts;
 
-import com.turkcell.basketService.business.dtos.response.get.GetBasketResponse;
+import com.turkcell.basketService.business.dtos.request.CreatedBasketRequest;
+import com.turkcell.basketService.business.dtos.response.CreatedBasketResponse;
+import com.turkcell.basketService.business.dtos.response.GetBasketResponse;
 import com.turkcell.basketService.entites.Basket;
 import java.util.Map;
 
 public interface BasketService {
-    void add(String accountId,int productId);
+    CreatedBasketResponse add(CreatedBasketRequest createdBasketRequest);
     Map<String, Basket> getAllItems();
     GetBasketResponse getByItems(String basketId);
     void deleteBasketItem(String basketId, String basketItemId);

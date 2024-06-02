@@ -2,7 +2,7 @@ package com.turkcell.basketService.business.rules;
 
 import com.turkcell.basketService.api.clients.AccountServiceClient;
 import com.turkcell.basketService.api.clients.CatalogServiceClient;
-import com.turkcell.basketService.business.dtos.response.get.GetProductResponse;
+import com.turkcell.basketService.business.dtos.response.GetProductResponse;
 import com.turkcell.basketService.business.messages.Messages;
 import com.turkcell.basketService.dataAccess.RedisRepository;
 import com.turkcell.basketService.entites.Basket;
@@ -34,13 +34,12 @@ public class BasketBusinessRules {
             return getProductResponse;
         }
         catch(FeignException e){
-            //todo burası yorumlanacak
             throw new BusinessException(messageService.getMessage(Messages.BasketErrors.ProductRegistrationShouldBeExist));
         }
     }
 
     public void checkExistBasketByBasketId(String basketId){
-        Basket basket = redisRepository.getByBasket(basketId);
+        Basket basket = redisRepository.getByBasketId(basketId);
         if (basket == null) {
             throw new BusinessException(messageService.getMessage(Messages.BasketErrors.BasketShouldBeExist));
         }
@@ -48,7 +47,7 @@ public class BasketBusinessRules {
 
     public void checkExistBasketItemsByBasketItemId(String basketId,String basketItemId){
         checkExistBasketByBasketId(basketId);
-        Basket basket = redisRepository.getByBasket(basketId);
+        Basket basket = redisRepository.getByBasketId(basketId);
         boolean basketItemExists = basket.getBasketItems().stream()
                 .anyMatch(item -> item.getId().equals(basketItemId));
         if (!basketItemExists) {
@@ -57,6 +56,13 @@ public class BasketBusinessRules {
 
     }
 
+    public void checkBasketExists(Basket basket,String accountId) {
+        if (basket == null) {
+            basket = new Basket();
+            basket.setAccountId(accountId);
+            basket.setTotalPrice(0.0);
+        }
+    }
 
 
 }

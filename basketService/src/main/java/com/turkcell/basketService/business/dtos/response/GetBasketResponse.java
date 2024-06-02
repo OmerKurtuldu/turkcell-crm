@@ -1,4 +1,4 @@
-package com.turkcell.basketService.business.dtos.response.get;
+package com.turkcell.basketService.business.dtos.response;
 
 import com.turkcell.basketService.entites.BasketItem;
 import lombok.AllArgsConstructor;

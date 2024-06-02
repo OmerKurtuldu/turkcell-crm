@@ -10,7 +10,12 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-
+/*
+Redis (Remote Dictionary Server), açık kaynaklı,bellek içi (in-memory)
+veri yapısı deposu olarak kullanılan bir veritabanı yönetim sistemidir.
+Redis, verileri bellek (RAM) içinde tutarak çok hızlı okuma ve yazma işlemleri gerçekleştirebilir.
+Redis, in-memory çalışan bir veritabanıdır ve key-value şeklinde veri tutabilir.
+*/
 @Repository
 public class RedisRepository {
 
@@ -28,7 +33,7 @@ public class RedisRepository {
         return this.hashOperations.entries(Key);
     }
 
-    public void addItem(Basket basket){
+    public void addBasket(Basket basket){
         this.hashOperations.put(Key,basket.getId()+"_"+basket.getAccountId(),basket);
     }
 
@@ -39,21 +44,21 @@ public class RedisRepository {
                 .orElse(null);
     }
 
-    public Basket getByBasket(String basketId) {
+    public Basket getByBasketId(String basketId) {
         return this.hashOperations.get(Key, basketId);
     }
 
-    public void deleteItem(String basketId){
+    public void deleteBasket(String basketId){
         this.hashOperations.delete(Key,basketId);
     }
 
     public void deleteBasketItem(String basketId, String basketItemId) {
-        // Basket'ı Redis'ten al
+        // Basket'i Redis'ten al
         Basket basket = this.hashOperations.get(Key, basketId);
 
         if (basket != null) {
             List<BasketItem> items = basket.getBasketItems();
-            // BasketItem listesinden ilgili öğeyi sil
+            // Iterator, koleksiyonlar üzerinde gezinmek ve ogeleri güvenli bir sekilde silmek icin kullanılır.
             Iterator<BasketItem> iterator = items.iterator();
             while (iterator.hasNext()) {
                 BasketItem item = iterator.next();
@@ -63,7 +68,7 @@ public class RedisRepository {
                 }
             }
 
-            // Güncellenmiş basket'ı tekrar Redis'e kaydet
+            // Güncellenmis basket'i tekrar Redis'e kaydet
             this.hashOperations.put(Key, basketId, basket);
         }
     }

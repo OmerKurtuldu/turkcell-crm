@@ -33,7 +33,7 @@ public class OrderController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public GetAllOrderResponse getAll(){
+    public List<GetOrderResponse> getAll(){
         return orderService.getAllOrders();
     }
 

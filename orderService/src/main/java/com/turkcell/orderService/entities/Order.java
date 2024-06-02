@@ -21,6 +21,7 @@ public class Order extends BaseEntity<Integer> {
     private String orderNumber;
     private String basketId;
     private Double totalPrice;
+    private int accountId;
     @JsonIgnore
     @ElementCollection(fetch = FetchType.LAZY)
     private List<OrderItem> orderItems;

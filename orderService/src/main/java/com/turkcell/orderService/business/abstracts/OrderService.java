@@ -5,10 +5,12 @@ import com.turkcell.orderService.business.dtos.response.create.CreateOrderRespon
 import com.turkcell.orderService.business.dtos.response.get.GetOrderResponse;
 import com.turkcell.orderService.business.dtos.response.getAll.GetAllOrderResponse;
 
+import java.util.List;
+
 public interface OrderService {
 
     CreateOrderResponse createOrder(CreateOrderRequest createOrderRequest);
     GetOrderResponse getOrderById(int orderId);
-    GetAllOrderResponse getAllOrders();
+    List<GetOrderResponse> getAllOrders();
     void deleteOrder(int orderId);
 }
