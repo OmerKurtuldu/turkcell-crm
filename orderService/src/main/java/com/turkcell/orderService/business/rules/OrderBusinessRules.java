@@ -35,4 +35,12 @@ public class OrderBusinessRules {
             throw new BusinessException(messageService.getMessage(Messages.OrderErrors.OrderShouldBeExist));
         }
     }
+
+    public Order checkExistOrderId(int orderId) {
+        Optional<Order> order = orderRepository.findById(orderId);
+        if (order.isEmpty()) {
+            throw new BusinessException(messageService.getMessage(Messages.OrderErrors.OrderShouldBeExist));
+        }
+        return order.get();
+    }
 }

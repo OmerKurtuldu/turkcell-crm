@@ -56,13 +56,4 @@ public class BasketBusinessRules {
 
     }
 
-    public void checkBasketExists(Basket basket,String accountId) {
-        if (basket == null) {
-            basket = new Basket();
-            basket.setAccountId(accountId);
-            basket.setTotalPrice(0.0);
-        }
-    }
-
-
 }

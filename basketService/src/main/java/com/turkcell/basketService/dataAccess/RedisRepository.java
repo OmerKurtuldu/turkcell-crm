@@ -10,12 +10,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-/*
-Redis (Remote Dictionary Server), açık kaynaklı,bellek içi (in-memory)
-veri yapısı deposu olarak kullanılan bir veritabanı yönetim sistemidir.
-Redis, verileri bellek (RAM) içinde tutarak çok hızlı okuma ve yazma işlemleri gerçekleştirebilir.
-Redis, in-memory çalışan bir veritabanıdır ve key-value şeklinde veri tutabilir.
-*/
 @Repository
 public class RedisRepository {
 
