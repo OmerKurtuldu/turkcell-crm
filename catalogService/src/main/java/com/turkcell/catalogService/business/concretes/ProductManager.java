@@ -92,7 +92,9 @@ public class ProductManager implements ProductService {
 
     @Override
     public GetProductResponse getById(int id) {
+
         productBusinessRules.productShouldBeExist(id);
+
         Optional<Product> productOptional = productRepository.findById(id);
         Product product = productOptional.get();
 
@@ -135,12 +137,9 @@ public class ProductManager implements ProductService {
 
     @Override
     public void delete(int id) {
-        productBusinessRules.productShouldBeExist(id);
-        Optional<Product> productOptional = productRepository.findById(id);
-        if (productOptional.isEmpty()) {
 
-            throw new RuntimeException("Product not found");
-        }
+        productBusinessRules.productShouldBeExist(id);
+
         productRepository.deleteById(id);
     }
 }

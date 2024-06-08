@@ -27,36 +27,50 @@ public class FeatureManager implements FeatureService {
 
     @Override
     public CreatedFeatureResponse addFeature(CreatedFeatureRequest createdFeatureRequest) {
+
         featureBusinessRules.featureNameCanNotBeDuplicated(createdFeatureRequest.getName());
+
         Feature feature = this.modelMapperService.forRequest().map(createdFeatureRequest, Feature.class);
+
         featureRepository.save(feature);
+
         return this.modelMapperService.forResponse().map(feature, CreatedFeatureResponse.class);
     }
 
     @Override
     public UpdatedFeatureResponse updateFeature(UpdatedFeatureRequest updatedFeatureRequest) {
+
         featureBusinessRules.featureShouldBeExist(updatedFeatureRequest.getId());
         featureBusinessRules.featureNameCanNotBeDuplicated(updatedFeatureRequest.getName());
+
         Feature feature = this.modelMapperService.forRequest().map(updatedFeatureRequest, Feature.class);
+
         featureRepository.save(feature);
+
         return this.modelMapperService.forResponse().map(feature, UpdatedFeatureResponse.class);
     }
 
     @Override
     public GetFeatureResponse getById(int id) {
+
         featureBusinessRules.featureShouldBeExist(id);
+
         Optional<Feature> feature = featureRepository.findById(id);
+
         return this.modelMapperService.forResponse().map(feature.get(), GetFeatureResponse.class);
     }
 
     @Override
     public List<GetAllFeatureResponse> getAll() {
+
         List<Feature> features = featureRepository.findAll();
+
         List<GetAllFeatureResponse> getAllFeatureResponses = new ArrayList<>();
         for (var feature : features) {
             GetAllFeatureResponse getAllFeatureResponse = this.modelMapperService.forResponse().map(feature, GetAllFeatureResponse.class);
             getAllFeatureResponses.add(getAllFeatureResponse);
         }
+
         return getAllFeatureResponses;
     }
 

@@ -41,6 +41,7 @@ public class AccountManager implements AccountService {
         Set<AccountType> accountTypes = accountTypeForControl(createdAccountRequest.getAccountTypes());
         account.setAccountTypes(accountTypes);
         account.setId(0);
+
         accountRepository.save(account);
 
         return this.modelMapperService.forResponse().map(account, CreatedAccountResponse.class);
@@ -53,7 +54,9 @@ public class AccountManager implements AccountService {
         accountBusinessRules.checkCustomerAvailabilityForAccount(updatedAccountRequest.getCustomerId());
         accountBusinessRules.checkAddressAvailabilityForAccount(updatedAccountRequest.getAddressId());
 
-        Account account = this.modelMapperService.forRequest().map(updatedAccountRequest, Account.class);
+        Optional<Account> accountOptional = accountRepository.findById(updatedAccountRequest.getId());
+        Account account = accountOptional.get();
+        this.modelMapperService.forRequest().map(updatedAccountRequest, account);
 
         Set<AccountType> accountTypes = accountTypeForControl(updatedAccountRequest.getAccountTypes());
         account.setAccountTypes(accountTypes);
@@ -66,27 +69,36 @@ public class AccountManager implements AccountService {
     @Override
     public GetAccountResponse getById(int id) {
         accountBusinessRules.accountShoulBeExist(id);
+
         Optional<Account> account = accountRepository.findById(id);
+
         this.deleteIfNotAnActiveCustomer(id, account.get().getCustomerId());
+
         account.get().setAccountAddressId(accountBusinessRules.checkActiveAddressesForAccount(account.get().getAccountAddressId()));
+
         return this.modelMapperService.forResponse().map(account.get(), GetAccountResponse.class);
     }
 
     @Override
     public List<GetAllAccountResponse> getAll() {
         List<Account> accounts = accountRepository.findAll();
+
         List<GetAllAccountResponse> getAllAccountResponses = new ArrayList<GetAllAccountResponse>();
+
         for (var account : accounts) {
             account.setAccountAddressId(accountBusinessRules.checkActiveAddressesForAccount(account.getAccountAddressId()));
             GetAllAccountResponse getAllAccountResponse = this.modelMapperService.forResponse().map(account, GetAllAccountResponse.class);
             getAllAccountResponses.add(getAllAccountResponse);
         }
+
         return getAllAccountResponses;
     }
 
     @Override
     public void delete(int id) {
+
         accountBusinessRules.accountShoulBeExist(id);
+
         accountRepository.deleteById(id);
     }
 
@@ -110,7 +122,6 @@ public class AccountManager implements AccountService {
 
     //todo : isim kontrol
     public Set<AccountType> accountTypeForControl(Set<Integer> AccountTypes) {
-
         Set<AccountType> accountTypes = new HashSet<AccountType>();
         for (Integer accountTypeId : AccountTypes) {
             AccountType accountType = accountTypeService.getById(accountTypeId);
