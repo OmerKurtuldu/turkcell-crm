@@ -1,9 +1,7 @@
 package com.turkcell.identityService.business.concretes;
 
-import com.turkcell.corepackage.business.abstracts.MessageService;
 import com.turkcell.identityService.business.abstracts.UserService;
 import com.turkcell.identityService.business.dtos.requests.RegisterRequest;
-import com.turkcell.identityService.dataAccess.abstracts.RoleRepository;
 import com.turkcell.identityService.dataAccess.abstracts.UserRepository;
 import com.turkcell.identityService.entities.concretes.User;
 import lombok.AllArgsConstructor;
@@ -18,9 +16,9 @@ import org.springframework.stereotype.Service;
 public class UserManager implements UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    private final RoleRepository roleRepository;
-    private final MessageService messageService;
 
+
+    //todo: hata gözden geçirilecek
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findByEmail(username).orElseThrow(() -> new AccessDeniedException("Giriş başarısız."));
