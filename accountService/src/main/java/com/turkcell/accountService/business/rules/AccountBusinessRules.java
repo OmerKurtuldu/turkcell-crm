@@ -35,7 +35,7 @@ public class AccountBusinessRules {
         for (int addressId : addressIds) {
             var response = customerServiceClient.addressGetById(addressId);
             if (!response.isSuccess()) {
-                throw new BusinessException(messageService.getMessage(Messages.AccountAddressErrors.AdressRegistrationShouldBeExist + addressId));
+                throw new BusinessException(messageService.getMessage(Messages.AccountAddressErrors.AdressRegistrationShouldBeExist));
             }
         }
     }

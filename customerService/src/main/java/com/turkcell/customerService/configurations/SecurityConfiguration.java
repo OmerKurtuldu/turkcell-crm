@@ -20,9 +20,9 @@ public class SecurityConfiguration {
         baseSecurityService.configureCoreSecurity(http);
         http
                 .authorizeHttpRequests(req -> req
-                        .requestMatchers("/customerservice/api/v1/address/{id}").permitAll()
-                        .requestMatchers("/customerservice/api/v1/individualcustomers/customerClient/{id}").permitAll()
-                        .requestMatchers("/customerservice/api/v1/address/addressClient/{id}").permitAll()
+//                        .requestMatchers("/customerservice/api/v1/address/{id}").permitAll()
+//                        .requestMatchers("/customerservice/api/v1/individualcustomers/customerClient/{id}").permitAll()
+//                        .requestMatchers("/customerservice/api/v1/address/addressClient/{id}").permitAll()
                         .requestMatchers("/customerservice/api/**").hasAnyAuthority("admin")
                         .anyRequest().authenticated()
                 );

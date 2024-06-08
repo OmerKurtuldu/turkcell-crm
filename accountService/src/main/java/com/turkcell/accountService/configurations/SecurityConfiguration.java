@@ -18,8 +18,8 @@ public class SecurityConfiguration {
         baseSecurityService.configureCoreSecurity(http);
         http
                 .authorizeHttpRequests(req -> req
-                        .requestMatchers("/accountservice/api/v1/account/{id}").permitAll()
-                        .requestMatchers("/accountservice/api/v1/account/accountClient/{id}").permitAll()
+//                        .requestMatchers("/accountservice/api/v1/account/{id}").permitAll()
+//                        .requestMatchers("/accountservice/api/v1/account/accountClient/{id}").permitAll()
                         .requestMatchers("/accountservice/api/**").hasAnyAuthority("admin")
                         .anyRequest().authenticated()
                 );
