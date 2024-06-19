@@ -1,5 +1,6 @@
-package com.turkcell.basketService.business.dtos.response;
+package com.turkcell.basketService.business.dtos.response.create;
 
+import com.turkcell.basketService.business.dtos.BasketItemResponse;
 import com.turkcell.basketService.entites.BasketItem;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,5 +15,5 @@ public class CreatedBasketResponse {
     private String basketId;
     private String accountId;
     private Double totalPrice;
-    private List<BasketItem> basketItems;
+    private List<BasketItemResponse> basketItems;
 }

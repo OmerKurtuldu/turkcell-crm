@@ -1,5 +1,6 @@
 package com.turkcell.accountService.business.dtos.response.get;
 
+import com.turkcell.accountService.business.dtos.response.AccountTypeDTO;
 import com.turkcell.accountService.entities.concretes.AccountType;
 import com.turkcell.accountService.entities.enums.Action;
 import lombok.AllArgsConstructor;
@@ -18,7 +19,7 @@ public class GetAccountResponse {
     private String accountNumber;
     private Boolean status;
     private Action action;
-    private Set<AccountType> accountTypes;
+    private Set<AccountTypeDTO> accountTypes;
     private int customerId;
     private List<Integer> addressId;
 

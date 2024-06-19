@@ -1,5 +1,6 @@
-package com.turkcell.basketService.business.dtos.response;
+package com.turkcell.basketService.business.dtos.response.get;
 
+import com.turkcell.basketService.business.dtos.response.ProductFeatureResponse;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

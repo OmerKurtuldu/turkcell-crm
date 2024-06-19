@@ -1,6 +1,6 @@
 package com.turkcell.catalogService.business.dtos.request.update;
 
-import com.turkcell.catalogService.business.dtos.dto.CategoryDTO;
+
 import com.turkcell.catalogService.business.dtos.request.create.ProductFeatureRequest;
 import lombok.AllArgsConstructor;
 import lombok.Data;

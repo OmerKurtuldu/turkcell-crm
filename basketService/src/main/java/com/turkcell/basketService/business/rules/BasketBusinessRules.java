@@ -2,7 +2,7 @@ package com.turkcell.basketService.business.rules;
 
 import com.turkcell.basketService.api.clients.AccountServiceClient;
 import com.turkcell.basketService.api.clients.CatalogServiceClient;
-import com.turkcell.basketService.business.dtos.response.GetProductResponse;
+import com.turkcell.basketService.business.dtos.response.get.GetProductResponse;
 import com.turkcell.basketService.business.messages.Messages;
 import com.turkcell.basketService.dataAccess.RedisRepository;
 import com.turkcell.basketService.entites.Basket;
