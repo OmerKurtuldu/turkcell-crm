@@ -110,7 +110,7 @@ public class IndividualCustomerManager implements IndividualCustomerService {
         customerService.setActiveCustomer(id);
     }
 
-    //todo : kullanım değerlendirilecek
+
     @Override
     public ClientResponse checkIfCustomerAvailable(int id) {
         var response = new ClientResponse();

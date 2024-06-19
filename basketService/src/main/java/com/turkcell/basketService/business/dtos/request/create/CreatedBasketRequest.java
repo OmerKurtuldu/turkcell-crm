@@ -1,4 +1,4 @@
-package com.turkcell.basketService.business.dtos.request;
+package com.turkcell.basketService.business.dtos.request.create;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

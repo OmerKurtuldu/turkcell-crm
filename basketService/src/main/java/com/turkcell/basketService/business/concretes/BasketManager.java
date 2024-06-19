@@ -1,9 +1,9 @@
 package com.turkcell.basketService.business.concretes;
 
-import com.turkcell.basketService.business.dtos.request.CreatedBasketRequest;
-import com.turkcell.basketService.business.dtos.response.CreatedBasketResponse;
-import com.turkcell.basketService.business.dtos.response.GetBasketResponse;
-import com.turkcell.basketService.business.dtos.response.GetProductResponse;
+import com.turkcell.basketService.business.dtos.request.create.CreatedBasketRequest;
+import com.turkcell.basketService.business.dtos.response.create.CreatedBasketResponse;
+import com.turkcell.basketService.business.dtos.response.get.GetBasketResponse;
+import com.turkcell.basketService.business.dtos.response.get.GetProductResponse;
 import com.turkcell.basketService.business.rules.BasketBusinessRules;
 import com.turkcell.basketService.entites.Basket;
 import com.turkcell.basketService.entites.BasketItem;
