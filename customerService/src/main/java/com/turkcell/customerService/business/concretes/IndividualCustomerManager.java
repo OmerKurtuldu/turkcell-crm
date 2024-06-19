@@ -70,9 +70,14 @@ public class IndividualCustomerManager implements IndividualCustomerService {
         customer.setId(customerId);
 
         individualCustomer.setCustomer(customer);
-        //todo : updateCustomerEvent
+
         customerService.saveCustomer(customer);
         individualCustomerRepository.save(individualCustomer);
+
+        CreatedCustomerEvent createdCustomerEvent = this.modelMapperService.forResponse().map(individualCustomer, CreatedCustomerEvent.class);
+        createdCustomerEvent.setMessages("customer status is in pending state");
+        createdCustomerEvent.setStatus("PENDING");
+        customerProducer.sendMessage(createdCustomerEvent);
 
         return this.modelMapperService.forResponse().map(individualCustomer, UpdatedIndividualCustomerResponse.class);
     }
