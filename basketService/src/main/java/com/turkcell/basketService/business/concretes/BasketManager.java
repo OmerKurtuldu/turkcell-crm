@@ -12,12 +12,14 @@ import com.turkcell.basketService.business.abstracts.BasketService;
 import com.turkcell.corepackage.utils.mappers.ModelMapperService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Map;
 import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class BasketManager implements BasketService {
 
     private final RedisRepository redisRepository;
