@@ -52,11 +52,6 @@ class BasketManagerTest {
         return basket;
     }
 
-    private GetProductResponse createProductResponse(int productId) {
-        return new GetProductResponse(productId, "Product1", 1, 1, new BigDecimal("10.00"), new ArrayList<>());
-    }
-
-
     @Test
     void getByItemsWhenSuccess() {
         // Given

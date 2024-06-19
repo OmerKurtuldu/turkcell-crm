@@ -13,6 +13,7 @@ import com.turkcell.orderService.business.rules.OrderBusinessRules;
 import com.turkcell.orderService.dataAccess.OrderRepository;
 import com.turkcell.orderService.entities.Order;
 import com.turkcell.orderService.entities.OrderItem;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +22,7 @@ import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
+@Transactional
 public class OrderManager implements OrderService {
     private final ModelMapperService modelMapperService;
     private final OrderRepository orderRepository;
@@ -32,6 +34,7 @@ public class OrderManager implements OrderService {
 
     @Override
     public CreateOrderResponse createOrder(CreateOrderRequest createOrderRequest) {
+
         GetBasketResponse getBasketResponse = orderBusinessRules.checkProductAvailabilityForBasket(createOrderRequest.getBasketId());
 
         List<OrderItem> orderItems = getBasketResponse.getBasketItems().stream()
@@ -57,7 +60,6 @@ public class OrderManager implements OrderService {
         List<GetAddressResponse> getAddressResponses = getAccountResponse.getAddressId().stream()
                 .map(addressId -> customerServiceClient.addressGetById(addressId))
                 .collect(Collectors.toList());
-
 
         Order savedOrder = orderRepository.save(order);
 

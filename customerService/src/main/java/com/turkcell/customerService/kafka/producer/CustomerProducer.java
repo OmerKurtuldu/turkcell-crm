@@ -16,7 +16,6 @@ public class CustomerProducer {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CustomerProducer.class);
 
-
     private final KafkaTemplate<String, CreatedCustomerEvent> kafkaTemplate;
 
     public void sendMessage(CreatedCustomerEvent event) {
